@@ -60,7 +60,6 @@ asadmin set resources.jdbc-connection-pool.dvnDbPool.property.password='${ALIAS=
 asadmin create-jdbc-resource --connectionpoolid dvnDbPool jdbc/VDCNetDS
 
 # JavaMail
-asadmin delete-javamail-resource mail/notifyMailSession
 asadmin create-javamail-resource \
           --mailhost "${MAIL_SERVER}" \
           --mailuser "dataversenotify" \
