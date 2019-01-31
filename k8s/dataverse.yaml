@@ -39,3 +39,20 @@ data:
   POSTGRES_PORT: "5432"
   POSTGRES_DATABASE: dvndb
   POSTGRES_USER: dvnapp
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dataverse
+spec:
+  ports:
+    - port: 8080
+      name: dataverse-http
+      targetPort: 8080
+      protocol: TCP
+    - port: 8009
+      name: dataverse-ajp
+      targetPort: 8009
+      protocol: TCP
+  selector:
+    app: dataverse
