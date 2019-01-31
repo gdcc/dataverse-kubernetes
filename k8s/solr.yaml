@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: solr
+  labels:
+    app: solr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: solr
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: solr
+      annotations: {}
+    spec:
+      containers:
+        - name: solr
+          image: iqss/solr-k8s
+          ports:
+            - containerPort: 8983
+          volumeMounts:
+            - name: data
+              mountPath: /opt/solr/server/solr/collection1/data
+          env:
+            - name: SOLR_PORT  # Otherwise, this is wrongfully set by K8s.
+              value: "8983"
+      volumes:
+        - name: data
+          emptyDir: {} # TODO: this needs to be replaced by a PVC!!!
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: solr
+spec:
+  ports:
+    - port: 8983
+      name: solr
+      targetPort: 8983
+      protocol: TCP
+  selector:
+    app: solr
