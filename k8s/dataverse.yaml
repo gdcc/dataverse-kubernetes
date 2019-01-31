@@ -1,0 +1,41 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dataverse
+  labels:
+    app: dataverse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dataverse
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: dataverse
+      annotations: {}
+    spec:
+      containers:
+        - name: dataverse
+          image: iqss/dataverse-k8s
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: dataverse
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dataverse
+  labels:
+    app: dataverse
+data:
+  HOST_DNS_ADDRESS: localhost
+  MAIL_SERVER: postfix
+  POSTGRES_SERVER: postgres
+  POSTGRES_PORT: "5432"
+  POSTGRES_DATABASE: dvndb
+  POSTGRES_USER: dvnapp
