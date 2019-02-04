@@ -49,6 +49,11 @@ kubectl create -f k8s/postgres.yaml
 kubectl create -f k8s/solr.yaml
 ```
 
+Once PostgreSQL and Solr are ready, deploy Dataverse:
+```
+kubectl create -f k8s/dataverse.yaml
+```
+
 ## Future plans and ideas
 
 At a later point in time, an [Operator](https://coreos.com/operators/) might be
