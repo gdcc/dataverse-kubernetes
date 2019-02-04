@@ -43,9 +43,10 @@ kubectl create secret generic dataverse-rserve --from-literal=username='rserve' 
 kubectl create secret generic dataverse-doi --from-literal=username='test.doi' --from-literal=password='changeme'
 ```
 
-Let's deploy PostgreSQL:
+Let's deploy PostgreSQL and Solr now:
 ```
 kubectl create -f k8s/postgres.yaml
+kubectl create -f k8s/solr.yaml
 ```
 
 ## Future plans and ideas
