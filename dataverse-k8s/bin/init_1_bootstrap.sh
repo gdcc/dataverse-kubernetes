@@ -17,13 +17,15 @@ set -e
 # 0. Start the domain
 asadmin start-domain
 
-# 1. Password aliases from secrets --> need to update this to make the alias format from the secret
-for alias in rserve_password doi_password db_password
+# 1. Password aliases from secrets
+for alias in rserve doi db
 do
-  if [ -f ${SECRETS_DIR}/$alias ]; then
-    asadmin $ASADMIN_OPTS create-password-alias --passwordfile ${SECRETS_DIR}/$alias $alias
+  if [ -f ${SECRETS_DIR}/$alias/password ]; then
+    cat ${SECRETS_DIR}/$alias/password | sed -e "s#^#AS_ADMIN_ALIASPASSWORD=#" > /tmp/$alias
+    asadmin $ASADMIN_OPTS create-password-alias --passwordfile /tmp/$alias ${alias}_password_alias
+    rm /tmp/$alias
   else
-    echo "Could not find secret for $alias in $SECRETS_DIR. Check your Kubernetes Secrets!"
+    echo "Could not find secret for ${alias} in ${SECRETS_DIR}. Check your Kubernetes Secrets!"
   fi
 done
 
