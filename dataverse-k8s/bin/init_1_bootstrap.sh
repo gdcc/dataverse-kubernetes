@@ -18,7 +18,7 @@ set -e
 asadmin start-domain
 
 # 1. Password aliases from secrets
-for alias in rserve_password_alias doi_password_alias db_password_alias storage_password_alias
+for alias in rserve_password_alias doi_password_alias db_password_alias
 do
   if [ -f ${SECRETS_DIR}/$alias ]; then
     asadmin $ASADMIN_OPTS create-password-alias --passwordfile ${SECRETS_DIR}/$alias $alias
@@ -30,6 +30,7 @@ done
 # 2. Domain-spaced resources (JDBC, JMS, ...)
 
 # JMS
+echo "Creating JMS resources."
 asadmin delete-connector-connection-pool --cascade=true jms/__defaultConnectionFactory-Connection-Pool
 asadmin create-connector-connection-pool \
           --steadypoolsize 1 \
@@ -51,6 +52,7 @@ asadmin create-admin-object \
           jms/DataverseIngest
 
 # JDBC
+echo "Creating JDBC resources."
 asadmin create-jdbc-connection-pool \
           --restype javax.sql.DataSource \
           --datasourceclassname org.postgresql.ds.PGPoolingDataSource \
@@ -60,12 +62,14 @@ asadmin set resources.jdbc-connection-pool.dvnDbPool.property.password='${ALIAS=
 asadmin create-jdbc-resource --connectionpoolid dvnDbPool jdbc/VDCNetDS
 
 # JavaMail
+echo "Configuring JavaMail."
 asadmin create-javamail-resource \
           --mailhost "${MAIL_SERVER}" \
           --mailuser "dataversenotify" \
           --fromaddress "do-not-reply@${HOST_DNS_ADDRESS}" \
           mail/notifyMailSession
 
+echo "Setting miscellaneous configuration options."
 # Timer data source
 asadmin set configs.config.server-config.ejb-container.ejb-timer-service.timer-datasource=jdbc/VDCNetDS
 # AJP connector
