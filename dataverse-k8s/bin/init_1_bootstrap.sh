@@ -17,8 +17,8 @@ set -e
 # 0. Start the domain
 asadmin start-domain
 
-# 1. Password aliases from secrets
-for alias in rserve_password_alias doi_password_alias db_password_alias
+# 1. Password aliases from secrets --> need to update this to make the alias format from the secret
+for alias in rserve_password doi_password db_password
 do
   if [ -f ${SECRETS_DIR}/$alias ]; then
     asadmin $ASADMIN_OPTS create-password-alias --passwordfile ${SECRETS_DIR}/$alias $alias

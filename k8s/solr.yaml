@@ -29,7 +29,8 @@ spec:
               value: "8983"
       volumes:
         - name: data
-          emptyDir: {} # TODO: this needs to be replaced by a PVC!!!
+          persistentVolumeClaim:
+            claimName: solr
 ---
 kind: Service
 apiVersion: v1
@@ -43,3 +44,17 @@ spec:
       protocol: TCP
   selector:
     app: solr
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: solr
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3G
+  selector:
+    matchLabels:
+      backup: "False"
