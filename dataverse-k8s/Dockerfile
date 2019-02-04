@@ -16,6 +16,7 @@ ENV HOME_DIR=/opt/dataverse\
     SCRIPT_DIR=/opt/dataverse/scripts\
     GLASSFISH_DIR=/opt/dataverse/appserver\
     DOMAIN_DIR=/opt/dataverse/appserver/glassfish/domains/${DOMAIN}\
+    DATA_DIR=/data\
     SECRETS_DIR=/opt/dataverse/secrets\
     GLASSFISH_PKG=http://download.java.net/glassfish/4.1/release/glassfish-4.1.zip\
     GLASSFISH_SHA1=704a90899ec5e3b5007d310b13a6001575827293\
@@ -37,7 +38,8 @@ RUN groupadd -g 1000 glassfish && \
     mkdir -p ${HOME_DIR} && \
     mkdir -p ${SCRIPT_DIR} && \
     mkdir -p ${SECRETS_DIR} && \
-    chown -R glassfish: ${HOME_DIR}
+    mkdir -p ${DATA_DIR} && \
+    chown -R glassfish: ${HOME_DIR} ${DATA_DIR}
 
 # Install tini as minimized init system
 RUN wget --no-verbose -O /tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \

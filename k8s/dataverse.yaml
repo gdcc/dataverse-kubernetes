@@ -25,6 +25,12 @@ spec:
           envFrom:
             - configMapRef:
                 name: dataverse
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          emptyDir: {} # TODO: this needs to be replaced by a PVC!!!
 ---
 kind: ConfigMap
 apiVersion: v1
