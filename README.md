@@ -54,6 +54,15 @@ Once PostgreSQL and Solr are ready, deploy Dataverse:
 kubectl create -f k8s/dataverse.yaml
 ```
 
+When the deployment was successfull (check with `kubectl logs dataverse-...`),
+you need to bootstrap the installation:
+```
+kubectl create -f k8s/bootstrap.yaml
+```
+
+More is WIP. For now, you can do a `kubectl port-forward` of dataverse pod port 8080
+and you should then see a login at http://localhost:8080 in your browser.
+
 ## Future plans and ideas
 
 At a later point in time, an [Operator](https://coreos.com/operators/) might be
