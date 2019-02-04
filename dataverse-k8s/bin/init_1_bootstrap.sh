@@ -82,7 +82,21 @@ asadmin set server-config.network-config.protocols.protocol.http-listener-1.http
 asadmin create-jvm-options "\-Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl"
 
 # 3. Domain based configuration options
-# t.b.d.: use script to map DATAVERSE_XXX_XXX to system properties -Ddataverse.xxx.xxx
+# Set Dataverse environment variables
+echo "Setting system properties for Dataverse configuration options:"
+env
+env -0 | grep -z -Ee "^(dataverse|doi)_" | while IFS='=' read -r -d '' k v; do
+    KEY=`echo "${k}" | tr '_' '.'`
+
+    # special handling of special values (e.g. dashes are not allowed in bash var name)
+    KEY=`echo "${KEY}" | sed -e "s#dataverse.auth.password.reset.timeout#dataverse.auth.password-reset-timeout-in-minutes#"`
+    # escape colons in values
+    v=`echo "${v}" | sed -e 's/:/\\\:/'`
+
+    echo "Handling ${KEY}=${v}."
+    asadmin delete-jvm-options "-D${KEY}"
+    asadmin create-jvm-options "-D${KEY}=${v}"
+done
 
 # 4. Stop the domain again (will be started in foreground later)
 asadmin stop-domain
