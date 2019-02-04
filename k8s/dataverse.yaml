@@ -25,12 +25,25 @@ spec:
           envFrom:
             - configMapRef:
                 name: dataverse
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: dataverse-postgresql
+                  key: username
           volumeMounts:
-            - name: data
+            - name: files
               mountPath: /data
+            - name: db-secret
+              mountPath: "/opt/dataverse/secrets/db"
+              readOnly: true
       volumes:
-        - name: data
-          emptyDir: {} # TODO: this needs to be replaced by a PVC!!!
+        - name: files
+          persistentVolumeClaim:
+            claimName: dataverse-files
+        - name: db-secret
+          secret:
+            secretName: dataverse-postgresql
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -39,12 +52,6 @@ metadata:
   labels:
     app: dataverse
 data:
-  HOST_DNS_ADDRESS: localhost
-  MAIL_SERVER: postfix
-  POSTGRES_SERVER: postgres
-  POSTGRES_PORT: "5432"
-  POSTGRES_DATABASE: dvndb
-  POSTGRES_USER: dvnapp
 ---
 kind: Service
 apiVersion: v1
@@ -62,3 +69,17 @@ spec:
       protocol: TCP
   selector:
     app: dataverse
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: dataverse-files
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 6G
+  selector:
+    matchLabels:
+      backup: "False"
