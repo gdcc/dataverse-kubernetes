@@ -45,7 +45,7 @@ kubectl create secret generic dataverse-doi --from-literal=username='test.doi' -
 
 Let's deploy PostgreSQL and Solr now:
 ```
-kubectl create -f k8s/postgres.yaml
+kubectl create -f k8s/postgresql.yaml
 kubectl create -f k8s/solr.yaml
 ```
 
