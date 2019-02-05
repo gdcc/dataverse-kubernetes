@@ -105,3 +105,7 @@ asadmin stop-domain
 
 # 5. Symlink the WAR file to autodeploy on real start
 ln -s ${HOME_DIR}/dvinstall/dataverse.war ${DOMAIN_DIR}/autodeploy/dataverse.war
+
+# 6. Symlink the jHove configuration
+ln -s ${HOME_DIR}/dvinstall/jhove.conf ${DOMAIN_DIR}/config/jhove.conf
+ln -s ${HOME_DIR}/dvinstall/jhoveConfig.xsd ${DOMAIN_DIR}/config/jhoveConfig.xsd
