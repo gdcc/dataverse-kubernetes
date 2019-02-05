@@ -8,7 +8,7 @@ spec:
       containers:
         - name: dv-bootstrap
           image: iqss/dataverse-k8s
-          command: ["scripts/bootstrap.sh"]
+          command: ["scripts/bootstrap-job.sh"]
           volumeMounts:
             - name: db-secret
               mountPath: "/opt/dataverse/secrets/db"
