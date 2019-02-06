@@ -60,8 +60,12 @@ you need to bootstrap the installation:
 kubectl create -f k8s/bootstrap.yaml
 ```
 
-More is WIP. For now, you can do a `kubectl port-forward` of dataverse pod port 8080
-and you should then see a login at http://localhost:8080 in your browser.
+If you want to use this basic deployment for development, testing or demo cases,
+you can just execute the following to open Dataverse in your browser:
+```
+kubectl expose deployment dataverse --type=NodePort --name=dataverse-local
+minikube service dataverse-local
+```
 
 ## Future plans and ideas
 
