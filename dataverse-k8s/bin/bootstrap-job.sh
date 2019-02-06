@@ -22,18 +22,21 @@ chmod 0600 ${HOME_DIR}/.pgpass
 # 1.) Load SQL data
 psql -h ${POSTGRES_SERVER} -U ${POSTGRES_USER} ${POSTGRES_DATABASE} < ${HOME_DIR}/dvinstall/reference_data.sql
 
-# 2a.) Patch load scripts with k8s based URL
+# 2) Initialize common data structures to make Dataverse usable
 cd ${HOME_DIR}/dvinstall
+# 2a) Patch load scripts with k8s based URL
 sed -i -e "s#localhost:8080#${DATAVERSE_K8S_HOST}:8080#" setup-*.sh
-
-# 2b) Patch user script with admin email
-# T. B. D.
-
-# 3.) Use scripts to bootstrap the instance.
+# 2b) Patch user and root dataverse JSON with contact email
+sed -i -e "s#root@mailinator.com#${CONTACT_MAIL}#" data/dv-root.json
+sed -i -e "s#dataverse@mailinator.com#${CONTACT_MAIL}#" data/user-admin.json
+# 2c) Use script(s) to bootstrap the instance.
 ./setup-all.sh --insecure
 
 # 4.) Configure Solr location
-curl -X PUT -d "${SOLR_K8S_HOST}:8983" http://${DATAVERSE_K8S_HOST}:8080/api/admin/settings/:SolrHostColonPort
+curl -X PUT -d "${SOLR_K8S_HOST}:8983" "http://${DATAVERSE_K8S_HOST}:8080/api/admin/settings/:SolrHostColonPort"
 
-# 5.) Block access to the API endpoints, but allow for request with key from secret
+# 5.) Configure system email (otherwise no email will be send)
+curl -X PUT -d "${ADMIN_MAIL}" "http://${DATAVERSE_K8S_HOST}:8080/api/admin/settings/:SystemEmail"
+
+# 6.) Block access to the API endpoints, but allow for request with key from secret
 # T. B. D.
