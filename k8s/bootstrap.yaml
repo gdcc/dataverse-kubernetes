@@ -13,6 +13,16 @@ spec:
             - name: db-secret
               mountPath: "/opt/dataverse/secrets/db"
               readOnly: true
+      initContainers:
+        - name: init-postgres
+          image: busybox
+          command: ['sh', '-c', 'until nslookup postgres; do echo waiting for postgres; sleep 2; done;']
+        - name: init-solr
+          image: busybox
+          command: ['sh', '-c', 'until nslookup solr; do echo waiting for solr; sleep 2; done;']
+        - name: init-dataverse
+          image: busybox
+          command: ['sh', '-c', 'until nslookup dataverse; do echo waiting for dataverse; sleep 2; done;']
       volumes:
         - name: db-secret
           secret:
