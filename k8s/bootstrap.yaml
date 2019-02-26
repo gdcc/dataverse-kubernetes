@@ -17,15 +17,21 @@ spec:
               mountPath: "/opt/dataverse/secrets/api"
               readOnly: true
       initContainers:
-        - name: init-postgres
-          image: busybox
-          command: ['sh', '-c', 'until nslookup postgres; do echo waiting for postgres; sleep 2; done;']
-        - name: init-solr
-          image: busybox
-          command: ['sh', '-c', 'until nslookup solr; do echo waiting for solr; sleep 2; done;']
-        - name: init-dataverse
-          image: busybox
-          command: ['sh', '-c', 'until nslookup dataverse; do echo waiting for dataverse; sleep 2; done;']
+        - name: check-db-ready
+          image: postgres:9.6
+          command: ['sh', '-c',
+            'until pg_isready -h postgresql -p 5432;
+            do echo waiting for database; sleep 3; done;']
+        - name: check-solr-ready
+          image: tutum/curl
+          command: ['sh', '-c',
+            'until curl -f http://solr:8983/solr/collection1/admin/ping 2>&1 | grep "status.:.OK";
+            do echo waiting for solr; sleep 3; done;']
+        - name: check-dataverse-ready
+          image: tutum/curl
+          command: ['sh', '-c',
+            'until curl -f http://dataverse:8080/robots.txt -m 2 2>&1 > /dev/null;
+            do echo waiting for dataverse; sleep 15; done;']
       volumes:
         - name: db-secret
           secret:
