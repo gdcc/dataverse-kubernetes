@@ -41,6 +41,7 @@ registration and Rserve:
 kubectl create secret generic dataverse-postgresql --from-literal=username='dataverse' --from-literal=password='changeme'
 kubectl create secret generic dataverse-rserve --from-literal=username='rserve' --from-literal=password='changeme'
 kubectl create secret generic dataverse-doi --from-literal=username='test.doi' --from-literal=password='changeme'
+kubectl create secret generic dataverse-api --from-literal=key='supersecret'
 ```
 
 Let's deploy PostgreSQL and Solr now:

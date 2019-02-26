@@ -14,6 +14,16 @@ set -e
 DATAVERSE_K8S_HOST=${DATAVERSE_K8S_HOST:-${DATAVERSE_SERVICE_HOST}}
 SOLR_K8S_HOST=${SOLR_K8S_HOST:-${SOLR_SERVICE_HOST}}
 
+# Check postgres and API key secrets are available
+if [ ! -s "${SECRETS_DIR}/db/password" ]; then
+  echo "No database password present. Failing."
+  exit 126
+fi
+if [ ! -s "${SECRETS_DIR}/api/key" ]; then
+  echo "No API key present. Failing."
+  exit 126
+fi
+
 # Drop the Postgres credentials into .pgpass
 echo "${POSTGRES_SERVER}:*:*:${POSTGRES_USER}:`cat ${SECRETS_DIR}/db/password`" > ${HOME_DIR}/.pgpass
 chmod 0600 ${HOME_DIR}/.pgpass
@@ -38,4 +48,7 @@ curl -X PUT -d "${SOLR_K8S_HOST}:8983" "http://${DATAVERSE_K8S_HOST}:8080/api/ad
 curl -X PUT -d "${ADMIN_MAIL}" "http://${DATAVERSE_K8S_HOST}:8080/api/admin/settings/:SystemEmail"
 
 # 6.) Block access to the API endpoints, but allow for request with key from secret
-# T. B. D.
+curl -X DELETE "http://${DATAVERSE_K8S_HOST}:8080/api/admin/settings/BuiltinUsers.KEY"
+curl -X PUT -d "`cat ${SECRETS_DIR}/api/key`" "http://${DATAVERSE_K8S_HOST}:8080/api/admin/settings/:BlockedApiKey"
+curl -X PUT -d unblock-key "http://${DATAVERSE_K8S_HOST}:8080/api/admin/settings/:BlockedApiPolicy"
+curl -X PUT -d admin,test "http://${DATAVERSE_K8S_HOST}:8080/api/admin/settings/:BlockedApiEndpoints"
