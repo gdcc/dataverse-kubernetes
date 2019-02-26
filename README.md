@@ -55,11 +55,14 @@ Once PostgreSQL and Solr are ready, deploy Dataverse:
 kubectl create -f k8s/dataverse.yaml
 ```
 
-When the deployment was successfull (check with `kubectl logs dataverse-...`),
-you need to bootstrap the installation:
+When the deployment was successfull, you need to bootstrap the installation.
+You can simply create the job, it will wait for Dataverse to deploy.
 ```
 kubectl create -f k8s/bootstrap.yaml
 ```
+
+You can check the status of the containers and the bootstrapping job from
+the output of `kubectl get pods,jobs`.
 
 If you want to use this basic deployment for development, testing or demo cases,
 you can just execute the following to open Dataverse in your browser:
@@ -78,3 +81,6 @@ so they can be build and used for development purposes, too.
 See also [issue 5292](https://github.com/IQSS/dataverse/issues/5292) on this.
 
 This should support testing S3 remote file storage with Minio out of the box.
+
+Mails should be catched and visible from a web interface for dev and demo
+purposes. Maybe use [MailCatcher](https://hub.docker.com/r/schickling/mailcatcher).
