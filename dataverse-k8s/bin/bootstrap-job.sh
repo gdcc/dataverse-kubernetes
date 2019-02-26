@@ -16,7 +16,6 @@ SOLR_K8S_HOST=${SOLR_K8S_HOST:-${SOLR_SERVICE_HOST}}
 
 # Drop the Postgres credentials into .pgpass
 echo "${POSTGRES_SERVER}:*:*:${POSTGRES_USER}:`cat ${SECRETS_DIR}/db/password`" > ${HOME_DIR}/.pgpass
-cat ${HOME_DIR}/.pgpass
 chmod 0600 ${HOME_DIR}/.pgpass
 
 # 1.) Load SQL data
