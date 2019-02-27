@@ -71,6 +71,26 @@ kubectl expose deployment dataverse --type=NodePort --name=dataverse-local
 minikube service dataverse-local
 ```
 
+## Little Helpers
+### Catching emails from Dataverse easily
+While doing a showcase, developing or other purposes, it comes in handy
+to see what emails are sent by Dataverse.
+Instead of relying on an external service as Mailinator, Mailtrap.io or similar,
+just use [MailCatcher](https://mailcatcher.me/) as a small extra deployment:
+
+```bash
+kubectl create -f k8s/mailcatcher.yaml
+minikube service mailcatcher
+```
+(The last will open the web UI in your default browser.)
+
+The SMTP server can be used via `postfix:25`, which is also the default config
+for Dataverse when you "just use" the deployments found in `k8s/`. (It will
+*"Just Work (TM)"*).
+
+**Please note** that all sent mails will be **deleted** when you restart or
+delete the deployment/pod/container.
+
 ## Future plans and ideas
 
 At a later point in time, an [Operator](https://coreos.com/operators/) might be
@@ -81,6 +101,3 @@ so they can be build and used for development purposes, too.
 See also [issue 5292](https://github.com/IQSS/dataverse/issues/5292) on this.
 
 This should support testing S3 remote file storage with Minio out of the box.
-
-Mails should be catched and visible from a web interface for dev and demo
-purposes. Maybe use [MailCatcher](https://hub.docker.com/r/schickling/mailcatcher).
