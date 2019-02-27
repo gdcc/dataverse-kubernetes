@@ -4,7 +4,7 @@
 # You may obtain a copy of the License at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-FROM centos:7.5.1804
+FROM centos:7
 
 LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
