@@ -32,7 +32,7 @@ installation at hands. If not, follow the instructions to get started.
 
 First you will need to create a physical volume to store data on:
 ```
-kubectl create -f k8s/pv-hostPath.yaml
+kubectl create -f k8s/utils/pv-hostPath.yaml
 ```
 
 Now let's create some secrets that will be used for Postgres, DataCite DOI
@@ -79,7 +79,7 @@ Instead of relying on an external service as Mailinator, Mailtrap.io or similar,
 just use [MailCatcher](https://mailcatcher.me/) as a small extra deployment:
 
 ```bash
-kubectl create -f k8s/mailcatcher.yaml
+kubectl create -f k8s/utils/mailcatcher.yaml
 minikube service mailcatcher
 ```
 (The last will open the web UI in your default browser.)
