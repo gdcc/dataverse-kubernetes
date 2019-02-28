@@ -86,7 +86,7 @@ asadmin create-jvm-options "\-Djavax.xml.parsers.SAXParserFactory=com.sun.org.ap
 # 3. Domain based configuration options
 # Set Dataverse environment variables
 echo "Setting system properties for Dataverse configuration options:"
-env
+env | grep -Ee "^(dataverse|doi)_" | sort -fd
 env -0 | grep -z -Ee "^(dataverse|doi)_" | while IFS='=' read -r -d '' k v; do
     KEY=`echo "${k}" | tr '_' '.'`
 
