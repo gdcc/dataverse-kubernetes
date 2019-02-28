@@ -109,3 +109,4 @@ ln -s ${HOME_DIR}/dvinstall/dataverse.war ${DOMAIN_DIR}/autodeploy/dataverse.war
 # 6. Symlink the jHove configuration
 ln -s ${HOME_DIR}/dvinstall/jhove.conf ${DOMAIN_DIR}/config/jhove.conf
 ln -s ${HOME_DIR}/dvinstall/jhoveConfig.xsd ${DOMAIN_DIR}/config/jhoveConfig.xsd
+sed -i ${DOMAIN_DIR}/config/jhove.conf -e "s:/usr/local/glassfish4/glassfish/domains/domain1:${DOMAIN_DIR}:g"
