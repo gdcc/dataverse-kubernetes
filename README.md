@@ -71,6 +71,69 @@ kubectl expose deployment dataverse --type=NodePort --name=dataverse-local
 minikube service dataverse-local
 ```
 
+## Configuration of Dataverse
+Configuring dataverse is done in different places. Some things for more "basic"
+system configuration is done in Java system properties, residing in the Glassfish
+domain configuration. More advanced and flexible options are stored in the
+database and configured via API and/or UI.
+
+* See [JVM Options](http://guides.dataverse.org/en/latest/installation/config.html#jvm-options)
+  for system properties.
+* See [Database Settings](http://guides.dataverse.org/en/latest/installation/config.html#database-settings)
+  for all other settings.
+
+Things like file storage, networking, DOI, etc are all *basic system settings*
+and can be set via system properties. For your convienience, these can be
+stored in a `ConfigMap`.
+
+Some things need sane defaults, which can be found in [default.config](./dataverse-k8s/bin/default.config).
+You might find those usefull as an example for your personally tuned `ConfigMap`.
+
+### Mapping environment variables to options
+The basic idea is to map environment variables to Java system properties when
+the container starts.
+
+1. Simply pick a [JVM Option](http://guides.dataverse.org/en/latest/installation/config.html#jvm-options)
+   from the list and replace "." with "_" ("-" is not allowed in env var names!).
+2. Put the transformed name as a key into the `ConfigMap` `.data`.
+3. Add your value. Be sure to use simple strings only - no numbers, no complex types.
+
+Example:
+```yaml
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dataverse
+  labels:
+    app: dataverse
+data:
+  dataverse_fqdn: data.example.org
+  dataverse_siteUrl: https://\${dataverse.fqdn}
+  doi_username: test.account
+```
+**DO NOT USE THIS FOR PASSWORDS!** Those are done via k8s secrets, see below.
+
+Currently, two JVM options have "-" in them, which is no allowed character for
+an environment variable.
+1. For "dataverse.auth.password-reset-timeout-in-minutes" use "dataverse_auth_password_reset_timeout".
+2. For "dataverse.files.hide-schema-dot-org-download-urls" no alias exists, as it's experimental.
+
+### Handling passwords with K8s Secrets
+Please use [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) and *mount them as volumes*.
+See also [here](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume).
+
+Currently understood secrets in the container, mounted at `SECRETS_DIR=/opt/dataverse/secrets`:
+1. `rserve/password` - optional, only needed when using a RServe server.
+2. `doi/password` - needed when you use DOIs for PIDs.
+3. `db/password` - required no matter what...
+
+A password alias is automatically created and used for those, no need to provide
+those yourself. (see [default.config](./dataverse-k8s/bin/default.config))
+
+You can of course map other parts of the secret like usernames to an environment
+variable like `doi_username` etc.
+
 ## Little Helpers
 ### Catching emails from Dataverse easily
 While doing a showcase, developing or other purposes, it comes in handy
