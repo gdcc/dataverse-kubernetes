@@ -47,7 +47,10 @@ RUN set -eux; \
   apt-get install -y --no-install-recommends \
     liblasso3 \
     libcurl3 \
+    ca-certificates \
   ; \
   apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+  mkdir ${HTTPD_PREFIX}/conf/k8s; \
+  echo "IncludeOptional conf/k8s/*.conf" >> ${HTTPD_PREFIX}/conf/httpd.conf; \
   apxs -e -a -n auth_mellon ${HTTPD_PREFIX}/modules/mod_auth_mellon.so; \
   httpd -v
