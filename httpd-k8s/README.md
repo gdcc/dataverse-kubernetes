@@ -19,5 +19,5 @@ inclusion. This is often usefull for vHosts or loading modules before other part
 Upstream image contains all modules Apache HTTPd has included.
 This repo contains some tagged images which contain extra modules:
 
-* `-mellon` adds [Uninett mod_auth_mellon](https://github.com/Uninett/mod_auth_mellon)
+* **EXPERIMENTAL** and **NOT WORKING**: `-mellon` adds [Uninett mod_auth_mellon](https://github.com/Uninett/mod_auth_mellon)
    for usage as a simple SAML 2.0 Service Provider and enables it to autoload on startup.
