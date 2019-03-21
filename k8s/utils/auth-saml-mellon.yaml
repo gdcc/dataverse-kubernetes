@@ -1,0 +1,281 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: httpd-mellon
+  labels:
+    app: httpd-mellon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpd-mellon
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: httpd-mellon
+      annotations: {}
+    spec:
+      containers:
+        - name: httpd-mellon
+          image: iqss/httpd-k8s:2.4-mellon
+          ports:
+            - containerPort: 80
+          #readinessProbe:
+          #  httpGet:
+          #    path: /robots.txt
+          #    port: 8080
+          volumeMounts:
+            - name: config
+              mountPath: /usr/local/apache2/conf/k8s
+      volumes:
+        - name: config
+          configMap:
+            name: httpd-mellon
+            items:
+              - key: 40_reverse_proxy
+                path: 40_reverse_proxy.conf
+              - key: idp_metadata
+                path: idp_metadata.xml
+              - key: demo_sp_key
+                path: sp-private-key.pem
+              - key: demo_sp_cert
+                path: sp-cert.pem
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: httpd-mellon
+  labels:
+    app: httpd-mellon
+data:
+  40_reverse_proxy: |
+        LoadModule proxy_module modules/mod_proxy.so
+        LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
+
+        <VirtualHost *:80>
+          ServerName demo.dataverse.org
+          ProxyPassMatch "^/saml" !
+          ProxyPass "/" "ajp://dataverse:8009/"
+          ProxyPassReverse "/" "ajp://dataverse:8009/"
+
+          <Location />
+            MellonEnable "info"
+            MellonVariable "dataverse"
+
+            MellonEndpointPath /saml
+            MellonIdPMetadataFile /usr/local/apache2/conf/k8s/idp_metadata.xml
+            MellonSPPrivateKeyFile /usr/local/apache2/conf/k8s/sp-private-key.pem
+            MellonSPCertFile /usr/local/apache2/conf/k8s/sp-cert.pem
+            # Needed for https://samltest.id - you need to check with your
+            # federation or IdP. If possible, use SHA256!
+            MellonSignatureMethod rsa-sha1
+
+            # You should try to switch this back to "On" for security.
+            MellonSubjectConfirmationDataAddressCheck Off
+
+            MellonIdP "IDP"
+            MellonSetEnvNoPrefix "AJP_Shib-Identity-Provider" "IDP"
+
+            ####################################################
+            # Mapping below does not work with https://samltest.id.
+            # Will not continue this due to switch to ORCID OAuth Login
+            ####################################################
+
+            # eppn = eduPersonPrincipalName, so using "mail" for it is
+            #        a dirty workaround. This is a required attribute in
+            #        Dataverse, so choose an attribute that is as persistant
+            #        as possible!
+            MellonSetEnvNoPrefix "AJP_eppn" "mail"
+
+            MellonSetEnvNoPrefix "AJP_givenName" "givenName"
+            MellonSetEnvNoPrefix "AJP_sn" "sn"
+            MellonSetEnvNoPrefix "AJP_sn" "surname"
+            MellonSetEnvNoPrefix "AJP_mail" "mail"
+            MellonSetEnvNoPrefix "AJP_uid" "uid"
+          </Location>
+
+          <Location /shib.xhtml>
+            Require valid-user
+            AuthType "Mellon"
+            MellonEnable "auth"
+          </Location>
+        </VirtualHost>
+  # Metadata for https://samltest.id test IdP.
+  # DO NOT USE IN PRODUCTION
+  idp_metadata: |
+        <!-- The entity describing the SAMLtest IdP, named by the entityID below -->
+        <EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" ID="SAMLtestIdP" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui" entityID="https://samltest.id/saml/idp">
+            <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0">
+                <Extensions>
+        <!-- An enumeration of the domains this IdP is able to assert scoped attributes, which are
+        typically those with a @ delimiter, like mail.  Most IdP's serve only a single domain.  It's crucial
+        for the SP to check received attribute values match permitted domains to prevent a recognized IdP from
+        sending attribute values for which a different recognized IdP is authoritative. -->
+                    <shibmd:Scope regexp="false">samltest.id</shibmd:Scope>
+        <!-- Display information about this IdP that can be used by SP's and discovery
+        services to identify the IdP meaningfully for end users -->
+                    <mdui:UIInfo>
+                        <mdui:DisplayName xml:lang="en">SAMLtest IdP</mdui:DisplayName>
+                        <mdui:Description xml:lang="en">A free and basic IdP for testing SAML deployments</mdui:Description>
+                        <mdui:Logo height="90" width="225">https://samltest.id/saml/logo.png</mdui:Logo>
+                    </mdui:UIInfo>
+                </Extensions>
+                <KeyDescriptor use="signing">
+                    <ds:KeyInfo>
+                            <ds:X509Data>
+                                <ds:X509Certificate>
+        MIIDETCCAfmgAwIBAgIUZRpDhkNKl5eWtJqk0Bu1BgTTargwDQYJKoZIhvcNAQEL
+        BQAwFjEUMBIGA1UEAwwLc2FtbHRlc3QuaWQwHhcNMTgwODI0MjExNDEwWhcNMzgw
+        ODI0MjExNDEwWjAWMRQwEgYDVQQDDAtzYW1sdGVzdC5pZDCCASIwDQYJKoZIhvcN
+        AQEBBQADggEPADCCAQoCggEBAJrh9/PcDsiv3UeL8Iv9rf4WfLPxuOm9W6aCntEA
+        8l6c1LQ1Zyrz+Xa/40ZgP29ENf3oKKbPCzDcc6zooHMji2fBmgXp6Li3fQUzu7yd
+        +nIC2teejijVtrNLjn1WUTwmqjLtuzrKC/ePoZyIRjpoUxyEMJopAd4dJmAcCq/K
+        k2eYX9GYRlqvIjLFoGNgy2R4dWwAKwljyh6pdnPUgyO/WjRDrqUBRFrLQJorR2kD
+        c4seZUbmpZZfp4MjmWMDgyGM1ZnR0XvNLtYeWAyt0KkSvFoOMjZUeVK/4xR74F8e
+        8ToPqLmZEg9ZUx+4z2KjVK00LpdRkH9Uxhh03RQ0FabHW6UCAwEAAaNXMFUwHQYD
+        VR0OBBYEFJDbe6uSmYQScxpVJhmt7PsCG4IeMDQGA1UdEQQtMCuCC3NhbWx0ZXN0
+        LmlkhhxodHRwczovL3NhbWx0ZXN0LmlkL3NhbWwvaWRwMA0GCSqGSIb3DQEBCwUA
+        A4IBAQBNcF3zkw/g51q26uxgyuy4gQwnSr01Mhvix3Dj/Gak4tc4XwvxUdLQq+jC
+        cxr2Pie96klWhY/v/JiHDU2FJo9/VWxmc/YOk83whvNd7mWaNMUsX3xGv6AlZtCO
+        L3JhCpHjiN+kBcMgS5jrtGgV1Lz3/1zpGxykdvS0B4sPnFOcaCwHe2B9SOCWbDAN
+        JXpTjz1DmJO4ImyWPJpN1xsYKtm67Pefxmn0ax0uE2uuzq25h0xbTkqIQgJzyoE/
+        DPkBFK1vDkMfAW11dQ0BXatEnW7Gtkc0lh2/PIbHWj4AzxYMyBf5Gy6HSVOftwjC
+        voQR2qr2xJBixsg+MIORKtmKHLfU
+                                </ds:X509Certificate>
+                            </ds:X509Data>
+                    </ds:KeyInfo>
+                </KeyDescriptor>
+                <KeyDescriptor use="signing">
+                    <ds:KeyInfo>
+                            <ds:X509Data>
+                                <ds:X509Certificate>
+        MIIDEjCCAfqgAwIBAgIVAMECQ1tjghafm5OxWDh9hwZfxthWMA0GCSqGSIb3DQEB
+        CwUAMBYxFDASBgNVBAMMC3NhbWx0ZXN0LmlkMB4XDTE4MDgyNDIxMTQwOVoXDTM4
+        MDgyNDIxMTQwOVowFjEUMBIGA1UEAwwLc2FtbHRlc3QuaWQwggEiMA0GCSqGSIb3
+        DQEBAQUAA4IBDwAwggEKAoIBAQC0Z4QX1NFKs71ufbQwoQoW7qkNAJRIANGA4iM0
+        ThYghul3pC+FwrGv37aTxWXfA1UG9njKbbDreiDAZKngCgyjxj0uJ4lArgkr4AOE
+        jj5zXA81uGHARfUBctvQcsZpBIxDOvUUImAl+3NqLgMGF2fktxMG7kX3GEVNc1kl
+        bN3dfYsaw5dUrw25DheL9np7G/+28GwHPvLb4aptOiONbCaVvh9UMHEA9F7c0zfF
+        /cL5fOpdVa54wTI0u12CsFKt78h6lEGG5jUs/qX9clZncJM7EFkN3imPPy+0HC8n
+        spXiH/MZW8o2cqWRkrw3MzBZW3Ojk5nQj40V6NUbjb7kfejzAgMBAAGjVzBVMB0G
+        A1UdDgQWBBQT6Y9J3Tw/hOGc8PNV7JEE4k2ZNTA0BgNVHREELTArggtzYW1sdGVz
+        dC5pZIYcaHR0cHM6Ly9zYW1sdGVzdC5pZC9zYW1sL2lkcDANBgkqhkiG9w0BAQsF
+        AAOCAQEASk3guKfTkVhEaIVvxEPNR2w3vWt3fwmwJCccW98XXLWgNbu3YaMb2RSn
+        7Th4p3h+mfyk2don6au7Uyzc1Jd39RNv80TG5iQoxfCgphy1FYmmdaSfO8wvDtHT
+        TNiLArAxOYtzfYbzb5QrNNH/gQEN8RJaEf/g/1GTw9x/103dSMK0RXtl+fRs2nbl
+        D1JJKSQ3AdhxK/weP3aUPtLxVVJ9wMOQOfcy02l+hHMb6uAjsPOpOVKqi3M8XmcU
+        ZOpx4swtgGdeoSpeRyrtMvRwdcciNBp9UZome44qZAYH1iqrpmmjsfI9pJItsgWu
+        3kXPjhSfj1AJGR1l9JGvJrHki1iHTA==
+                                </ds:X509Certificate>
+                            </ds:X509Data>
+                    </ds:KeyInfo>
+                </KeyDescriptor>
+                <KeyDescriptor use="encryption">
+                    <ds:KeyInfo>
+                            <ds:X509Data>
+                                <ds:X509Certificate>
+        MIIDEjCCAfqgAwIBAgIVAPVbodo8Su7/BaHXUHykx0Pi5CFaMA0GCSqGSIb3DQEB
+        CwUAMBYxFDASBgNVBAMMC3NhbWx0ZXN0LmlkMB4XDTE4MDgyNDIxMTQwOVoXDTM4
+        MDgyNDIxMTQwOVowFjEUMBIGA1UEAwwLc2FtbHRlc3QuaWQwggEiMA0GCSqGSIb3
+        DQEBAQUAA4IBDwAwggEKAoIBAQCQb+1a7uDdTTBBFfwOUun3IQ9nEuKM98SmJDWa
+        MwM877elswKUTIBVh5gB2RIXAPZt7J/KGqypmgw9UNXFnoslpeZbA9fcAqqu28Z4
+        sSb2YSajV1ZgEYPUKvXwQEmLWN6aDhkn8HnEZNrmeXihTFdyr7wjsLj0JpQ+VUlc
+        4/J+hNuU7rGYZ1rKY8AA34qDVd4DiJ+DXW2PESfOu8lJSOteEaNtbmnvH8KlwkDs
+        1NvPTsI0W/m4SK0UdXo6LLaV8saIpJfnkVC/FwpBolBrRC/Em64UlBsRZm2T89ca
+        uzDee2yPUvbBd5kLErw+sC7i4xXa2rGmsQLYcBPhsRwnmBmlAgMBAAGjVzBVMB0G
+        A1UdDgQWBBRZ3exEu6rCwRe5C7f5QrPcAKRPUjA0BgNVHREELTArggtzYW1sdGVz
+        dC5pZIYcaHR0cHM6Ly9zYW1sdGVzdC5pZC9zYW1sL2lkcDANBgkqhkiG9w0BAQsF
+        AAOCAQEABZDFRNtcbvIRmblnZItoWCFhVUlq81ceSQddLYs8DqK340//hWNAbYdj
+        WcP85HhIZnrw6NGCO4bUipxZXhiqTA/A9d1BUll0vYB8qckYDEdPDduYCOYemKkD
+        dmnHMQWs9Y6zWiYuNKEJ9mf3+1N8knN/PK0TYVjVjXAf2CnOETDbLtlj6Nqb8La3
+        sQkYmU+aUdopbjd5JFFwbZRaj6KiHXHtnIRgu8sUXNPrgipUgZUOVhP0C0N5OfE4
+        JW8ZBrKgQC/6vJ2rSa9TlzI6JAa5Ww7gMXMP9M+cJUNQklcq+SBnTK8G+uBHgPKR
+        zBDsMIEzRtQZm4GIoHJae4zmnCekkQ==
+                                </ds:X509Certificate>
+                            </ds:X509Data>
+                    </ds:KeyInfo>
+                </KeyDescriptor>
+        <!-- An endpoint for artifact resolution.  Please see Wikipedia for more details about SAML
+             artifacts and when you may find them useful. -->
+                <ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://samltest.id/idp/profile/SAML2/SOAP/ArtifactResolution" index="1" />
+        <!-- A set of endpoints where the IdP can receive logout messages. These must match the public
+        facing addresses if this IdP is hosted behind a reverse proxy.  -->
+                <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://samltest.id/idp/profile/SAML2/Redirect/SLO"/>
+                <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://samltest.id/idp/profile/SAML2/POST/SLO"/>
+                <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://samltest.id/idp/profile/SAML2/POST-SimpleSign/SLO"/>
+        <!-- A set of endpoints the SP can send AuthnRequests to in order to trigger user authentication. -->
+                <SingleSignOnService Binding="urn:mace:shibboleth:1.0:profiles:AuthnRequest" Location="https://samltest.id/idp/profile/Shibboleth/SSO"/>
+                <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://samltest.id/idp/profile/SAML2/POST/SSO"/>
+                <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://samltest.id/idp/profile/SAML2/POST-SimpleSign/SSO"/>
+                <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://samltest.id/idp/profile/SAML2/Redirect/SSO"/>
+                <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://samltest.id/idp/profile/SAML2/SOAP/ECP"/>
+            </IDPSSODescriptor>
+        </EntityDescriptor>
+  # This is a dev or demo private key.
+  # DO NOT USE IN PRODUCTION
+  demo_sp_key: |
+        -----BEGIN PRIVATE KEY-----
+        MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCtDJz8uXEzvTiy
+        oLLxjhIRsOoT6p5Fk17qQ+pmj/ehMeZQScflwcqVvqSyz0DonyrPvr2ZxGu3a184
+        2IR+S/u6lXPNjHO1lhwdG9BoCQ6slg/Vj+pIft71UFlwORU00pZlt9MOs49SXHj8
+        Yfc8owr2x6hIMQ0fxpfkjmBTiLrzcsGfaNZt10XukCPng2O3w9AAw4WAQuvb3dBU
+        oSG0cMR5Y32vE7DbLcApTK6rNMn4JsgkT3frKll6y/V/8NjApPj/P/yorvSrme52
+        nU2fd9hBZHTHy6Fs2yONQWH2Z8iX3jCX76bJlL7zLrqcEw+HY4LJ4ccnKufobgeg
+        UJz3jfDvAgMBAAECggEAUKtbl3h/LAZeou7E3FRFWhfl1uj9ZSPBEGYepDci0fMo
+        EW+Djziaztmzf2OcN5TTaUraqg7lw/h6yE4u3Y1gSOeYt05tNk5Gxs8LhSQLwiqm
+        MQFIzwjNuP/+4ZDKsPgmgj6CVg0gl91hzQ2CKrM6zjXe3eB35MM4VaSFhQttU0T8
+        WVzogz5/2cgENYchjbjdZCEj+/6092Ku9vRQ0wVCw7rTkzX8PSQqPaWcX3tE+iFt
+        f8t0rK5Wf42fgJIYRJT/8JOqHgXeA+EO1eI9/fzjNyV1bSLUJNVbEN62hifkt+AD
+        vAbcj8EZFdoW1msS2r+/IO9ABQX8xOPf5XmgRpYVKQKBgQDa0WnnRyCUEGKhRl4T
+        +oYvKJwPqW37VPvtuMYJ3/PZw0XYCluTeHII94toEBHjVAQH7/slLYmRByz7zJhD
+        zCG4zexsuP06+6ZPw1FKwQwF2BE7/TwMoeIqUmJQ4kI160IyUGCbZTvUj1RGomzQ
+        FRq2V4SwzG9wvWpIZokKWXRevQKBgQDKdEIjZUytbKeDznEtnGxic373O7S6tqGc
+        rVdjFTfls1h8H3+RDeWCThIAya2+iKohyhZC3nM/aC6bVG1dPA/6muTQWgM5LrcO
+        SAf6ygSthDnNXs7AXEA90E/eCEUFojRPOXfLhvUNBc0XJuhPGcaZnIRyJhe3Zbt3
+        wS2tnURvGwKBgFeLaP9q6ZHTbGJxsLn1hTHg4W8yrhnbyl81iaXxv7Hj+lGQ80pw
+        6c7EmzWrGD0HJAW48ZXSPjOT1192X4Tgaq1xVaG58TZj8AoBbsilq5W6+Eoz6o5z
+        RfUAuOz7WNoRoY5Xsg751ZIZNfJ8kWQ+zU0efqvtXriQT7FftHw7hd9RAoGAQ4EY
+        PG0ecAT2pgBDxI2PphQUlaMW09rpcDBsHuGITdLLAjgOdPNJP3WAkzqr8AfpknKr
+        kYhSrSWzxJ8WCCxqt4jGGqKoyHxHFT/3SSvq+2BHVa7zCTi5QuMefk4LlaFMB86F
+        nxtUwg7ZH4sdkqJpkfaaQuVoqwIEzB1hea4ij1kCgYAwutNy1e13RmppgYLNJDEb
+        wXLilBNhojlNX1BiW7VHaRoGbig3DiM7bwvhNPYCGiqYlkJXaM+CBsBIhQJXHK4h
+        TLGb8i7NL0EJ1eD6bDfbL6UoTY3TKeHt6ZxE5ZVMR0k8vuaHbd4G5gyegKrPR+9w
+        4GpYAhSIMun6+FSXW7BgZg==
+        -----END PRIVATE KEY-----
+  # This is a self-signed dev or demo certificate.
+  # DO NOT USE IN PRODUCTION
+  demo_sp_cert: |
+        -----BEGIN CERTIFICATE-----
+        MIIDITCCAgmgAwIBAgIUcdhJaYn4wXt7A1DdmPdqniAFBGEwDQYJKoZIhvcNAQEL
+        BQAwIDEeMBwGA1UEAwwVZGVtby1zcC5kYXRhdmVyc2Uub3JnMB4XDTE5MDMyMDA5
+        MTcwOFoXDTI5MDMxNzA5MTcwOFowIDEeMBwGA1UEAwwVZGVtby1zcC5kYXRhdmVy
+        c2Uub3JnMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArQyc/LlxM704
+        sqCy8Y4SEbDqE+qeRZNe6kPqZo/3oTHmUEnH5cHKlb6kss9A6J8qz769mcRrt2tf
+        ONiEfkv7upVzzYxztZYcHRvQaAkOrJYP1Y/qSH7e9VBZcDkVNNKWZbfTDrOPUlx4
+        /GH3PKMK9seoSDENH8aX5I5gU4i683LBn2jWbddF7pAj54Njt8PQAMOFgELr293Q
+        VKEhtHDEeWN9rxOw2y3AKUyuqzTJ+CbIJE936ypZesv1f/DYwKT4/z/8qK70q5nu
+        dp1Nn3fYQWR0x8uhbNsjjUFh9mfIl94wl++myZS+8y66nBMPh2OCyeHHJyrn6G4H
+        oFCc943w7wIDAQABo1MwUTAdBgNVHQ4EFgQUGjCEdMaW2QCVaTCIE1VHW2xLHzIw
+        HwYDVR0jBBgwFoAUGjCEdMaW2QCVaTCIE1VHW2xLHzIwDwYDVR0TAQH/BAUwAwEB
+        /zANBgkqhkiG9w0BAQsFAAOCAQEAE5yYOf8+GeiQJm+185IpRtsMRAbC0OPDTl6l
+        nhRbmi06hH7pNjinjzRZ/huZD4FzR29U5CgMIm4WzEHwqqp5vkri0fd24/1D/VVS
+        wKdDNhXUkaBOfxy4WAIoqO+BboqYNUHz2QSFZ24BAZeldpPdoT6coe9yrOxDVY20
+        jYqwRbUmwWWRP8c3eEFB7LjdXrMGDW/reIV1LMa7nVrmDmc63DKel99cwoIkj5qM
+        kRLslYcx5m7edthTZ9rtWTjKUAzclBS3WunDtyVPn7LwJREBttLNDjGev5M1r79X
+        ibglOpD0/neL2fjK9hMbv5et7VsxxVN3MVUsnY/o6HYn5rbrjA==
+        -----END CERTIFICATE-----
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: httpd-mellon
+spec:
+  ports:
+    - port: 80
+      name: httpd-http
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: httpd-mellon
