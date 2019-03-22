@@ -15,9 +15,8 @@ if [ ! -s "${SECRETS_DIR}/api/key" ]; then
 fi
 API_KEY=`cat ${SECRETS_DIR}/api/key`
 
-# 3. Domain based configuration options
-# Set Dataverse environment variables
-echo "Setting system properties for Dataverse configuration options:"
+# Set Database options based on environment variables db_XXX from ConfigMap
+echo "Setting Database options for Dataverse:"
 env | grep -Ee "^(db)_" | sort -fd
 env -0 | grep -z -Ee "^(db)_" | while IFS='=' read -r -d '' k v; do
     KEY=`echo "${k}" | sed -e 's/^db_/:/'`
