@@ -1,0 +1,31 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: configure-dataverse
+spec:
+  template:
+    spec:
+      containers:
+        - name: dv-bootstrap
+          image: iqss/dataverse-k8s
+          command: ["scripts/config-job.sh"]
+          envFrom:
+            - configMapRef:
+                name: dataverse
+          volumeMounts:
+            - name: api-secret
+              mountPath: "/opt/dataverse/secrets/api"
+              readOnly: true
+      initContainers:
+        - name: check-dataverse-ready
+          image: tutum/curl
+          command: ['sh', '-c',
+            'until curl -f http://dataverse:8080/robots.txt -m 2 2>&1 > /dev/null;
+            do echo waiting for dataverse; sleep 15; done;']
+      volumes:
+        - name: api-secret
+          secret:
+            secretName: dataverse-api
+      restartPolicy: Never
+  backoffLimit: 4
