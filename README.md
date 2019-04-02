@@ -89,9 +89,10 @@ stored in a `ConfigMap`.
 Some things need sane defaults, which can be found in [default.config](./dataverse-k8s/bin/default.config).
 You might find those usefull as an example for your personally tuned `ConfigMap`.
 
-### Mapping environment variables to options
-The basic idea is to map environment variables to Java system properties when
-the container starts.
+### Mapping environment variables to JVM options
+The basic idea is to map environment variables to Java system properties each
+time a Dataverse container starts with the default entrypoint (being the application
+server).
 
 1. Simply pick a [JVM Option](http://guides.dataverse.org/en/latest/installation/config.html#jvm-options)
    from the list and replace "." with "_" ("-" is not allowed in env var names!).
@@ -119,6 +120,56 @@ an environment variable.
 1. For "dataverse.auth.password-reset-timeout-in-minutes" use "dataverse_auth_password_reset_timeout".
 2. For "dataverse.files.hide-schema-dot-org-download-urls" no alias exists, as it's experimental.
 
+### Mapping environment variables to Database settings
+As database settings are persistent in, well, the database, they don't need
+to get set everytime the container starts. To be consistent and easy to use,
+the same `ConfigMap` used for JVM options can be used for these settings,
+but you need to create a `Job` or even a `CronJob` to apply them.
+
+*Note:* Of course you can choose to use your own tools and scripts for this.
+Basically its just `curl` calls to the Admin API.
+
+#### Provide a setting
+
+1. Pick a [Database setting](http://guides.dataverse.org/en/latest/installation/config.html#database-settings)
+2. Remove the `:` and replace it with `db_`. Keep the Pascal case!
+3. Put the transformed value into the `ConfigMap` `.data`.
+4. Add your value, which can be any value you see in the docs. Keep in mind:
+   when you need to use JSON, format it as a string!
+
+Example:
+```yaml
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dataverse
+  labels:
+    app: dataverse
+data:
+  # Skipping JVM options here. See above.
+  db_SystemEmail: "Ghostbusters <slimer@buh.net>"
+  db_Languages: '[{ "locale":"en", "title":"English" }, { "locale":"fr", "title":"Français" }]'
+```
+**DO NOT USE THIS FOR PASSWORDS OR KEYS!** Those are done via k8s secrets, see below.
+
+#### Delete a setting
+When you need to **delete** a setting, just provide an *empty* value.
+
+#### Apply settings
+Remember: you will need to update the `ConfigMap` when you want to apply changes.
+You need to think about in which file you keep the map - having it in two locations
+is a bad idea. It's always a good idea to put it in revision control.
+
+```
+# Updated ConfigMap inside:
+kubectl apply -f k8s/dataverse.yaml
+# Deploy the config job:
+kubectl apply -f k8s/utils/configure-job.yaml
+```
+
+You might consider providing a `CronJob` for scheduled, regular updates.
+
 ### Handling passwords with K8s Secrets
 Please use [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) and *mount them as volumes*.
 See also [here](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume).
@@ -126,7 +177,8 @@ See also [here](https://kubernetes.io/docs/tasks/inject-data-application/distrib
 Currently understood secrets in the container, mounted at `SECRETS_DIR=/opt/dataverse/secrets`:
 1. `rserve/password` - optional, only needed when using a RServe server.
 2. `doi/password` - needed when you use DOIs for PIDs.
-3. `db/password` - required no matter what...
+3. `db/password` - required - guess why?
+4. `api/key` - required because you want the *unblock-key* for anything serious.
 
 A password alias is automatically created and used for those, no need to provide
 those yourself. (see [default.config](./dataverse-k8s/bin/default.config))
