@@ -29,3 +29,5 @@ env -0 | grep -z -Ee "^(db)_" | while IFS='=' read -r -d '' k v; do
       curl -X PUT -d "${v}" "http://${DATAVERSE_K8S_HOST}:8080/api/admin/settings/${KEY}?unblock-key=${API_KEY}"
     fi
 done
+
+# TODO: think about how to POST the configs for OAuth, etc
