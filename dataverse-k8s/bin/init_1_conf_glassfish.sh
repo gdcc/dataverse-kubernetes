@@ -88,10 +88,11 @@ asadmin create-jvm-options "\-Djavax.xml.parsers.SAXParserFactory=com.sun.org.ap
 echo "Setting system properties for Dataverse configuration options:"
 env | grep -Ee "^(dataverse|doi)_" | sort -fd
 env -0 | grep -z -Ee "^(dataverse|doi)_" | while IFS='=' read -r -d '' k v; do
-    KEY=`echo "${k}" | tr '_' '.'`
+    # transform __ to -
+    KEY=`echo "${k}" | sed -e "s#__#-#g"`
+    # transform remaining single _ to .
+    KEY=`echo "${KEY}" | tr '_' '.'`
 
-    # special handling of special values (e.g. dashes are not allowed in bash var name)
-    KEY=`echo "${KEY}" | sed -e "s#dataverse.auth.password.reset.timeout#dataverse.auth.password-reset-timeout-in-minutes#"`
     # escape colons in values
     v=`echo "${v}" | sed -e 's/:/\\\:/'`
 
