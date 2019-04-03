@@ -112,13 +112,13 @@ data:
   dataverse_fqdn: data.example.org
   dataverse_siteUrl: https://\${dataverse.fqdn}
   doi_username: test.account
+  dataverse_auth_password__reset__timeout__in__minutes: 30
 ```
 **DO NOT USE THIS FOR PASSWORDS!** Those are done via k8s secrets, see below.
 
-Currently, two JVM options have "-" in them, which is no allowed character for
-an environment variable.
-1. For "dataverse.auth.password-reset-timeout-in-minutes" use "dataverse_auth_password_reset_timeout".
-2. For "dataverse.files.hide-schema-dot-org-download-urls" no alias exists, as it's experimental.
+Currently some JVM options have dashes in them, which is no allowed character for
+an environment variable. As a workaround, replace any dash with `__`. It will
+be transformed back into `-` internally when the container starts. See example above.
 
 ### Mapping environment variables to Database settings
 As database settings are persistent in, well, the database, they don't need
