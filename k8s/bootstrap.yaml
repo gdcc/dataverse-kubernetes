@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: dv-bootstrap
-          image: iqss/dataverse-k8s
+          image: iqss/dataverse-k8s:4.11
           command: ["scripts/bootstrap-job.sh"]
           volumeMounts:
             - name: db-secret
