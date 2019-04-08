@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: dataverse
-          image: iqss/dataverse-k8s:4.11
+          image: iqss/dataverse-k8s:4.12
           ports:
             - containerPort: 8080
           envFrom:

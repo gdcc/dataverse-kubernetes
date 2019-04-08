@@ -17,6 +17,20 @@ Otherwise, you might want to use the FAKE provider.
 See also: http://guides.dataverse.org/en/latest/installation/config.html
 and https://github.com/IQSS/dataverse/issues/5448
 
+## Upgrading your installation
+
+When switching to a new Dataverse version (you will need to change the image tag),
+please always [read upstream release notes carefully](https://github.com/IQSS/dataverse/releases).
+
+Obviously, deployments or changed files are included in the images, but
+sometimes, you will need to execute some actions manually.
+
+These actions are left out of automation by intent. For example re-indexing
+might be a heavy lifting task in your installation and put heavy load on your
+deployment (you might want to schedule that for off-hours).
+
+We will try to point out any of those in release notes of our k8s images.
+
 ## Usage
 
 Depending on the type of deployment you are going to achieve, you will need to
