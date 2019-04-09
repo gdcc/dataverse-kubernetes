@@ -29,6 +29,19 @@ do
   fi
 done
 
+# 1b. Create AWS access credentials when storage driver is set to s3
+#     See IQSS/dataverse-kubernetes#28 for details of this workaround.
+if [ "s3" = "${dataverse_files_storage__driver__id}" ]; then
+  if [ -f ${SECRETS_DIR}/s3/access-key ] && [ -f ${SECRETS_DIR}/s3/secret-key ]; then
+    mkdir -p ${HOME_DIR}/.aws
+    echo "[default]" > ${HOME_DIR}/.aws/credentials
+    cat ${SECRETS_DIR}/s3/access-key | sed -e "s#^#aws_access_key_id = #" -e "s#\$#\n#" >> ${HOME_DIR}/.aws/credentials
+    cat ${SECRETS_DIR}/s3/secret-key | sed -e "s#^#aws_secret_access_key = #" -e "s#\$#\n#" >> ${HOME_DIR}/.aws/credentials
+  else
+    echo "WARNING: Could not find all S3 access secrets in ${SECRETS_DIR}/s3/(access-key|secret-key). Check your Kubernetes Secrets and their mounting!"
+  fi
+fi
+
 # 2. Domain-spaced resources (JDBC, JMS, ...)
 
 # JMS
@@ -94,7 +107,7 @@ env -0 | grep -z -Ee "^(dataverse|doi)_" | while IFS='=' read -r -d '' k v; do
     KEY=`echo "${KEY}" | tr '_' '.'`
 
     # escape colons in values
-    v=`echo "${v}" | sed -e 's/:/\\\:/'`
+    v=`echo "${v}" | sed -e 's/:/\\\:/g'`
 
     echo "Handling ${KEY}=${v}."
     asadmin delete-jvm-options "-D${KEY}"
