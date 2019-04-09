@@ -37,6 +37,9 @@ spec:
             - name: db-secret
               mountPath: "/opt/dataverse/secrets/db"
               readOnly: true
+            - name: doi-secret
+              mountPath: "/opt/dataverse/secrets/doi"
+              readOnly: true
           readinessProbe:
             httpGet:
               path: /robots.txt
@@ -55,6 +58,9 @@ spec:
         - name: db-secret
           secret:
             secretName: dataverse-postgresql
+        - name: doi-secret
+          secret:
+            secretName: dataverse-doi
 ---
 kind: ConfigMap
 apiVersion: v1
