@@ -107,7 +107,7 @@ env -0 | grep -z -Ee "^(dataverse|doi)_" | while IFS='=' read -r -d '' k v; do
     KEY=`echo "${KEY}" | tr '_' '.'`
 
     # escape colons in values
-    v=`echo "${v}" | sed -e 's/:/\\\:/'`
+    v=`echo "${v}" | sed -e 's/:/\\\:/g'`
 
     echo "Handling ${KEY}=${v}."
     asadmin delete-jvm-options "-D${KEY}"
