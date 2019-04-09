@@ -25,7 +25,7 @@ do
     asadmin $ASADMIN_OPTS create-password-alias --passwordfile /tmp/$alias ${alias}_password_alias
     rm /tmp/$alias
   else
-    echo "Could not find secret for ${alias} in ${SECRETS_DIR}. Check your Kubernetes Secrets!"
+    echo "WARNING: Could not find 'password' secret for ${alias} in ${SECRETS_DIR}. Check your Kubernetes Secrets and their mounting!"
   fi
 done
 
