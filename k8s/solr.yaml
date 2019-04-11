@@ -27,6 +27,13 @@ spec:
           env:
             - name: SOLR_PORT  # Otherwise, this is wrongfully set by K8s.
               value: "8983"
+      initContainers:
+        - name: volume-mount-hack
+          image: busybox
+          command: ["sh", "-c", "chown -c 8983:8983 /data"]
+          volumeMounts:
+          - name: data
+            mountPath: /data
       volumes:
         - name: data
           persistentVolumeClaim:
