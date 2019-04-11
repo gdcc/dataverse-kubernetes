@@ -193,6 +193,7 @@ Currently understood secrets in the container, mounted at `SECRETS_DIR=/opt/data
 2. `doi/password` - needed when you use DOIs for PIDs.
 3. `db/password` - required - guess why?
 4. `api/key` - required because you want the *unblock-key* for anything serious.
+5. `s3/access-key` and `s3/secret-key` - needed when you want to use S3 storage. See #28.
 
 A password alias is automatically created and used for those, no need to provide
 those yourself. (see [default.config](./dataverse-k8s/bin/default.config))
