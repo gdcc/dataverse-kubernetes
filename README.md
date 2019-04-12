@@ -201,6 +201,18 @@ those yourself. (see [default.config](./dataverse-k8s/bin/default.config))
 You can of course map other parts of the secret like usernames to an environment
 variable like `doi_username` etc.
 
+### Use a `Secret` to configure PostgreSQL connection details
+You may use the *dataverse-postgres* secret above to configure database name,
+database user and password without adding these details to the `ConfigMap`.
+
+Customize the following example to use it:
+```
+kubectl create secret generic dataverse-postgresql \
+            --from-literal=username='dataverse' \
+            --from-literal=password='changeme' \
+            --from-literal=database='mydataverse'
+```
+
 ## Little Helpers
 ### Catching emails from Dataverse easily
 While doing a showcase, developing or other purposes, it comes in handy
