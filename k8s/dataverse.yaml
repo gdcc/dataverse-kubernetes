@@ -31,6 +31,13 @@ spec:
                 secretKeyRef:
                   name: dataverse-postgresql
                   key: username
+                  optional: true
+            - name: POSTGRES_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: dataverse-postgresql
+                  key: database
+                  optional: true
           volumeMounts:
             - name: files
               mountPath: /data

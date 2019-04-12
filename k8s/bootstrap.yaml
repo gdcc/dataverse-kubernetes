@@ -12,6 +12,19 @@ spec:
           envFrom:
             - configMapRef:
                 name: dataverse
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: dataverse-postgresql
+                  key: username
+                  optional: true
+            - name: POSTGRES_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: dataverse-postgresql
+                  key: database
+                  optional: true
           volumeMounts:
             - name: db-secret
               mountPath: "/opt/dataverse/secrets/db"
