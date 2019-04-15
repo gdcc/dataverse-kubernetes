@@ -39,51 +39,8 @@ use the k8s YAML files in the `k8s` directory as an example to get you started.
 For production usage you really will want to fork and create your on deployments.
 (At least as long as no Operator or Helm chart exists for this...)
 
-### Test deployment with Minikube
-
-Suggesting you have a working [Minikube](https://kubernetes.io/docs/setup/minikube/)
-installation at hands. If not, follow the instructions to get started.
-
-First you will need to create a physical volume to store data on:
-```
-kubectl create -f k8s/utils/pv-hostPath.yaml
-```
-
-Now let's create some secrets that will be used for Postgres, DataCite DOI
-registration and Rserve:
-```
-kubectl create secret generic dataverse-postgresql --from-literal=username='dataverse' --from-literal=password='changeme'
-kubectl create secret generic dataverse-rserve --from-literal=username='rserve' --from-literal=password='changeme'
-kubectl create secret generic dataverse-doi --from-literal=username='test.doi' --from-literal=password='changeme'
-kubectl create secret generic dataverse-api --from-literal=key='supersecret'
-```
-
-Let's deploy PostgreSQL and Solr now:
-```
-kubectl create -f k8s/postgresql.yaml
-kubectl create -f k8s/solr.yaml
-```
-
-Once PostgreSQL and Solr are ready, deploy Dataverse:
-```
-kubectl create -f k8s/dataverse.yaml
-```
-
-When the deployment was successfull, you need to bootstrap the installation.
-You can simply create the job, it will wait for Dataverse to deploy.
-```
-kubectl create -f k8s/bootstrap.yaml
-```
-
-You can check the status of the containers and the bootstrapping job from
-the output of `kubectl get pods,jobs`.
-
-If you want to use this basic deployment for development, testing or demo cases,
-you can just execute the following to open Dataverse in your browser:
-```
-kubectl expose deployment dataverse --type=NodePort --name=dataverse-local
-minikube service dataverse-local
-```
+Example usages:
+* [Quick demo with Minikube](docs/minikube.md)
 
 ## Configuration of Dataverse
 Configuring dataverse is done in different places. Some things for more "basic"
