@@ -47,29 +47,3 @@ spec:
         - name: postgresql-persistent-storage
           persistentVolumeClaim:
             claimName: postgresql
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: postgresql
-spec:
-  ports:
-    - port: 5432
-      targetPort: 5432
-      protocol: TCP
-  selector:
-    app: postgresql
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: postgresql
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 3G
-  selector:
-    matchLabels:
-      backup: "False"
