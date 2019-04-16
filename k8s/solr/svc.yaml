@@ -1,0 +1,13 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: solr
+spec:
+  ports:
+    - port: 8983
+      name: solr
+      targetPort: 8983
+      protocol: TCP
+  selector:
+    app: solr

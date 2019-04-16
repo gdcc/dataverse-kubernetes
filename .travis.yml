@@ -1,0 +1,8 @@
+language: minimal
+sudo: false
+env:
+  - K8S_RELEASE="master"
+  - K8S_RELEASE="1.13.0"
+  - K8S_RELEASE="1.12.0"
+script:
+  - ./test/lint.sh

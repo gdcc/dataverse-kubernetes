@@ -1,3 +1,4 @@
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -38,30 +39,3 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: solr
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: solr
-spec:
-  ports:
-    - port: 8983
-      name: solr
-      targetPort: 8983
-      protocol: TCP
-  selector:
-    app: solr
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: solr
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 3G
-  selector:
-    matchLabels:
-      backup: "False"
