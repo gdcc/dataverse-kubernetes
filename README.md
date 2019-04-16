@@ -1,5 +1,8 @@
 # Running Dataverse on Kubernetes
 
+[![Dataverse](https://img.shields.io/badge/Dataverse-v4.12-important.svg)](https://dataverse.org)
+[![Test Status](https://travis-ci.org/IQSS/dataverse-kubernetes.svg?branch=master)](https://travis-ci.org/IQSS/dataverse-kubernetes)
+
 This project aims to provide a simple to re-use example on how to run
 Dataverse on a Kubernetes cluster.
 
