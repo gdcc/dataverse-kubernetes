@@ -1,6 +1,7 @@
 #!/bin/sh
 KUBEVAL_RELEASE=0.7.3
 PLATFORM=linux
+K8S_RELEASE=${K8S_RELEASE:-1.13.0}
 
 if [ ! -x test/kubeval ]; then
   echo Downloading and extracting kubeval... Please be patient.
@@ -8,4 +9,13 @@ if [ ! -x test/kubeval ]; then
   tar xf test/kubeval.tar.gz -C test
 fi
 
-find k8s -name '*.yaml' -print0 | xargs -0 test/kubeval
+find k8s -name '*.yaml' -print0 | xargs -0 test/kubeval -v ${K8S_RELEASE}
+
+status=$?
+if [ "$status" = 0 ] ; then
+    echo "Static analysis found no problems."
+    exit 0
+else
+    echo 1>&2 "Static analysis found violations that need to be fixed."
+    exit 1
+fi
