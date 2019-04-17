@@ -1,0 +1,37 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: inplace-reindex-dataverse
+spec:
+  template:
+    spec:
+      containers:
+        - name: reindex
+          image: tutum/curl
+          command: ['sh', '-c',
+            'curl -f -X DELETE http://dataverse:8080/api/admin/index/timestamps?unblock-key=${API_KEY} &&
+            curl -f http://dataverse:8080/api/admin/index/continue?unblock-key=${API_KEY}']
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dataverse-api
+                  key: key
+      initContainers:
+        - name: check-solr-ready
+          image: tutum/curl
+          command: ['sh', '-c',
+            'until curl -f http://solr:8983/solr/collection1/admin/ping 2>&1 | grep "status.:.OK";
+            do echo waiting for solr; sleep 3; done;']
+        - name: check-dataverse-ready
+          image: tutum/curl
+          command: ['sh', '-c',
+            'until curl -f http://dataverse:8080/robots.txt -m 2 2>&1 > /dev/null;
+            do echo waiting for dataverse; sleep 15; done;']
+      volumes:
+        - name: api-secret
+          secret:
+            secretName: dataverse-api
+      restartPolicy: Never
+  backoffLimit: 4
