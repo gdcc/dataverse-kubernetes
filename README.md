@@ -24,7 +24,18 @@ Otherwise, you might want to use the FAKE provider.
 See also: http://guides.dataverse.org/en/latest/installation/config.html
 and https://github.com/IQSS/dataverse/issues/5448
 
-## Upgrading your installation
+## Usage
+
+Depending on the type of deployment you are going to achieve, you will need to
+use the k8s YAML files in the `k8s` directory as an example to get you started.
+
+For production usage you really will want to fork and create your on deployments.
+(At least as long as no Operator or Helm chart exists for this...)
+
+Example usages:
+* [Quick demo with Minikube](docs/minikube.md)
+
+### Upgrading your installation
 
 When switching to a new Dataverse version (you will need to change the image tag),
 please always [read upstream release notes carefully](https://github.com/IQSS/dataverse/releases).
@@ -37,17 +48,6 @@ might be a heavy lifting task in your installation and put heavy load on your
 deployment (you might want to schedule that for off-hours).
 
 We will try to point out any of those in release notes of our k8s images.
-
-## Usage
-
-Depending on the type of deployment you are going to achieve, you will need to
-use the k8s YAML files in the `k8s` directory as an example to get you started.
-
-For production usage you really will want to fork and create your on deployments.
-(At least as long as no Operator or Helm chart exists for this...)
-
-Example usages:
-* [Quick demo with Minikube](docs/minikube.md)
 
 ## Configuration of Dataverse
 Configuring dataverse is done in different places. Some things for more "basic"
@@ -178,6 +178,17 @@ kubectl create secret generic dataverse-postgresql \
 ```
 
 ## Little Helpers
+### Inplace Re-Index Job
+Sometimes when you upgrade to a new Dataverse version, the Solr configuration
+has been changed by upstream. In these cases, release notes will advise you to
+[do an "inplace reindex"](http://guides.dataverse.org/en/latest/admin/solr-search-index.html#reindex-in-place).
+
+For your convienience, a batch job has been added containing actions mentioned
+in the docs for you. Simply deploy it during off-hours (or fork and create a CronJob):
+```
+kubectl apply -f k8s/dataverse/jobs/inplace-reindex.yaml
+```
+
 ### Catching emails from Dataverse easily
 While doing a showcase, developing or other purposes, it comes in handy
 to see what emails are sent by Dataverse.
