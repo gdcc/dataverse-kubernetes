@@ -1,13 +1,15 @@
 #!/bin/sh
 KUBEVAL_RELEASE=0.7.3
 PLATFORM=linux
-K8S_RELEASE=${K8S_RELEASE:-1.13.0}
+K8S_RELEASE=${K8S_RELEASE:-${1-1.13.0}}
 
 if [ ! -x test/kubeval ]; then
   echo Downloading and extracting kubeval... Please be patient.
   wget -q -O test/kubeval.tar.gz https://github.com/garethr/kubeval/releases/download/${KUBEVAL_RELEASE}/kubeval-${PLATFORM}-amd64.tar.gz
   tar xf test/kubeval.tar.gz -C test
 fi
+
+echo "Running kubeval with schema for k8s v${K8S_RELEASE}"
 
 find k8s -name '*.yaml' -print0 | xargs -0 test/kubeval -v ${K8S_RELEASE}
 
