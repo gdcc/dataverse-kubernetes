@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: dv-bootstrap
-          image: iqss/dataverse-k8s:4.12
+          image: iqss/dataverse-k8s:4.13
           command: ["scripts/bootstrap-job.sh"]
           envFrom:
             - configMapRef:
