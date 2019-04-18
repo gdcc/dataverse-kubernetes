@@ -43,3 +43,6 @@ kubectl port-forward service/dataverse 8080
 
 Now you may point your favorite browser to http://localhost:8080 and enjoy
 your freshly backed Dataverse demo.
+
+Secrets are the same as documented in [minikube setup](minikube.md),
+[see also](k3s-demo/demo-secrets.yaml).
