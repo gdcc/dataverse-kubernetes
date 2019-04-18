@@ -34,6 +34,7 @@ For production usage you really will want to fork and create your on deployments
 
 Example usages:
 * [Quick demo with Minikube](docs/minikube.md)
+* [Usage with minimized k3s](docs/k3s.md)
 
 ### Upgrading your installation
 
