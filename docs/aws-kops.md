@@ -37,3 +37,15 @@ kubectl apply -k docs/aws-demo
 
 This will deploy a default demo instance to your cluster. See also:
 [minikube demo](minikube.md) and [k3s demo](k3s.md).
+
+When bootstrapping finished (see `kubectl get job,pod` and logs), simply do a
+port forwarding to access Dataverse:
+```
+kubectl port-forward service/dataverse 8080
+```
+
+Now you may point your favorite browser to http://localhost:8080 and enjoy
+your freshly backed Dataverse demo.
+
+Secrets are the same as documented in [minikube setup](minikube.md),
+[see also](aws-demo/demo-secrets.yaml).
