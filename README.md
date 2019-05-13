@@ -1,11 +1,11 @@
-![](docs/title-composition.png)
+![](https://raw.githubusercontent.com/IQSS/dataverse-kubernetes/master/docs/title-composition.png)
 
 # Running Dataverse on Kubernetes
 
 [![Dataverse](https://img.shields.io/badge/Dataverse-v4.14-important.svg)](https://dataverse.org)
 [![Test Status](https://travis-ci.org/IQSS/dataverse-kubernetes.svg?branch=master)](https://travis-ci.org/IQSS/dataverse-kubernetes)
-[![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=dataverse-k8s&logo=docker)](https://cloud.docker.com/u/iqss/repository/docker/iqss/dataverse-k8s)
-[![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=solr-k8s&logo=docker)](https://cloud.docker.com/u/iqss/repository/docker/iqss/solr-k8s)
+[![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=dataverse-k8s&logo=docker)](https://hub.docker.com/r/iqss/dataverse-k8s)
+[![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=solr-k8s&logo=docker)](https://hub.docker.com/r/iqss/solr-k8s)
 
 This project aims to provide a simple to re-use example on how to run
 Dataverse on a Kubernetes cluster.
@@ -33,7 +33,7 @@ For production usage you really will want to fork and create your on deployments
 (At least as long as no Operator or Helm chart exists for this...)
 
 Example usages:
-* [Quick demo with Minikube](docs/minikube.md)
+* [Quick demo with Minikube](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/minikube.md)
 
 ### Upgrading your installation
 
@@ -64,7 +64,7 @@ Things like file storage, networking, DOI, etc are all *basic system settings*
 and can be set via system properties. For your convienience, these can be
 stored in a `ConfigMap`.
 
-Some things need sane defaults, which can be found in [default.config](./dataverse-k8s/bin/default.config).
+Some things need sane defaults, which can be found in [default.config](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/bin/default.config).
 You might find those usefull as an example for your personally tuned `ConfigMap`.
 
 ### Mapping environment variables to JVM options
@@ -160,7 +160,7 @@ Currently understood secrets in the container, mounted at `SECRETS_DIR=/opt/data
 5. `s3/access-key` and `s3/secret-key` - needed when you want to use S3 storage. See #28.
 
 A password alias is automatically created and used for those, no need to provide
-those yourself. (see [default.config](./dataverse-k8s/bin/default.config))
+those yourself. (see [default.config](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/bin/default.config))
 
 You can of course map other parts of the secret like usernames to an environment
 variable like `doi_username` etc.
