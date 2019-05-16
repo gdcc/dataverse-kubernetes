@@ -2,7 +2,7 @@
 
 In this file you may find detailed documentation about how things are connected together in this Kubernetes application.
 
-## Deployment procedure
+## Initial Deployment Procedure
 
 ![Alt text](https://g.gravizo.com/source/mark_deployment?https%3A%2F%2Fraw.githubusercontent.com%2FIQSS%2FDataverse-kubernetes%2F44-add-docs%2Fdocs%2Fhow-it-works.md)
 <details>
@@ -10,13 +10,48 @@ In this file you may find detailed documentation about how things are connected 
 mark_deployment
   @startuml
   actor User
-  participant "Kubernetes" as K
-  User -> K: Deploy ConfigMap
-  User -> K: Deploy PostgreSQL
-  User -> K: Deploy Solr from iqss/solr-k8s
-  User -> K: Deploy Dataverse from iqss/dataverse-k8s
-  User -> K: Deploy bootstrapping job
-  User -> K: Deploy configure job
+  participant "Secrets" as S
+  participant "ConfigMap" as CM
+  participant "PostgreSQL" as P
+  participant "Dataverse" as D
+  participant "Bootstrap Job" as BJ
+  participant "Solr"
+  participant "Configure Job" as CJ
+
+  create S
+  User -> S: Deploy Secrets
+  create CM
+  User -> CM: Deploy ConfigMap
+  create P
+  User -> P: Deploy PostgreSQL
+  CM -> P: Pass username +\ndatabase name
+  S -> P: Pass password
+  P -> P: Init database
+
+  create Solr
+  User -> Solr: Deploy Solr from iqss/solr-k8s
+
+  create D
+  User -> D: Deploy Dataverse from iqss/dataverse-k8s
+  D -> D: Deploy app
+  note over D: see also:\nContainer Startup
+  D -> P: Persistance Framework:\nCreate structure
+  P --> D: Done
+
+  create BJ
+  User -> BJ: Deploy Bootstrapping Job
+  BJ <<-->> P: wait for
+  BJ <<-->> Solr: wait for
+  BJ <<-->> D: wait for
+  BJ -> P: Additional SQL init
+  BJ -> D: Bootstrapping w/ setup-all.sh\n(Metadata, user, root dataverse, ...)
+  activate D
+  BJ -> D: Configure Solr location\n+ admin contact
+  BJ -> D: Block API with unblock-key
+  return
+
+  create CJ
+  User -> CJ: Deploy Configure Job
   @enduml
 mark_deployment
 </details>
@@ -37,7 +72,7 @@ mark_container_startupp
   Tini -> E: Start
   create I
   E -> I: Start
-  
+
   create A
   I -> A: Start
   activate A
