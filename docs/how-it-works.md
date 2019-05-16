@@ -23,7 +23,7 @@ mark_deployment
   User -> S: Deploy Secrets
   create CM
   User -> CM: Deploy ConfigMap
-  note over P: Optional!\nFire at will.
+  note over P: Optional!
   create P
   User -> P: Deploy PostgreSQL
   CM -> P: Pass username +\ndatabase name
@@ -60,7 +60,7 @@ mark_deployment
   User -> CJ: Deploy Configure Job
   S -> CJ: Pass API key
   CM -> CJ: Pass settings
-  CJ -> D: Configure DB settings via API
+  CJ -> D: Configure Dataverse DB-based\nsettings via API
   activate D
   D -> P: Store settings
   return
@@ -78,6 +78,7 @@ mark_deployment
 mark_container_startup
   @startuml
   participant Tini
+  note left Tini: "Tiny init"\ngithub.com/krallin/tini
   participant "Entrypoint" as E
   participant "Init script" as I
   participant "Appserver" as A
@@ -92,7 +93,7 @@ mark_container_startup
   activate A
   I -> A: Configure password aliases
   I -> A: Configure resources
-  I -> A: Configure JVM options
+  I -> A: Configure Dataverse\nJVM options
   I -> A: Stop
   destroy A
   I -> I: Symlink WAR & more
