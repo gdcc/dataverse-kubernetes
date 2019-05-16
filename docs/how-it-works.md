@@ -2,6 +2,25 @@
 
 In this file you may find detailed documentation about how things are connected together in this Kubernetes application.
 
+## Deployment procedure
+
+![Alt text](https://g.gravizo.com/source/mark_deployment?https%3A%2F%2Fraw.githubusercontent.com%2FIQSS%2FDataverse-kubernetes%2F44-add-docs%2Fdocs%2Fhow-it-works.md)
+<details>
+<summary></summary>
+mark_deployment
+  @startuml
+  actor User
+  participant "Kubernetes" as K
+  User -> K: Deploy ConfigMap
+  User -> K: Deploy PostgreSQL
+  User -> K: Deploy Solr from iqss/solr-k8s
+  User -> K: Deploy Dataverse from iqss/dataverse-k8s
+  User -> K: Deploy bootstrapping job
+  User -> K: Deploy configure job
+  @enduml
+mark_deployment
+</details>
+
 ## Dataverse Container Startup
 
 ![Alt text](https://g.gravizo.com/source/mark_container_startup?https%3A%2F%2Fraw.githubusercontent.com%2FIQSS%2FDataverse-kubernetes%2F44-add-docs%2Fdocs%2Fhow-it-works.md)
