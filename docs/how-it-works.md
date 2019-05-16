@@ -36,7 +36,7 @@ mark_deployment
   create D
   User -> D: Deploy Dataverse from iqss/dataverse-k8s
   D -> D: Deploy app
-  note over D: see also in detail at\n"Container Startup"
+  note right: see also in detail at\n"Container Startup"
   D -> P: Persistance Framework:\nCreate tables
   P --> D: Done
 
@@ -47,7 +47,7 @@ mark_deployment
   BJ <<-->> P: wait for
   BJ <<-->> Solr: wait for
   BJ <<-->> D: wait for
-  ...After Dataverse has been deployed successfully......
+  ...After Dataverse, Solr and PostgreSQL have been deployed successfully......
   BJ -> P: Additional SQL init
   BJ -> D: Bootstrapping w/ setup-all.sh\n(Metadata, user, root dataverse, ...)
   activate D
@@ -75,7 +75,7 @@ mark_deployment
 ![Alt text](https://g.gravizo.com/source/mark_container_startup?https%3A%2F%2Fraw.githubusercontent.com%2FIQSS%2FDataverse-kubernetes%2F44-add-docs%2Fdocs%2Fhow-it-works.md)
 <details>
 <summary></summary>
-mark_container_startupp
+mark_container_startup
   @startuml
   participant Tini
   participant "Entrypoint" as E
