@@ -15,13 +15,15 @@ mark_deployment
   participant "PostgreSQL" as P
   participant "Dataverse" as D
   participant "Bootstrap Job" as BJ
-  participant "Solr"
   participant "Configure Job" as CJ
+
+  participant "Solr"
 
   create S
   User -> S: Deploy Secrets
   create CM
   User -> CM: Deploy ConfigMap
+  note over P: Optional!\nFire at will.
   create P
   User -> P: Deploy PostgreSQL
   CM -> P: Pass username +\ndatabase name
@@ -34,24 +36,36 @@ mark_deployment
   create D
   User -> D: Deploy Dataverse from iqss/dataverse-k8s
   D -> D: Deploy app
-  note over D: see also:\nContainer Startup
-  D -> P: Persistance Framework:\nCreate structure
+  note over D: see also in detail at\n"Container Startup"
+  D -> P: Persistance Framework:\nCreate tables
   P --> D: Done
 
   create BJ
   User -> BJ: Deploy Bootstrapping Job
+  S -> BJ: Pass db password\n+API key
+  CM -> BJ: Pass settings
   BJ <<-->> P: wait for
   BJ <<-->> Solr: wait for
   BJ <<-->> D: wait for
+  ...After Dataverse has been deployed successfully......
   BJ -> P: Additional SQL init
   BJ -> D: Bootstrapping w/ setup-all.sh\n(Metadata, user, root dataverse, ...)
   activate D
   BJ -> D: Configure Solr location\n+ admin contact
   BJ -> D: Block API with unblock-key
+  D -> P: Store settings
   return
 
   create CJ
   User -> CJ: Deploy Configure Job
+  S -> CJ: Pass API key
+  CM -> CJ: Pass settings
+  CJ -> D: Configure DB settings via API
+  activate D
+  D -> P: Store settings
+  return
+
+  User -> D: Start accessing Dataverse
   @enduml
 mark_deployment
 </details>
