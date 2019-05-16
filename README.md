@@ -34,6 +34,7 @@ For production usage you really will want to fork and create your on deployments
 
 Example usages:
 * [Quick demo with Minikube](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/minikube.md)
+* [Usage with minimized k3s](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/k3s.md)
 
 ### Upgrading your installation
 

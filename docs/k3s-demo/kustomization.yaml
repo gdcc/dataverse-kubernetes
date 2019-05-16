@@ -1,0 +1,11 @@
+---
+bases:
+  - ../../k8s/dataverse
+  - ../../k8s/solr
+  - ../../k8s/utils/postgresql
+
+resources:
+  - demo-secrets.yaml
+
+patches:
+  - patch-pvc-k3s.yaml

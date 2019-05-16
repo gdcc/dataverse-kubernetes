@@ -1,0 +1,7 @@
+---
+resources:
+  - deployment.yaml
+  - configmap.yaml
+  - pvc.yaml
+  - svc.yaml
+  - jobs/bootstrap.yaml
