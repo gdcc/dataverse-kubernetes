@@ -1,4 +1,4 @@
-## Configuration of Dataverse
+# Configuration of Dataverse
 Configuring dataverse is done in different places. Some things for more "basic"
 system configuration is done in Java system properties, residing in the Glassfish
 domain configuration. More advanced and flexible options are stored in the
@@ -16,7 +16,7 @@ stored in a `ConfigMap`.
 Some things need sane defaults, which can be found in [default.config](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/bin/default.config).
 You might find those usefull as an example for your personally tuned `ConfigMap`.
 
-### Mapping environment variables to JVM options
+## JVM options: mapping from environment variables
 The basic idea is to map environment variables to Java system properties each
 time a Dataverse container starts with the default entrypoint (being the application
 server).
@@ -47,7 +47,7 @@ Currently some JVM options have dashes in them, which is no allowed character fo
 an environment variable. As a workaround, replace any dash with `__`. It will
 be transformed back into `-` internally when the container starts. See example above.
 
-### Mapping environment variables to Database settings
+## Database settings: mapping from environment variables, too
 As database settings are persistent in, well, the database, they don't need
 to get set everytime the container starts. To be consistent and easy to use,
 the same `ConfigMap` used for JVM options can be used for these settings,

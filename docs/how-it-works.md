@@ -1,8 +1,23 @@
-# How it works...
+# Inner workings of Dataverse Kubernetes application
 
-In this file you may find detailed documentation about how things are connected together in this Kubernetes application.
+Please familiarize yourself with the architecture of Dataverse if not already
+done: http://guides.dataverse.org/en/latest/installation
+
+It helps a lot knowning how things are connected in Dataverse to understand
+what happens when using Kubernetes in addition.
+
+In this chapter you may find detailed documentation about how things are
+connected together in this Kubernetes application in a visual way.
+In doubt consult the scripts and descriptors in this repository.
 
 ## Initial Deployment Procedure
+
+The below image shows all necessary steps by you (the user) or your deployment
+framework (like Terraform, Ansible and similar) for a new deployment of Dataverse.
+It also explains what happens in the background on an overview level.
+For more details please look at the demos or code.
+
+*The below image is loaded from Garvizo. It might be not shown completely. Try reloading and empty cache.*
 
 ![Alt text](https://g.gravizo.com/source/mark_deployment?https%3A%2F%2Fraw.githubusercontent.com%2FIQSS%2FDataverse-kubernetes%2F44-add-docs%2Fdocs%2Fhow-it-works.md)
 <details>
@@ -72,6 +87,10 @@ mark_deployment
 
 ## Dataverse Container Startup
 
+When the Kubernetes pod containing the application server container starts (using the
+image [iqss/dataverse-k8s](https://hub.docker.com/r/iqss/dataverse-k8s) by default, but you might derive or use your own), the following
+happens:
+
 ![Alt text](https://g.gravizo.com/source/mark_container_startup?https%3A%2F%2Fraw.githubusercontent.com%2FIQSS%2FDataverse-kubernetes%2F44-add-docs%2Fdocs%2Fhow-it-works.md)
 <details>
 <summary></summary>
@@ -108,3 +127,5 @@ mark_container_startup
   @enduml
 mark_container_startup
 </details>
+
+## 
