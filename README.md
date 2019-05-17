@@ -35,13 +35,13 @@ For quick and easy demo purposes, you can use one of the examples:
 For production usage, you should make yourself familiar with a series of
 documentation articles:
 
-* [Detailed insight into inner workings](docs/how-it-works.md)
-* [Using Kubernetes descriptors from this project](docs/reuse.md)
-* [Configuration of Dataverse](docs/config.md)
-* [Secrets usage](docs/secrets.md)
+* [Detailed insight into inner workings](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/how-it-works.md)
+* [Using Kubernetes descriptors from this project](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/reuse.md)
+* [Configuration of Dataverse](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md)
+* [Secrets usage](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md)
 
 A number of utilities have been added for your convienience:
-have a look at [Little Helpers](docs/little-helpers.md).
+have a look at [Little Helpers](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md).
 
 ### Upgrading your installation
 
