@@ -36,7 +36,7 @@ For production usage, you should make yourself familiar with a series of
 documentation articles:
 
 * [Detailed insight into inner workings](docs/how-it-works.md)
-* [Kubernetes descriptor re-use](docs/reuse.md)
+* [Using Kubernetes descriptors from this project](docs/reuse.md)
 * [Configuration of Dataverse](docs/config.md)
 * [Secrets usage](docs/secrets.md)
 
