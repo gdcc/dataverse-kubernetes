@@ -7,7 +7,7 @@
 [![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=dataverse-k8s&logo=docker)](https://hub.docker.com/r/iqss/dataverse-k8s)
 [![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=solr-k8s&logo=docker)](https://hub.docker.com/r/iqss/solr-k8s)
 
-This project aims to provide a simple to re-use example on how to run
+This community-supported project aims to provide a simple to re-use example on how to run
 Dataverse on a Kubernetes cluster.
 
 **NOTE:** all Docker images in this project work for released versions of
@@ -61,6 +61,10 @@ might be a heavy lifting task in your installation and put heavy load on your
 deployment (you might want to schedule that for off-hours).
 
 We will try to point out any of those in release notes of our k8s images.
+
+## Support
+
+This project is supported by the Dataverse community rather than IQSS. If you need help, please open an issue.
 
 ## Future plans and ideas
 
