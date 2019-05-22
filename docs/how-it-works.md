@@ -3,7 +3,7 @@
 Please familiarize yourself with the architecture of Dataverse if not already
 done: http://guides.dataverse.org/en/latest/installation
 
-It helps a lot knowning how things are connected in Dataverse to understand
+It helps a lot knowing how things are connected in Dataverse to understand
 what happens when using Kubernetes in addition.
 
 In this chapter you may find detailed documentation about how things are
