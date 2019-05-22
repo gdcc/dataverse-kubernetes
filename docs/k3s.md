@@ -12,7 +12,7 @@ For usage with Docker a handy wrapper is available as [*k3d*](https://github.com
 
 ### Setup K3s
 
-First, setup a single node *k3s* cluster. Pick your favorite poison. Once you
+First, setup a single node *k3s* cluster. Pick your poison. Once you
 have your cluster up and running, continue.
 
 As *k3s* removed all "in-tree" storage classes, you will need to provide
