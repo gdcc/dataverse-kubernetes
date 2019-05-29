@@ -3,6 +3,11 @@
 This how-to suggests you have a working [Minikube](https://kubernetes.io/docs/setup/minikube/)
 installation at hands. If not, follow the upstream instructions to get started.
 
+**IMPORTANT**
+* *Due to an upstream Kubernetes bug, documented in kubernetes/kubernetes#78308,*
+  *you will need to ensure not using K8s v1.13.6 or v1.14.2.*
+* Start your Minikube VM with `--kubernetes-version=v1.14.1` as a workaround!
+
 Please provide at least 4096 MB of RAM for the Minikube VM, as Dataverse will
 use **a lot** of RAM during deployment and at least 1024 MB when idle:
 ```

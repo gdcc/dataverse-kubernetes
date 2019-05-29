@@ -8,6 +8,12 @@ and more lightweight.
 You can run *k3s* on hardware, a virtual machine or within a Docker container.
 For usage with Docker a handy wrapper is available as [*k3d*](https://github.com/rancher/k3d).
 
+**IMPORTANT**
+* *Due to an upstream Kubernetes bug, documented in kubernetes/kubernetes#78308,*
+  *you will need to ensure not using K8s v1.13.6 or v1.14.2.*
+* As of writing this, k3s release v0.5.0 and v0.6.0 are using v1.14.1 and are not
+  affected.
+
 ## Deploying Dataverse to *k3s* for local development or demo purposes
 
 ### Setup K3s
