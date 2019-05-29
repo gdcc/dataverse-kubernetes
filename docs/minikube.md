@@ -3,7 +3,14 @@
 This how-to suggests you have a working [Minikube](https://kubernetes.io/docs/setup/minikube/)
 installation at hands. If not, follow the upstream instructions to get started.
 
+Please provide at least 4096 MB of RAM for the Minikube VM, as Dataverse will
+use **a lot** of RAM during deployment and at least 1024 MB when idle:
+```
+minikube start --memory=4096
+```
+
 First you will need to create a physical volume to store data on:
+(You will not need to do this using Minikube equal or newer than v1.1.0)
 ```
 kubectl create -f k8s/utils/pv-hostPath.yaml
 ```
