@@ -9,7 +9,7 @@ FROM centos:7
 LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
 ARG TINI_VERSION=v0.18.0
-ARG VERSION=4.14
+ARG VERSION=4.15
 ARG DOMAIN=domain1
 
 ENV HOME_DIR=/opt/dataverse\

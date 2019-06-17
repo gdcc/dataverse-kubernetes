@@ -2,7 +2,7 @@
 
 # Running Dataverse on Kubernetes
 
-[![Dataverse](https://img.shields.io/badge/Dataverse-v4.14-important.svg)](https://dataverse.org)
+[![Dataverse](https://img.shields.io/badge/Dataverse-v4.15-important.svg)](https://dataverse.org)
 [![Test Status](https://travis-ci.org/IQSS/dataverse-kubernetes.svg?branch=master)](https://travis-ci.org/IQSS/dataverse-kubernetes)
 [![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=dataverse-k8s&logo=docker)](https://hub.docker.com/r/iqss/dataverse-k8s)
 [![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=solr-k8s&logo=docker)](https://hub.docker.com/r/iqss/solr-k8s)

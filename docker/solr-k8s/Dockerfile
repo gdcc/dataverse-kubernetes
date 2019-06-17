@@ -8,7 +8,7 @@ FROM solr:7.3.1
 
 LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
-ARG VERSION=4.14
+ARG VERSION=4.15
 ARG COLLECTION=collection1
 ENV SOLR_OPTS="-Dsolr.jetty.request.header.size=102400"\
     COLLECTION_DIR=/opt/solr/server/solr/${COLLECTION}\
