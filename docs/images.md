@@ -11,8 +11,8 @@ images to be used for the Dataverse deployment.
 
 Simple with Docker after cloning and accessing the source folder:
 ```
-docker build -t iqss/dataverse-k8s:4.14 docker/dataverse-k8s
-docker build -t iqss/solr-k8s:4.14 docker/solr-k8s
+docker build -t iqss/dataverse-k8s:4.15 docker/dataverse-k8s
+docker build -t iqss/solr-k8s:4.15 docker/solr-k8s
 ```
 *Please remember to change the tag above as appropriate. You should be*
 *using tagged images as best practice, not 'latest'.*
