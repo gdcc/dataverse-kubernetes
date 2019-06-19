@@ -31,8 +31,9 @@ mark_deployment
   participant "Dataverse" as D
   participant "Bootstrap Job" as BJ
   participant "Configure Job" as CJ
-
   participant "Solr"
+
+  == Deploy application ==
 
   create S
   User -> S: Deploy Secrets
@@ -47,13 +48,17 @@ mark_deployment
 
   create Solr
   User -> Solr: Deploy Solr from iqss/solr-k8s
+  Solr -> Solr: Init container:\nFix volume permissions
 
   create D
   User -> D: Deploy Dataverse from iqss/dataverse-k8s
+  D -> D: Init container:\nFix volume permissions
   D -> D: Deploy app
   note right: see also in detail at\n"Container Startup"
   D -> P: Persistance Framework:\nCreate tables
   P --> D: Done
+
+  == Bootstrapping ==
 
   create BJ
   User -> BJ: Deploy Bootstrapping Job
@@ -70,16 +75,22 @@ mark_deployment
   BJ -> D: Block API with unblock-key
   D -> P: Store settings
   return
+  destroy BJ
 
+  == Further Configuration ==
   create CJ
   User -> CJ: Deploy Configure Job
   S -> CJ: Pass API key
   CM -> CJ: Pass settings
+  CJ <<-->> D: wait for
+  ...After Dataverse ready......
   CJ -> D: Configure Dataverse DB-based\nsettings via API
   activate D
   D -> P: Store settings
   return
+  destroy CJ
 
+  == Start using ==
   User -> D: Start accessing Dataverse
   @enduml
 mark_deployment
