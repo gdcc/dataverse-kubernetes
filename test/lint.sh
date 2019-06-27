@@ -1,12 +1,15 @@
 #!/bin/sh
-KUBEVAL_RELEASE=0.7.3
+KUBEVAL_RELEASE=0.10.0
 PLATFORM=linux
 K8S_RELEASE=${K8S_RELEASE:-${1-1.13.0}}
 
-if [ ! -x test/kubeval ]; then
-  echo Downloading and extracting kubeval... Please be patient.
-  wget -q -O test/kubeval.tar.gz https://github.com/garethr/kubeval/releases/download/${KUBEVAL_RELEASE}/kubeval-${PLATFORM}-amd64.tar.gz
-  tar xf test/kubeval.tar.gz -C test
+if [ ! -x test/kubeval ] || [ ! -f test/kubeval-${KUBEVAL_RELEASE}.tar.gz ]; then
+  echo Downloading and extracting kubeval-${KUBEVAL_RELEASE}... Please be patient.
+  # delete old releases
+  rm -f test/kubeval*
+  # download new
+  wget -q -O test/kubeval-${KUBEVAL_RELEASE}.tar.gz https://github.com/garethr/kubeval/releases/download/${KUBEVAL_RELEASE}/kubeval-${PLATFORM}-amd64.tar.gz
+  tar xf test/kubeval-${KUBEVAL_RELEASE}.tar.gz -C test
 fi
 
 echo "Running kubeval with schema for k8s v${K8S_RELEASE}"
