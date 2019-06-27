@@ -9,7 +9,7 @@ if [ ! -x test/kubeval ] || [ ! -f test/kubeval-${KUBEVAL_RELEASE}.tar.gz ]; the
   rm -f test/kubeval*
   # download new
   wget -q -O test/kubeval-${KUBEVAL_RELEASE}.tar.gz https://github.com/garethr/kubeval/releases/download/${KUBEVAL_RELEASE}/kubeval-${PLATFORM}-amd64.tar.gz
-  tar xf test/kubeval-${KUBEVAL_RELEASE}.tar.gz -C test
+  tar xf test/kubeval-${KUBEVAL_RELEASE}.tar.gz -C test kubeval
 fi
 
 echo "Running kubeval with schema for k8s v${K8S_RELEASE}"
