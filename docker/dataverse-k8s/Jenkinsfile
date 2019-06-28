@@ -1,0 +1,11 @@
+node {
+  def image
+
+  stage('Clone repository') {
+    checkout scm
+  }
+
+  stage('Build image') {
+    image = docker.build("iqss/dataverse-k8s:${env.BUILD_ID}", "-f ${dockerfile} ${context}")
+  }
+}
