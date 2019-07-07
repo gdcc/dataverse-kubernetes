@@ -6,6 +6,6 @@ node {
   }
 
   stage('Build image') {
-    image = docker.build("iqss/dataverse-k8s:${env.BUILD_ID}", "-f ${dockerfile} ${context}")
+    image = docker.build("iqss/dataverse-k8s:build-${env.BUILD_ID}", "-f ${dockerfile} ${context}")
   }
 }
