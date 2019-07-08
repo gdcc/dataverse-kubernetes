@@ -34,7 +34,11 @@ apiVersion: v1
 metadata:
   name: dataverse
   labels:
-    app: dataverse
+    app.kubernetes.io/name: configmap
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: configmap
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
 data:
   dataverse_fqdn: data.example.org
   dataverse_siteUrl: https://\${dataverse.fqdn}
