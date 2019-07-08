@@ -4,18 +4,23 @@ apiVersion: apps/v1
 metadata:
   name: dataverse
   labels:
-    app: dataverse
+    app.kubernetes.io/name: dataverse
+    app.kubernetes.io/version: "4.15"
+    app.kubernetes.io/component: appserver
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dataverse
+      app.kubernetes.io/name: dataverse
+      app.kubernetes.io/part-of: dataverse
   revisionHistoryLimit: 1
   template:
     metadata:
       labels:
-        app: dataverse
-      annotations: {}
+        app.kubernetes.io/name: dataverse
+        app.kubernetes.io/part-of: dataverse
     spec:
       containers:
         - name: dataverse

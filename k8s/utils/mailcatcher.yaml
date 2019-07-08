@@ -15,7 +15,6 @@ spec:
     metadata:
       labels:
         app: mailcatcher
-      annotations: {}
     spec:
       containers:
         - name: mailcatcher
@@ -28,6 +27,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: postfix
+  labels:
+    app: mailcatcher
 spec:
   ports:
     # As we are using a port mapping here, we need it handled by kube-proxy!
@@ -43,6 +44,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: mailcatcher
+  labels:
+    app: mailcatcher
 spec:
   type: NodePort
   ports:

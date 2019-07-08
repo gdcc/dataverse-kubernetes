@@ -3,6 +3,12 @@ kind: Service
 apiVersion: v1
 metadata:
   name: solr
+  labels:
+    app.kubernetes.io/name: solr
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: service
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
 spec:
   ports:
     - port: 8983
@@ -10,4 +16,5 @@ spec:
       targetPort: 8983
       protocol: TCP
   selector:
-    app: solr
+    app.kubernetes.io/name: solr
+    app.kubernetes.io/part-of: dataverse

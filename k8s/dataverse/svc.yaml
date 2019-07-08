@@ -3,6 +3,12 @@ kind: Service
 apiVersion: v1
 metadata:
   name: dataverse
+  labels:
+    app.kubernetes.io/name: dataverse
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: service
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
 spec:
   ports:
     - port: 8080
@@ -14,4 +20,5 @@ spec:
       targetPort: 8009
       protocol: TCP
   selector:
-    app: dataverse
+    app.kubernetes.io/name: dataverse
+    app.kubernetes.io/part-of: dataverse
