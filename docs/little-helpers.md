@@ -7,7 +7,7 @@ has been changed by upstream. In these cases, release notes will advise you to
 For your convienience, a batch job has been added containing actions mentioned
 in the docs for you. Simply deploy it during off-hours (or fork and create a CronJob):
 ```
-kubectl apply -f k8s/dataverse/jobs/inplace-reindex.yaml
+kubectl create -f k8s/dataverse/jobs/inplace-reindex.yaml
 ```
 
 ### Catching emails from Dataverse easily

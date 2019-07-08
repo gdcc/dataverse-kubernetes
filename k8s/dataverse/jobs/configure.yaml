@@ -2,9 +2,19 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: configure-dataverse
+  generateName: configure-dataverse-
+  labels:
+    app.kubernetes.io/name: configure
+    app.kubernetes.io/version: "4.15"
+    app.kubernetes.io/component: job
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
 spec:
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: configure
+        app.kubernetes.io/part-of: dataverse
     spec:
       containers:
         - name: dv-bootstrap

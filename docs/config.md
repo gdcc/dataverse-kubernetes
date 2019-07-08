@@ -34,7 +34,11 @@ apiVersion: v1
 metadata:
   name: dataverse
   labels:
-    app: dataverse
+    app.kubernetes.io/name: configmap
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: configmap
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
 data:
   dataverse_fqdn: data.example.org
   dataverse_siteUrl: https://\${dataverse.fqdn}
@@ -89,10 +93,10 @@ You need to think about in which file you keep the map - having it in two locati
 is a bad idea. It's always a good idea to put it in revision control.
 
 ```
-# Updated ConfigMap inside:
-kubectl apply -f k8s/dataverse.yaml
-# Deploy the config job:
-kubectl apply -f k8s/utils/configure-job.yaml
+# Update ConfigMap:
+kubectl apply -f k8s/dataverse/configmap.yaml
+# Deploy a new config job:
+kubectl create -f k8s/utils/configure-job.yaml
 ```
 
 You might consider providing a `CronJob` for scheduled, regular updates.
