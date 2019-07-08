@@ -89,10 +89,10 @@ You need to think about in which file you keep the map - having it in two locati
 is a bad idea. It's always a good idea to put it in revision control.
 
 ```
-# Updated ConfigMap inside:
-kubectl apply -f k8s/dataverse.yaml
-# Deploy the config job:
-kubectl apply -f k8s/utils/configure-job.yaml
+# Update ConfigMap:
+kubectl apply -f k8s/dataverse/configmap.yaml
+# Deploy a new config job:
+kubectl create -f k8s/utils/configure-job.yaml
 ```
 
 You might consider providing a `CronJob` for scheduled, regular updates.
