@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: configure-dataverse
+  generateName: configure-dataverse-
   labels:
     app.kubernetes.io/name: configure
     app.kubernetes.io/version: "4.15"

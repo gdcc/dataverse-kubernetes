@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: inplace-reindex-dataverse
+  generateName: inplace-reindex-dataverse-
   labels:
     app.kubernetes.io/name: reindex
     app.kubernetes.io/version: "1.0"
