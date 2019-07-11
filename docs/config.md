@@ -96,7 +96,7 @@ is a bad idea. It's always a good idea to put it in revision control.
 # Update ConfigMap:
 kubectl apply -f k8s/dataverse/configmap.yaml
 # Deploy a new config job:
-kubectl create -f k8s/utils/configure-job.yaml
+kubectl create -f k8s/dataverse/jobs/configure.yaml
 ```
 
 You might consider providing a `CronJob` for scheduled, regular updates.
