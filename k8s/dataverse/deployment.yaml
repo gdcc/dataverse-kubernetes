@@ -5,7 +5,7 @@ metadata:
   name: dataverse
   labels:
     app.kubernetes.io/name: dataverse
-    app.kubernetes.io/version: "4.15"
+    app.kubernetes.io/version: "4.15.1"
     app.kubernetes.io/component: appserver
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: dataverse
-          image: iqss/dataverse-k8s:4.15
+          image: iqss/dataverse-k8s:4.15.1
           ports:
             - containerPort: 8080
           envFrom:
