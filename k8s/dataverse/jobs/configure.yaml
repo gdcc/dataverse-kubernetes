@@ -5,7 +5,7 @@ metadata:
   generateName: configure-dataverse-
   labels:
     app.kubernetes.io/name: configure
-    app.kubernetes.io/version: "4.15"
+    app.kubernetes.io/version: "4.15.1"
     app.kubernetes.io/component: job
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: dv-bootstrap
-          image: iqss/dataverse-k8s:4.15
+          image: iqss/dataverse-k8s:4.15.1
           command: ["scripts/config-job.sh"]
           envFrom:
             - configMapRef:
