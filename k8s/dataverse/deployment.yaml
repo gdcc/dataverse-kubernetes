@@ -56,13 +56,8 @@ spec:
             httpGet:
               path: /robots.txt
               port: 8080
-      initContainers:
-        - name: volume-mount-hack
-          image: busybox
-          command: ["sh", "-c", "chown -c 1000:1000 /data"]
-          volumeMounts:
-          - name: files
-            mountPath: /data
+      securityContext:
+        fsGroup: 1000
       volumes:
         - name: files
           persistentVolumeClaim:
