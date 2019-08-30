@@ -1,11 +1,23 @@
-node {
-  def image
-
-  stage('Clone repository') {
-    checkout scm
+pipeline {
+  agent any
+  environment {
+    dockerfile = "./docker/dataverse-k8s/Dockerfile"
+    context = "./docker/dataverse-k8s"
+    imagetag = "build-${env.BUILD_ID}"
   }
+  stages {
+    stage('checkout') {
+      steps {
+        checkout scm
+      }
+    }
 
-  stage('Build image') {
-    image = docker.build("iqss/dataverse-k8s:build-${env.BUILD_ID}", "-f ${dockerfile} ${context}")
+    stage('build') {
+      steps {
+        script {
+          docker_image = docker.build("iqss/dataverse-k8s:${env.imagetag}", "-f ${env.dockerfile} ${env.context}")
+        }
+      }
+    }
   }
 }
