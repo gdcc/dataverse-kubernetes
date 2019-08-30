@@ -11,7 +11,7 @@ pipeline {
     stage('build') {
       steps {
         script {
-          docker_image = docker.build("iqss/dataverse-k8s:${env.imagetag}", "-f ${env.dockerfile} ${env.context}")
+          docker_image = docker.build("iqss/dataverse-k8s:${env.imagetag}", "--pull -f ${env.dockerfile} ${env.context}")
         }
       }
     }
