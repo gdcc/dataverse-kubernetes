@@ -4,6 +4,8 @@ pipeline {
     dockerfile = "./docker/dataverse-k8s/Dockerfile"
     context = "./docker/dataverse-k8s"
     imagetag = "build-${env.BUILD_ID}"
+    hublogin = "dockerhub-dataversebot"
+    registry = "https://registry.hub.docker.com"
   }
   stages {
     stage('checkout') {
@@ -16,6 +18,24 @@ pipeline {
       steps {
         script {
           docker_image = docker.build("iqss/dataverse-k8s:${env.imagetag}", "-f ${env.dockerfile} ${env.context}")
+        }
+      }
+    }
+
+    stage('push-latest') {
+      /*
+      when {
+        anyOf {
+          branch 'master'
+          buildingTag()
+        }
+      }
+      */
+      steps {
+        script {
+          docker.withRegistry("${env.registry}", "${env.hublogin}") {
+            docker_image.push("latest")
+          }
         }
       }
     }
