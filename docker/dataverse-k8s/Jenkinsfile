@@ -16,17 +16,31 @@ pipeline {
       }
     }
 
-    stage('push-latest') {
+    stage('push') {
       when {
         anyOf {
           branch 'master'
-          buildingTag()
+          tag "v4.*"
         }
       }
-      steps {
-        script {
-          docker.withRegistry("${env.registry}", "${env.hublogin}") {
-            docker_image.push("latest")
+      parallel {
+        stage('release') {
+          when { buildingTag() }
+          steps {
+            script {
+              docker.withRegistry("${env.registry}", "${env.hublogin}") {
+                docker_image.push("${env.TAG_NAME}")
+              }
+            }
+          }
+        }
+        stage('latest') {
+          steps {
+            script {
+              docker.withRegistry("${env.registry}", "${env.hublogin}") {
+                docker_image.push("latest")
+              }
+            }
           }
         }
       }
