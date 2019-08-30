@@ -17,14 +17,12 @@ pipeline {
     }
 
     stage('push-latest') {
-      /*
       when {
         anyOf {
           branch 'master'
           buildingTag()
         }
       }
-      */
       steps {
         script {
           docker.withRegistry("${env.registry}", "${env.hublogin}") {
