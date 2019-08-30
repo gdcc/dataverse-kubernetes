@@ -8,12 +8,6 @@ pipeline {
     registry = "https://registry.hub.docker.com"
   }
   stages {
-    stage('checkout') {
-      steps {
-        checkout scm
-      }
-    }
-
     stage('build') {
       steps {
         script {
