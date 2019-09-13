@@ -33,7 +33,25 @@ it in your Docker build context. Easiest way to achieve this, after cloning the
 K8s repo, run:
 
 ```
-git submodule init
+git submodule sync --recursive
+git submodule update --init --recursive
 ```
 
 This will checkout the upstream Dataverse `develop` branch into `./dataverse`.
+If you want a feature branch, add your fork, whatever: just follow normal `git submodule`
+routines. (For example, goto `./dataverse` and `git checkout` your branch.)
+
+For more on submodules, have a look at
+  - https://medium.com/@porteneuve/mastering-git-submodules-34c65e940407
+  - https://chrisjean.com/git-submodules-adding-using-removing-and-updating/
+  - https://gist.github.com/gitaarik/8735255
+  - https://lmgtfy.com/?q=git+submodule
+
+You can even point your IDE to this new subfolder and it will work like a champ.
+
+### Build snappy images manually
+Simply use Docker again (almost like above, but different path):
+```
+docker build -t iqss/dataverse-k8s:test -f docker/dataverse-k8s/glassfish-dev/Dockerfile .
+```
+*NOTE: currently there is no Solr development image. This is likely to change.*
