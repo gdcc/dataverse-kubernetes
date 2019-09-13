@@ -27,6 +27,10 @@ docker build -t iqss/solr-k8s:4.15.1 docker/solr-k8s
 
 ## Development images
 
+*NOTE: You don't need to worry about anything related to Dataverse like compilation.*
+*Image building will take care of it. So if you don't have Maven installed,*
+*don't use an IDE or just want to try out sth.: you are all set. Go ahead.*
+
 ### Prepare Dataverse sources
 For building images from any branch or commit of Dataverse, you need to have
 it in your Docker build context. Easiest way to achieve this, after cloning the
