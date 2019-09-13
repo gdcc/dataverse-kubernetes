@@ -94,7 +94,7 @@ RUN wget --no-verbose -O dvinstall.zip ${DATAVERSE_PKG} && \
     rm dvinstall.zip
 
 # Copy across docker scripts
-COPY --chown=glassfish:glassfish bin/*.sh bin/default.config ${SCRIPT_DIR}/
+COPY --chown=glassfish:glassfish docker/dataverse-k8s/bin/* docker/dataverse-k8s/glassfish/bin/* ${SCRIPT_DIR}/
 RUN mkdir -p ${SCRIPT_DIR}/init.d && \
     chmod +x ${SCRIPT_DIR}/*
 

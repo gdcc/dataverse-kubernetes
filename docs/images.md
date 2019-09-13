@@ -11,7 +11,8 @@ images to be used for the Dataverse deployment.
 
 Simple with Docker after cloning and accessing the source folder:
 ```
-docker build -t iqss/dataverse-k8s:4.15.1 docker/dataverse-k8s
+cd $(git rev-parse --show-cdup)
+docker build -t iqss/dataverse-k8s:4.15.1 -f docker/dataverse-k8s/glassfish/Dockerfile .
 docker build -t iqss/solr-k8s:4.15.1 docker/solr-k8s
 ```
 *Please remember to change the tag above as appropriate. You should be*
