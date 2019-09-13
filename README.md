@@ -26,11 +26,11 @@ and https://github.com/IQSS/dataverse/issues/5448
 
 ## Usage
 
-For quick and easy demo purposes, you can use one of the examples:
-
-* [Quick demo with Minikube](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/minikube.md)
-* [Usage with minimized k3s](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/k3s.md)
-* [Deploy to an Amazon EC2 based custom K8s cluster](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/aws-kops.md)
+*Quick'n'dirty on naked cluster:*
+```
+kubectl apply -k .
+```
+(This will of course need a recent `kubectl` and a configured cluster context.)
 
 A number of utilities have been added for your convienience:
 have a look at [Little Helpers](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md).
@@ -53,6 +53,12 @@ First, you will need to read up and get familiar with all of the above about pro
 More details about usage for developing Dataverse below.
 
 * TODO: Skaffold, Kind/K3s, Building, Kustomization
+
+#### Examples
+
+* [Quick demo with Minikube](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/minikube.md)
+* [Usage with minimized k3s](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/k3s.md)
+* [Deploy to an Amazon EC2 based custom K8s cluster](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/aws-kops.md)
 
 ### Upgrading your installation
 
