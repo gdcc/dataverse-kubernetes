@@ -32,8 +32,11 @@ For quick and easy demo purposes, you can use one of the examples:
 * [Usage with minimized k3s](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/k3s.md)
 * [Deploy to an Amazon EC2 based custom K8s cluster](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/aws-kops.md)
 
-For production usage, you should make yourself familiar with a series of
-documentation articles, linked below:
+A number of utilities have been added for your convienience:
+have a look at [Little Helpers](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md).
+
+#### Production usage
+You should make yourself familiar with a series of documentation articles, linked below:
 
 * [Container images](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md)
 * [Detailed insight into inner workings](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/how-it-works.md)
@@ -45,8 +48,11 @@ Please be aware that this project currently only offers images and support
 for basic usage. Integrations are not yet part of this, but may be added as needed.
 See also relevant docs within Dataverse guides and upstream projects.
 
-A number of utilities have been added for your convienience:
-have a look at [Little Helpers](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md).
+#### Development usage
+First, you will need to read up and get familiar with all of the above about production usage.
+More details about usage for developing Dataverse below.
+
+* TODO: Skaffold, Kind/K3s, Building, Kustomization
 
 ### Upgrading your installation
 
