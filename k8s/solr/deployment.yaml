@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: solr
-          image: iqss/solr-k8s:4.15.1
+          image: iqss/solr-k8s
           ports:
             - containerPort: 8983
           volumeMounts:
