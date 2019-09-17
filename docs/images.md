@@ -59,3 +59,7 @@ Simply use Docker again (almost like above, but different path):
 docker build -t iqss/dataverse-k8s:test -f docker/dataverse-k8s/glassfish-dev/Dockerfile .
 ```
 *NOTE: currently there is no Solr development image. This is likely to change.*
+
+### Build images automatically (with Skaffold)
+Please see [development usage docs](rundev.md) for this. It will make your life
+easier, I suppose.
