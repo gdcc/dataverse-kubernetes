@@ -10,7 +10,7 @@ For any change to the codebase, you most likely will have to wait about five
 to ten minutes to redeploy from compilation to reload of webpage.
 
 This is due to a really big WAR file (which needs to be loaded into the cluster)
-and being stuck on old technology in combination with a bloated monolith.
+and being stuck on old technology in combination with a tremendous monolith.
 
 **YOU HAVE BEEN WARNED.**
 
