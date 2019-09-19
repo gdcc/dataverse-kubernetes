@@ -1,3 +1,13 @@
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "${env.GIT_URL}"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/kubeval"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
 pipeline {
   agent any
   environment {
@@ -7,6 +17,7 @@ pipeline {
   stages {
     stage ("Prepare kubeval") {
       steps {
+        setBuildStatus("Awaiting KubeVal validation...", "PENDING")
         sh "${KUBEVAL_DIR}/prepare.sh"
       }
     }
@@ -33,6 +44,14 @@ pipeline {
           }
         }
       }
+    }
+  }
+  post {
+    success {
+        setBuildStatus("KubeVal validation succeeded", "SUCCESS");
+    }
+    failure {
+        setBuildStatus("KubeVal validation failed", "FAILURE");
     }
   }
 }
