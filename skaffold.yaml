@@ -11,3 +11,12 @@ build:
   local: {}
 deploy:
   kustomize: {}
+profiles:
+  - name: payara
+    patches:
+      - op: replace
+        path: /build/artifacts/0/docker/dockerfile
+        value: docker/dataverse-k8s/payara-dev/Dockerfile
+    deploy:
+      kustomize:
+        path: k8s/experiments/payara
