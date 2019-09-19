@@ -3,7 +3,7 @@
 # Running Dataverse on Kubernetes
 
 [![Dataverse](https://img.shields.io/badge/Dataverse-v4.15.1-important.svg)](https://dataverse.org)
-[![Validation](https://jenkins.dataverse.org/job/dataverse-k8s/job/K8s%20Linting/badge/icon?subject=kubeval&status=valid&color=purple)](https://jenkins.dataverse.org/job/dataverse-k8s/job/K8s%20Linting/)
+[![Validation](https://jenkins.dataverse.org/job/dataverse-k8s/job/Kubeval%20Linting/job/master/badge/icon?subject=kubeval&status=valid&color=purple)](https://jenkins.dataverse.org/job/dataverse-k8s/job/Kubeval%20Linting/job/master/)
 [![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=dataverse-k8s&logo=docker)](https://hub.docker.com/r/iqss/dataverse-k8s)
 [![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=solr-k8s&logo=docker)](https://hub.docker.com/r/iqss/solr-k8s)
 
