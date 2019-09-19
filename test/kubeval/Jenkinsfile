@@ -1,19 +1,38 @@
-def k8sVersions = ["1.12.9","1.13.9","1.14.6","1.15.3"]
-def tasks = [:]
-
-for(int i=0; i< k8sVersions.size(); i++) {
-  def version = k8sVersions[i]
-  tasks["K8s v${version}"] = {
-    node {
-      sh "pwd"
-      sh "test/kubeval/kubeval ${version}"
+pipeline {
+  agent any
+  environment {
+    KUBEVAL_DIR = "test/kubeval"
+    KUBEVAL_RELEASE= "0.14.0"
+  }
+  stages {
+    stage ("Prepare kubeval") {
+      steps {
+        sh "${KUBEVAL_DIR}/prepare.sh"
+      }
+    }
+    stage ("KubeVal Linting") {
+      parallel {
+        stage ("K8s 1.12.9") {
+          steps {
+            sh "${KUBEVAL_DIR}/lint.sh 1.12.9"
+          }
+        }
+        stage ("K8s 1.13.9") {
+          steps {
+            sh "${KUBEVAL_DIR}/lint.sh 1.13.9"
+          }
+        }
+        stage ("K8s 1.14.6") {
+          steps {
+            sh "${KUBEVAL_DIR}/lint.sh 1.14.6"
+          }
+        }
+        stage ("K8s 1.15.3") {
+          steps {
+            sh "${KUBEVAL_DIR}/lint.sh 1.15.3"
+          }
+        }
+      }
     }
   }
-}
-
-stage ("Checkout") {
-  checkout scm
-}
-stage ("KubeVal linting") {
-  parallel tasks
 }
