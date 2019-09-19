@@ -1,0 +1,4 @@
+[submodule "dataverse"]
+	path = dataverse
+	url = https://github.com/IQSS/dataverse
+	branch = develop
