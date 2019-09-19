@@ -1,14 +1,14 @@
 #!/bin/sh
-KUBEVAL_RELEASE=0.10.0
+KUBEVAL_RELEASE=0.14.0
 PLATFORM=linux
-K8S_RELEASE=${K8S_RELEASE:-${1-1.13.0}}
+K8S_RELEASE=${K8S_RELEASE:-${1-1.14.6}}
 
 if [ ! -x test/kubeval ] || [ ! -f test/kubeval-${KUBEVAL_RELEASE}.tar.gz ]; then
   echo Downloading and extracting kubeval-${KUBEVAL_RELEASE}... Please be patient.
   # delete old releases
   rm -f test/kubeval*
   # download new
-  wget -q -O test/kubeval-${KUBEVAL_RELEASE}.tar.gz https://github.com/garethr/kubeval/releases/download/${KUBEVAL_RELEASE}/kubeval-${PLATFORM}-amd64.tar.gz
+  wget -q -O test/kubeval-${KUBEVAL_RELEASE}.tar.gz https://github.com/instrumenta/kubeval/releases/download/${KUBEVAL_RELEASE}/kubeval-${PLATFORM}-amd64.tar.gz
   tar xf test/kubeval-${KUBEVAL_RELEASE}.tar.gz -C test kubeval
 fi
 
