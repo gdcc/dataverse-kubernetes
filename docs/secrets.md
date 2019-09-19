@@ -2,7 +2,7 @@
 Please use [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) and *mount them as volumes*.
 See also [here](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume).
 
-Currently understood secrets in the container, mounted at `SECRETS_DIR=/opt/dataverse/secrets`:
+Currently understood secrets in the container, mounted at `SECRETS_DIR=/secrets`:
 1. `rserve/password` - optional, only needed when using a RServe server.
 2. `doi/password` - needed when you use DOIs for PIDs.
 3. `db/password` - required - guess why?

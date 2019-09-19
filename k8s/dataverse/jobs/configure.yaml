@@ -18,14 +18,14 @@ spec:
     spec:
       containers:
         - name: dv-bootstrap
-          image: iqss/dataverse-k8s:4.15.1
+          image: iqss/dataverse-k8s
           command: ["scripts/config-job.sh"]
           envFrom:
             - configMapRef:
                 name: dataverse
           volumeMounts:
             - name: api-secret
-              mountPath: "/opt/dataverse/secrets/api"
+              mountPath: "/secrets/api"
               readOnly: true
       initContainers:
         - name: check-dataverse-ready
