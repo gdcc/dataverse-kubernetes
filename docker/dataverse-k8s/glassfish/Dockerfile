@@ -24,7 +24,8 @@ ENV HOME_DIR=/opt/dataverse\
     GRIZZLY_PKG=http://guides.dataverse.org/en/latest/_downloads/glassfish-grizzly-extra-all.jar\
     PGDRIVER_PKG=https://jdbc.postgresql.org/download/postgresql-42.2.5.jar\
     DATAVERSE_VERSION=${VERSION}\
-    DATAVERSE_PKG=https://github.com/IQSS/dataverse/releases/download/v${VERSION}/dvinstall.zip
+    DATAVERSE_PKG=https://github.com/IQSS/dataverse/releases/download/v${VERSION}/dvinstall.zip\
+    METADATA_DIR=/metadata
 ENV PATH="${PATH}:${GLASSFISH_DIR}/bin"
 
 # Install prerequisites
@@ -39,7 +40,8 @@ RUN groupadd -g 1000 glassfish && \
     mkdir -p ${SCRIPT_DIR} && \
     mkdir -p ${SECRETS_DIR} && \
     mkdir -p ${DATA_DIR} && \
-    chown -R glassfish: ${HOME_DIR} ${DATA_DIR}
+    mkdir -p ${METADATA_DIR} && \
+    chown -R glassfish: ${HOME_DIR} ${DATA_DIR} ${METADATA_DIR}
 
 # Install tini as minimized init system
 RUN wget --no-verbose -O /tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
@@ -88,10 +90,12 @@ RUN ${GLASSFISH_DIR}/bin/asadmin start-domain && \
 RUN wget --no-verbose -O postgresql.jar ${PGDRIVER_PKG} && \
     mv postgresql.jar ${GLASSFISH_DIR}/glassfish/lib
 
-# Retrieve the Dataverse install package, extract and remove ZIP
+# Retrieve the Dataverse install package, extract and remove ZIP,
+#   remove Harvard custom metadatablocks
 RUN wget --no-verbose -O dvinstall.zip ${DATAVERSE_PKG} && \
     unzip -qq dvinstall.zip -d ./ && \
-    rm dvinstall.zip
+    rm dvinstall.zip && \
+    find . -iname "custom*.tsv" -delete
 
 # Copy across docker scripts
 COPY --chown=glassfish:glassfish docker/dataverse-k8s/bin/* docker/dataverse-k8s/glassfish/bin/* ${SCRIPT_DIR}/

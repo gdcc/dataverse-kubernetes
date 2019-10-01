@@ -5,7 +5,7 @@ metadata:
   generateName: inplace-reindex-dataverse-
   labels:
     app.kubernetes.io/name: reindex
-    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/version: "1.1"
     app.kubernetes.io/component: job
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
@@ -20,8 +20,8 @@ spec:
         - name: reindex
           image: tutum/curl
           command: ['sh', '-c',
-            'curl -f -X DELETE http://dataverse:8080/api/admin/index/timestamps?unblock-key=${API_KEY} &&
-            curl -f http://dataverse:8080/api/admin/index/continue?unblock-key=${API_KEY}']
+            'curl -sS -f -X DELETE "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/api/admin/index/timestamps?unblock-key=${API_KEY}" &&
+            curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/api/admin/index/continue?unblock-key=${API_KEY}"']
           env:
             - name: API_KEY
               valueFrom:
@@ -32,12 +32,12 @@ spec:
         - name: check-solr-ready
           image: tutum/curl
           command: ['sh', '-c',
-            'until curl -f http://solr:8983/solr/collection1/admin/ping 2>&1 | grep "status.:.OK";
+            'until curl -sS -f "http://${SOLR_SERVICE_HOST}:${SOLR_SERVICE_PORT}/solr/collection1/admin/ping" 2>&1 | grep "status.:.OK";
             do echo waiting for solr; sleep 3; done;']
         - name: check-dataverse-ready
           image: tutum/curl
           command: ['sh', '-c',
-            'until curl -f http://dataverse:8080/robots.txt -m 2 2>&1 > /dev/null;
+            'until curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/robots.txt" -m 2 2>&1 > /dev/null;
             do echo waiting for dataverse; sleep 15; done;']
       volumes:
         - name: api-secret

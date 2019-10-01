@@ -43,6 +43,7 @@ You should make yourself familiar with a series of documentation articles, linke
 * [Using Kubernetes descriptors from this project](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/reuse.md)
 * [Configuration of Dataverse](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md)
 * [Secrets usage](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md)
+* [(Custom) Metadata Blocks)](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/metadata.md)
 
 Please be aware that this project currently only offers images and support
 for basic usage. Integrations are not yet part of this, but may be added as needed.

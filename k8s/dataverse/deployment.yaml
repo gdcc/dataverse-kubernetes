@@ -15,12 +15,14 @@ spec:
     matchLabels:
       app.kubernetes.io/name: dataverse
       app.kubernetes.io/part-of: dataverse
+      app.kubernetes.io/component: appserver
   revisionHistoryLimit: 1
   template:
     metadata:
       labels:
         app.kubernetes.io/name: dataverse
         app.kubernetes.io/part-of: dataverse
+        app.kubernetes.io/component: appserver
     spec:
       containers:
         - name: dataverse

@@ -2,10 +2,10 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: configure-dataverse-
+  generateName: metadata-update-dataverse-
   labels:
-    app.kubernetes.io/name: configure
-    app.kubernetes.io/version: "1.1"
+    app.kubernetes.io/name: metadata-update
+    app.kubernetes.io/version: "1.0"
     app.kubernetes.io/component: job
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
@@ -13,13 +13,13 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: configure
+        app.kubernetes.io/name: metadata-update
         app.kubernetes.io/part-of: dataverse
     spec:
       containers:
-        - name: dv-bootstrap
-          image: iqss/dataverse-k8s
-          command: ["scripts/config-job.sh"]
+        - name: metadata-update
+          image: iqss/dataverse-k8s:34a483752b816abd37f06cfdec451377fda5f8194c22de886272ef2f97f9288f
+          command: ['scripts/metadata-update.sh']
           envFrom:
             - configMapRef:
                 name: dataverse
@@ -28,6 +28,11 @@ spec:
               mountPath: "/opt/dataverse/secrets/api"
               readOnly: true
       initContainers:
+        - name: check-solr-ready
+          image: tutum/curl
+          command: ['sh', '-c',
+            'until curl -sS -f "http://${SOLR_SERVICE_HOST}:${SOLR_SERVICE_PORT}/solr/collection1/admin/ping" 2>&1 | grep "status.:.OK";
+            do echo waiting for solr; sleep 3; done;']
         - name: check-dataverse-ready
           image: tutum/curl
           command: ['sh', '-c',
