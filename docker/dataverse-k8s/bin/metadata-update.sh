@@ -19,9 +19,7 @@ API_KEY=`cat ${SECRETS_DIR}/api/key`
 # Find all TSV files
 TSVS=`find "${METADATA_DIR}" "${HOME_DIR}" -maxdepth 5 -iname '*.tsv'`
 
-# Check for builtin blocks to be readable
-
-#TODO ITERATE: how to check if in TSVS list?
+# Check for builtin blocks to be present
 BUILTIN=("astrophysics.tsv" "biomedical.tsv" "citation.tsv" "geospatial.tsv" "journals.tsv" "social_science.tsv")
 miss=1
 fail=1
