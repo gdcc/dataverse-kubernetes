@@ -42,6 +42,9 @@ spec:
             - name: api-secret
               mountPath: "/opt/dataverse/secrets/api"
               readOnly: true
+            - name: admin-secret
+              mountPath: "/opt/dataverse/secrets/admin"
+              readOnly: true
       initContainers:
         - name: check-db-ready
           image: postgres:9.6
@@ -65,5 +68,9 @@ spec:
         - name: api-secret
           secret:
             secretName: dataverse-api
+        - name: admin-secret
+          secret:
+            secretName: dataverse-admin
+            optional: true
       restartPolicy: Never
   backoffLimit: 4

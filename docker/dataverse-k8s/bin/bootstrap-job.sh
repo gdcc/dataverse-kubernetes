@@ -26,6 +26,12 @@ if [ ! -s "${SECRETS_DIR}/api/key" ]; then
   exit 126
 fi
 
+# Load dataverseAdmin password if present
+if [ -s "${SECRETS_DIR}/admin/password" ]; then
+  echo "Loading admin password from secret file."
+  ADMIN_PASSWORD=`cat ${SECRETS_DIR}/admin/password`
+fi
+
 # Drop the Postgres credentials into .pgpass
 echo "${POSTGRES_SERVER}:*:*:${POSTGRES_USER}:`cat ${SECRETS_DIR}/db/password`" > ${HOME_DIR}/.pgpass
 chmod 0600 ${HOME_DIR}/.pgpass
@@ -41,7 +47,7 @@ sed -i -e "s#localhost:8080#${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT}#
 sed -i -e "s#root@mailinator.com#${CONTACT_MAIL}#" data/dv-root.json
 sed -i -e "s#dataverse@mailinator.com#${CONTACT_MAIL}#" data/user-admin.json
 # 2c) Use script(s) to bootstrap the instance.
-./setup-all.sh --insecure
+./setup-all.sh --insecure -p="${ADMIN_PASSWORD}"
 
 # 4.) Configure Solr location
 curl -sS -X PUT -d "${SOLR_K8S_HOST}:8983" "${DATAVERSE_URL}/api/admin/settings/:SolrHostColonPort"
