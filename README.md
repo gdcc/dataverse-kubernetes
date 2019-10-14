@@ -26,11 +26,15 @@ and https://github.com/IQSS/dataverse/issues/5448
 
 ## Usage
 
-*Quick'n'dirty on naked cluster:*
+*Quick'n'dirty demo on naked cluster:*
 ```
 kubectl apply -k .
 ```
-(This will of course need a recent `kubectl` and a configured cluster context.)
+
+**Notes:**
+- This will of course need a recent `kubectl` and a configured cluster context.
+- This is usable for demo purposes.
+- You really want to [provide a secure admin password](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md) for anything serious.
 
 A number of utilities have been added for your convienience:
 have a look at [Little Helpers](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md).
