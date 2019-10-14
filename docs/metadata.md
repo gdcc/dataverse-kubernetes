@@ -27,4 +27,4 @@ Remember: you will need to get your custom metadata inside that job somehow, see
 
 ## Update Solr Search Index
 
-> TODO for release 4.16 containing necessary scripts.
+> TODO for release 4.17 containing necessary scripts.

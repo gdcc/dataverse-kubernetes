@@ -36,9 +36,6 @@ kubectl apply -k .
 - This is usable for demo purposes.
 - You really want to [provide a secure admin password](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md) for anything serious.
 
-A number of utilities have been added for your convienience:
-have a look at [Little Helpers](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md).
-
 #### Production usage
 You should make yourself familiar with a series of documentation articles, linked below:
 
@@ -48,6 +45,7 @@ You should make yourself familiar with a series of documentation articles, linke
 * [Configuration of Dataverse](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md)
 * [Secrets usage](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md)
 * [(Custom) Metadata Blocks](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/metadata.md)
+* [Maintenance Jobs and Little Helpers](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md)
 
 Please be aware that this project currently only offers images and support
 for basic usage. Integrations are not yet part of this, but may be added as needed.

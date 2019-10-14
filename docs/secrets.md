@@ -32,6 +32,7 @@ kubectl create secret generic dataverse-postgresql \
 ### Provision a password for your superadmin account
 The password for the superadmin account `dataverseAdmin` defaults to
 **admin1**. *You really should change that to something more secure.*
+
 <small>*Note:* this password is the same as IQSS/dataverse-ansible uses!</small>
 
 During bootstrap, mount a secret at `${SECRETS_DIR}/admin/password` to provision
