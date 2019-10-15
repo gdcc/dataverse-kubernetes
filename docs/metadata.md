@@ -34,6 +34,8 @@ kubectl create -f k8s/dataverse/jobs/metadata-reexport.yaml
 Having a large set of published dataverses and datasets, you might want to run
 this during off-hours.
 
+See also: [upstream docs](http://guides.dataverse.org/en/latest/admin/metadataexport.html).
+
 ## Update Solr Search Index
 
 > TODO for release 4.17 containing necessary scripts.
