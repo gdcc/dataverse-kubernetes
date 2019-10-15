@@ -5,7 +5,7 @@ how to handle custom metadata block support.
 
 See also: [Upstream documentation about customizing metadata](http://guides.dataverse.org/en/latest/admin/metadatacustomization.html)
 
-## Add custom metada blocks
+## Add custom metadata blocks
 Please put any metadata TSV files to the `/metadata` directory of the jobs
 container below.
 
@@ -24,6 +24,15 @@ Simply deploy a metadata update job:
 kubectl create -f k8s/dataverse/jobs/metadata-update.yaml
 ```
 Remember: you will need to get your custom metadata inside that job somehow, see above.
+
+### Force re-export of citation metadata after update
+Especially when the core `citation.tsv` metadata schema changed, you will need
+to re-export all citation metadata. A simple job does the trick:
+```
+kubectl create -f k8s/dataverse/jobs/metadata-reexport.yaml
+```
+Having a large set of published dataverses and datasets, you might want to run
+this during off-hours.
 
 ## Update Solr Search Index
 
