@@ -1,0 +1,41 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: metadata-reexport-dataverse-
+  labels:
+    app.kubernetes.io/name: metadata-reexport
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: job
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: metadata-reexport
+        app.kubernetes.io/part-of: dataverse
+    spec:
+      containers:
+        - name: metadata-reexport
+          image: giantswarm/tiny-tools
+          command: ['sh', '-c',
+            'curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/api/admin/metadata/reExportAll?unblock-key=${API_KEY}"']
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dataverse-api
+                  key: key
+      initContainers:
+        - name: check-dataverse-ready
+          image: giantswarm/tiny-tools
+          command: ['sh', '-c',
+            'until curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/robots.txt" -m 2 2>&1 > /dev/null;
+            do echo waiting for dataverse; sleep 15; done;']
+      volumes:
+        - name: api-secret
+          secret:
+            secretName: dataverse-api
+      restartPolicy: Never
+  backoffLimit: 4
