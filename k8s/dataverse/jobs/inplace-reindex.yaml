@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: reindex
-          image: tutum/curl
+          image: giantswarm/tiny-tools
           command: ['sh', '-c',
             'curl -sS -f -X DELETE "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/api/admin/index/timestamps?unblock-key=${API_KEY}" &&
             curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/api/admin/index/continue?unblock-key=${API_KEY}"']
@@ -30,12 +30,12 @@ spec:
                   key: key
       initContainers:
         - name: check-solr-ready
-          image: tutum/curl
+          image: giantswarm/tiny-tools
           command: ['sh', '-c',
             'until curl -sS -f "http://${SOLR_SERVICE_HOST}:${SOLR_SERVICE_PORT}/solr/collection1/admin/ping" 2>&1 | grep "status.:.OK";
             do echo waiting for solr; sleep 3; done;']
         - name: check-dataverse-ready
-          image: tutum/curl
+          image: giantswarm/tiny-tools
           command: ['sh', '-c',
             'until curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/robots.txt" -m 2 2>&1 > /dev/null;
             do echo waiting for dataverse; sleep 15; done;']

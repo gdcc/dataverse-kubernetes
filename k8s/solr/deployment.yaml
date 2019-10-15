@@ -35,7 +35,7 @@ spec:
               value: "8983"
       initContainers:
         - name: volume-mount-hack
-          image: busybox
+          image: giantswarm/tiny-tools
           command: ["sh", "-c", "chown -c 8983:8983 /data"]
           volumeMounts:
           - name: data
