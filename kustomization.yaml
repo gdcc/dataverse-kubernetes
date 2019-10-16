@@ -11,6 +11,6 @@ resources:
 
 images:
   - name: iqss/dataverse-k8s
-    newTag: 4.15.1
+    newTag: "4.16"
   - name: iqss/solr-k8s
-    newTag: 4.15.1
+    newTag: "4.16"
