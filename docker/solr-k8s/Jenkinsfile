@@ -23,6 +23,7 @@ pipeline {
         anyOf {
           changeset "docker/solr-k8s/**"
           triggeredBy 'TimerTrigger'
+          tag "v4.*"
         }
       }
       steps {
@@ -36,6 +37,7 @@ pipeline {
         anyOf {
           changeset "docker/solr-k8s/**"
           triggeredBy 'TimerTrigger'
+          tag "v4.*"
         }
         anyOf {
           branch 'master'

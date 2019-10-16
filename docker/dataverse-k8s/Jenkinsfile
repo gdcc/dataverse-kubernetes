@@ -24,6 +24,7 @@ pipeline {
         anyOf {
           changeset "docker/dataverse-k8s/**"
           triggeredBy 'TimerTrigger'
+          tag "v4.*"
         }
       }
       steps {
@@ -37,6 +38,7 @@ pipeline {
         anyOf {
           changeset "docker/dataverse-k8s/**"
           triggeredBy 'TimerTrigger'
+          tag "v4.*"
         }
         anyOf {
           branch 'master'
