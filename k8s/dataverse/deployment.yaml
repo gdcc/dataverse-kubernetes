@@ -5,7 +5,7 @@ metadata:
   name: dataverse
   labels:
     app.kubernetes.io/name: dataverse
-    app.kubernetes.io/version: "4.15.1"
+    app.kubernetes.io/version: "4.16"
     app.kubernetes.io/component: appserver
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
@@ -15,16 +15,18 @@ spec:
     matchLabels:
       app.kubernetes.io/name: dataverse
       app.kubernetes.io/part-of: dataverse
+      app.kubernetes.io/component: appserver
   revisionHistoryLimit: 1
   template:
     metadata:
       labels:
         app.kubernetes.io/name: dataverse
         app.kubernetes.io/part-of: dataverse
+        app.kubernetes.io/component: appserver
     spec:
       containers:
         - name: dataverse
-          image: iqss/dataverse-k8s:4.15.1
+          image: iqss/dataverse-k8s
           ports:
             - containerPort: 8080
           envFrom:
@@ -58,7 +60,7 @@ spec:
               port: 8080
       initContainers:
         - name: volume-mount-hack
-          image: busybox
+          image: giantswarm/tiny-tools
           command: ["sh", "-c", "chown -c 1000:1000 /data"]
           volumeMounts:
           - name: files

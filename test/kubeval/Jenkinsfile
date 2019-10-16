@@ -1,0 +1,57 @@
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "${env.GIT_URL}"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/kubeval"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+pipeline {
+  agent any
+  environment {
+    KUBEVAL_DIR = "test/kubeval"
+    KUBEVAL_RELEASE= "0.14.0"
+  }
+  stages {
+    stage ("Prepare kubeval") {
+      steps {
+        setBuildStatus("Awaiting KubeVal validation...", "PENDING")
+        sh "${KUBEVAL_DIR}/prepare.sh"
+      }
+    }
+    stage ("KubeVal Linting") {
+      parallel {
+        stage ("K8s 1.12.9") {
+          steps {
+            sh "${KUBEVAL_DIR}/lint.sh 1.12.9"
+          }
+        }
+        stage ("K8s 1.13.9") {
+          steps {
+            sh "${KUBEVAL_DIR}/lint.sh 1.13.9"
+          }
+        }
+        stage ("K8s 1.14.6") {
+          steps {
+            sh "${KUBEVAL_DIR}/lint.sh 1.14.6"
+          }
+        }
+        stage ("K8s 1.15.3") {
+          steps {
+            sh "${KUBEVAL_DIR}/lint.sh 1.15.3"
+          }
+        }
+      }
+    }
+  }
+  post {
+    success {
+        setBuildStatus("KubeVal validation succeeded", "SUCCESS");
+    }
+    failure {
+        setBuildStatus("KubeVal validation failed", "FAILURE");
+    }
+  }
+}

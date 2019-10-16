@@ -2,8 +2,8 @@
 
 # Running Dataverse on Kubernetes
 
-[![Dataverse](https://img.shields.io/badge/Dataverse-v4.15.1-important.svg)](https://dataverse.org)
-[![Validation](https://jenkins.dataverse.org/job/dataverse-k8s/job/K8s%20Linting/badge/icon?subject=kubeval&status=valid&color=purple)](https://jenkins.dataverse.org/job/dataverse-k8s/job/K8s%20Linting/)
+[![Dataverse](https://img.shields.io/badge/Dataverse-v4.16-important.svg)](https://dataverse.org)
+[![Validation](https://jenkins.dataverse.org/job/dataverse-k8s/job/Kubeval%20Linting/job/master/badge/icon?subject=kubeval&status=valid&color=purple)](https://jenkins.dataverse.org/job/dataverse-k8s/job/Kubeval%20Linting/job/master/)
 [![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=dataverse-k8s&logo=docker)](https://hub.docker.com/r/iqss/dataverse-k8s)
 [![Docker Hub Image](https://img.shields.io/static/v1.svg?label=image&message=solr-k8s&logo=docker)](https://hub.docker.com/r/iqss/solr-k8s)
 
@@ -26,27 +26,60 @@ and https://github.com/IQSS/dataverse/issues/5448
 
 ## Usage
 
-For quick and easy demo purposes, you can use one of the examples:
+*Quick'n'dirty demo on naked cluster:*
+```
+kubectl apply -k .
+```
 
-* [Quick demo with Minikube](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/minikube.md)
-* [Usage with minimized k3s](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/k3s.md)
-* [Deploy to an Amazon EC2 based custom K8s cluster](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/aws-kops.md)
+**Notes:**
+- This will of course need a recent `kubectl` and a configured cluster context.
+- This is usable for demo purposes.
+- You really want to [provide a secure admin password](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md) for anything serious.
 
-For production usage, you should make yourself familiar with a series of
-documentation articles, linked below:
+#### Production usage
+You should make yourself familiar with a series of documentation articles, linked below:
 
 * [Container images](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md)
 * [Detailed insight into inner workings](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/how-it-works.md)
 * [Using Kubernetes descriptors from this project](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/reuse.md)
 * [Configuration of Dataverse](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md)
 * [Secrets usage](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md)
+* [(Custom) Metadata Blocks](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/metadata.md)
+* [Maintenance Jobs and Little Helpers](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md)
 
 Please be aware that this project currently only offers images and support
 for basic usage. Integrations are not yet part of this, but may be added as needed.
 See also relevant docs within Dataverse guides and upstream projects.
 
-A number of utilities have been added for your convienience:
-have a look at [Little Helpers](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md).
+#### Development usage
+First, you will need to read up and get familiar with all of the above about production usage.
+More details about usage for developing Dataverse below.
+
+* [Development container images](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md#development-images)
+* [Prepare toolchain](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#prepare-toolchain)
+* [Using local cluster](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#local-cluster)
+* [Using remote cluster](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#remote-cluster) (not yet supported)
+
+<small>
+<details>
+<summary>If you think this is weird and/or cumbersome:</summary>
+As long as K8s usage is not a first class citizen for IQSS, this project should
+not (or cannot) be included in Dataverse upstream.
+
+```diff
++ We don't have to deal with upstream merge process for PRs and can move quicker.
++ We can use tools like Skaffold, Kustomization, etc only usable when living at the topmost level.
+- We have to deal with `git submodules` and somewhat bloated image builds.
+- We cannot use fancy Maven tools like JIB and others.
+```
+</details>
+</small>
+
+#### Examples
+
+* [Quick demo with Minikube](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/minikube.md)
+* [Usage with minimized k3s](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/k3s.md)
+* [Deploy to an Amazon EC2 based custom K8s cluster](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/aws-kops.md)
 
 ### Upgrading your installation
 

@@ -2,10 +2,10 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: inplace-reindex-dataverse-
+  generateName: metadata-update-dataverse-
   labels:
-    app.kubernetes.io/name: reindex
-    app.kubernetes.io/version: "1.1"
+    app.kubernetes.io/name: metadata-update
+    app.kubernetes.io/version: "1.0"
     app.kubernetes.io/component: job
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
@@ -13,21 +13,20 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: reindex
+        app.kubernetes.io/name: metadata-update
         app.kubernetes.io/part-of: dataverse
     spec:
       containers:
-        - name: reindex
-          image: giantswarm/tiny-tools
-          command: ['sh', '-c',
-            'curl -sS -f -X DELETE "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/api/admin/index/timestamps?unblock-key=${API_KEY}" &&
-            curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/api/admin/index/continue?unblock-key=${API_KEY}"']
-          env:
-            - name: API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: dataverse-api
-                  key: key
+        - name: metadata-update
+          image: iqss/dataverse-k8s
+          command: ['scripts/metadata-update.sh']
+          envFrom:
+            - configMapRef:
+                name: dataverse
+          volumeMounts:
+            - name: api-secret
+              mountPath: "/opt/dataverse/secrets/api"
+              readOnly: true
       initContainers:
         - name: check-solr-ready
           image: giantswarm/tiny-tools

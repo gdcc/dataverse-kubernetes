@@ -10,6 +10,9 @@ in the docs for you. Simply deploy it during off-hours (or fork and create a Cro
 kubectl create -f k8s/dataverse/jobs/inplace-reindex.yaml
 ```
 
+### Metadata Housekeeping
+See [Metadata docs](metadata.md).
+
 ### Catching emails from Dataverse easily
 While doing a showcase, developing or other purposes, it comes in handy
 to see what emails are sent by Dataverse.
