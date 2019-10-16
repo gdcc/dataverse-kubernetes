@@ -17,10 +17,14 @@ pipeline {
     hublogin = "dockerhub-dataversebot"
     registry = "https://registry.hub.docker.com"
   }
+  triggers { cron('H H(0-4) * * *') }
   stages {
     stage('build') {
       when {
-        changeset "docker/dataverse-k8s/**"
+        anyOf {
+          changeset "docker/dataverse-k8s/**"
+          triggeredBy 'TimerTrigger'
+        }
       }
       steps {
         script {
@@ -30,7 +34,10 @@ pipeline {
     }
     stage('push') {
       when {
-        changeset "docker/dataverse-k8s/**"
+        anyOf {
+          changeset "docker/dataverse-k8s/**"
+          triggeredBy 'TimerTrigger'
+        }
         anyOf {
           branch 'master'
           tag "v4.*"
