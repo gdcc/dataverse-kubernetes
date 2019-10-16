@@ -33,6 +33,10 @@ spec:
           env:
             - name: SOLR_PORT  # Otherwise, this is wrongfully set by K8s.
               value: "8983"
+          readinessProbe:
+            httpGet:
+              path: /solr/collection1/admin/ping
+              port: 8983
       initContainers:
         - name: volume-mount-hack
           image: giantswarm/tiny-tools
