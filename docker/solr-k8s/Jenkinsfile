@@ -1,0 +1,78 @@
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "${env.GIT_URL}"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/docker/solr-k8s"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+pipeline {
+  agent any
+  environment {
+    context = "docker/solr-k8s"
+    imagetag = "build-${env.BUILD_ID}"
+    hublogin = "dockerhub-dataversebot"
+    registry = "https://registry.hub.docker.com"
+  }
+  triggers { cron('H H(0-4) * * *') }
+  stages {
+    stage('build') {
+      when {
+        anyOf {
+          changeset "docker/solr-k8s/**"
+          triggeredBy 'TimerTrigger'
+          tag "v4.*"
+        }
+      }
+      steps {
+        script {
+          docker_image = docker.build("iqss/solr-k8s:${env.imagetag}", "--pull ${env.context}")
+        }
+      }
+    }
+    stage('push') {
+      when {
+        anyOf {
+          changeset "docker/solr-k8s/**"
+          triggeredBy 'TimerTrigger'
+          tag "v4.*"
+        }
+        anyOf {
+          branch 'master'
+          tag "v4.*"
+        }
+      }
+      parallel {
+        stage('release') {
+          when { buildingTag() }
+          steps {
+            script {
+              docker.withRegistry("${env.registry}", "${env.hublogin}") {
+                docker_image.push("${env.TAG_NAME}")
+              }
+            }
+          }
+        }
+        stage('latest') {
+          steps {
+            script {
+              docker.withRegistry("${env.registry}", "${env.hublogin}") {
+                docker_image.push("latest")
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  post {
+    success {
+        setBuildStatus("Image build (if necessary: push) succeeded", "SUCCESS");
+    }
+    failure {
+        setBuildStatus("Image build or push failed", "FAILURE");
+    }
+  }
+}
