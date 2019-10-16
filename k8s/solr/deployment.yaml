@@ -5,7 +5,7 @@ metadata:
   name: solr
   labels:
     app.kubernetes.io/name: solr
-    app.kubernetes.io/version: "4.15.1"
+    app.kubernetes.io/version: "4.16"
     app.kubernetes.io/component: searchindex
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
@@ -33,6 +33,10 @@ spec:
           env:
             - name: SOLR_PORT  # Otherwise, this is wrongfully set by K8s.
               value: "8983"
+          readinessProbe:
+            httpGet:
+              path: /solr/collection1/admin/ping
+              port: 8983
       initContainers:
         - name: volume-mount-hack
           image: giantswarm/tiny-tools

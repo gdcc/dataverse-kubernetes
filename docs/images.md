@@ -19,8 +19,8 @@ when using your custom CI.
 
 Simple with Docker after cloning and accessing the source folder:
 ```
-docker build -t iqss/dataverse-k8s:4.15.1 -f docker/dataverse-k8s/glassfish/Dockerfile .
-docker build -t iqss/solr-k8s:4.15.1 docker/solr-k8s
+docker build -t iqss/dataverse-k8s:4.16 -f docker/dataverse-k8s/glassfish/Dockerfile .
+docker build -t iqss/solr-k8s:4.16 docker/solr-k8s
 ```
 *Please remember to change the tag above as appropriate. You should be*
 *using tagged images as best practice, not 'latest'.*
