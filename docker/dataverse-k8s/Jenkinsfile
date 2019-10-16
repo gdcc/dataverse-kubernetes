@@ -1,8 +1,8 @@
 pipeline {
   agent any
   environment {
-    dockerfile = "./docker/dataverse-k8s/Dockerfile"
-    context = "./docker/dataverse-k8s"
+    dockerfile = "./docker/dataverse-k8s/glassfish/Dockerfile"
+    context = "."
     imagetag = "build-${env.BUILD_ID}"
     hublogin = "dockerhub-dataversebot"
     registry = "https://registry.hub.docker.com"
