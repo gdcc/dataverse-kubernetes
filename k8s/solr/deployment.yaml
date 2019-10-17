@@ -26,17 +26,26 @@ spec:
         - name: solr
           image: iqss/solr-k8s
           ports:
-            - containerPort: 8983
+            - name: index
+              containerPort: 8983
           volumeMounts:
             - name: data
               mountPath: /opt/solr/server/solr/collection1/data
           env:
             - name: SOLR_PORT  # Otherwise, this is wrongfully set by K8s.
               value: "8983"
-          readinessProbe:
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 10
             httpGet:
               path: /solr/collection1/admin/ping
-              port: 8983
+              port: index
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+              path: /solr/admin/info/system
+              port: index
       initContainers:
         - name: volume-mount-hack
           image: giantswarm/tiny-tools
