@@ -17,6 +17,8 @@ ENV HOME_DIR=/opt/dataverse\
     GLASSFISH_DIR=/opt/dataverse/appserver\
     DOMAIN_DIR=/opt/dataverse/appserver/glassfish/domains/${DOMAIN}\
     DATA_DIR=/data\
+    DOCROOT_DIR=/docroot\
+    METADATA_DIR=/metadata\
     SECRETS_DIR=/opt/dataverse/secrets\
     GLASSFISH_PKG=http://download.java.net/glassfish/4.1/release/glassfish-4.1.zip\
     GLASSFISH_SHA1=704a90899ec5e3b5007d310b13a6001575827293\
@@ -24,8 +26,7 @@ ENV HOME_DIR=/opt/dataverse\
     GRIZZLY_PKG=http://guides.dataverse.org/en/latest/_downloads/glassfish-grizzly-extra-all.jar\
     PGDRIVER_PKG=https://jdbc.postgresql.org/download/postgresql-42.2.5.jar\
     DATAVERSE_VERSION=${VERSION}\
-    DATAVERSE_PKG=https://github.com/IQSS/dataverse/releases/download/v${VERSION}/dvinstall.zip\
-    METADATA_DIR=/metadata
+    DATAVERSE_PKG=https://github.com/IQSS/dataverse/releases/download/v${VERSION}/dvinstall.zip
 ENV PATH="${PATH}:${GLASSFISH_DIR}/bin"
 
 # Install prerequisites
@@ -36,12 +37,9 @@ RUN yum install -y java-1.8.0-openjdk-headless epel-release unzip curl wget && \
 RUN groupadd -g 1000 glassfish && \
     useradd -u 1000 -M -s /bin/bash -d ${HOME_DIR} glassfish -g glassfish && \
     echo glassfish:glassfish | chpasswd && \
-    mkdir -p ${HOME_DIR} && \
-    mkdir -p ${SCRIPT_DIR} && \
-    mkdir -p ${SECRETS_DIR} && \
-    mkdir -p ${DATA_DIR} && \
-    mkdir -p ${METADATA_DIR} && \
-    chown -R glassfish: ${HOME_DIR} ${DATA_DIR} ${METADATA_DIR}
+    mkdir -p ${HOME_DIR} ${SCRIPT_DIR} ${SECRETS_DIR} && \
+    mkdir -p ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR} && \
+    chown -R glassfish: ${HOME_DIR} ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR}
 
 # Install tini as minimized init system
 RUN wget --no-verbose -O /tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
@@ -70,6 +68,10 @@ RUN wget --no-verbose -O weld-osgi-bundle.jar ${WELD_PKG} && \
     wget --no-verbose -O glassfish-grizzly-extra-all.jar ${GRIZZLY_PKG} && \
     mv glassfish-grizzly-extra-all.jar ${GLASSFISH_DIR}/glassfish/modules && \
     cp /etc/pki/ca-trust/extracted/java/cacerts ${GLASSFISH_DIR}/glassfish/domains/domain1/config/cacerts.jks
+
+# Make docroot of Glassfish reside in higher level directory for easier targeting
+RUN rm -rf ${DOMAIN_DIR}/docroot && \
+    ln -s ${DOCROOT_DIR} ${DOMAIN_DIR}/docroot
 
 # Tune basic settings
 # 1) Set to use Server VM
