@@ -12,8 +12,8 @@ In doubt consult the scripts and descriptors in this repository.
 
 ## Initial Deployment Procedure
 
-The below image shows all necessary steps by you (the user) or your deployment
-framework (like Terraform, Ansible and similar) for a new deployment of Dataverse.
+The below image shows all necessary steps by "you" (the user activity on the left) or your deployment
+framework (like Kustomization, Terraform, Ansible and similar) on your behalf for a new deployment of Dataverse.
 It also explains what happens in the background on an overview level.
 For more details please look at the demos or code.
 

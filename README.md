@@ -40,6 +40,7 @@ kubectl apply -k .
 You should make yourself familiar with a series of documentation articles, linked below:
 
 * [Container images](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md)
+* [Persistance storage](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/storage.md)
 * [Detailed insight into inner workings](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/how-it-works.md)
 * [Using Kubernetes descriptors from this project](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/reuse.md)
 * [Configuration of Dataverse](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md)
