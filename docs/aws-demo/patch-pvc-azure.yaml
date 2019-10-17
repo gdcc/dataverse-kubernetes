@@ -1,0 +1,39 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgresql
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: managed-premium
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: dataverse-files
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: managed-premium
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: solr
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: managed-premium
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
