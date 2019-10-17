@@ -35,14 +35,13 @@ spec:
             - name: SOLR_PORT  # Otherwise, this is wrongfully set by K8s.
               value: "8983"
           livenessProbe:
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 10
+            failureThreshold: 1
             httpGet:
               path: /solr/collection1/admin/ping
               port: index
           readinessProbe:
-            initialDelaySeconds: 10
-            periodSeconds: 5
+            initialDelaySeconds: 5
             httpGet:
               path: /solr/admin/info/system
               port: index
