@@ -8,6 +8,7 @@ bases:
 
 resources:
   - k8s/utils/demo-secrets.yaml
+  - k8s/dataverse/jobs/bootstrap.yaml
 
 images:
   - name: iqss/dataverse-k8s
