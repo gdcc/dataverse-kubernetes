@@ -3,12 +3,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 bases:
-  - ../../k8s/dataverse
-  - ../../k8s/solr
-  - ../../k8s/utils/postgresql
+  - ../demo
+  - github.com/poikilotherm/local-path-provisioner/deploy?ref=feature-kustomize-support
 
 resources:
-  - demo-secrets.yaml
+  - ingress.yaml
 
 patches:
   - patch-pvc-k3s.yaml
