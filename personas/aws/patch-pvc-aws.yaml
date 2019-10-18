@@ -18,6 +18,14 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
+  name: dataverse-docroot
+spec:
+  storageClassName: gp2
+  selector:
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
   name: solr
 spec:
   storageClassName: gp2
