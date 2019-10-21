@@ -4,7 +4,7 @@ kind: Kustomization
 
 bases:
   - ../demo
-  - github.com/poikilotherm/local-path-provisioner/deploy?ref=feature-kustomize-support
+  - github.com/rancher/local-path-provisioner/deploy
 
 resources:
   - ingress.yaml
