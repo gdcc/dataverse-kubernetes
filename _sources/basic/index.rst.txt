@@ -1,0 +1,10 @@
+=====
+Basic
+=====
+
+.. toctree::
+    :maxdepth: 1
+    :caption: Contents:
+
+    ./architecture
+    ./images
