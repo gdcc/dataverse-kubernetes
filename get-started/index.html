@@ -2,8 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -13,10 +12,10 @@
     <link rel="stylesheet" href="../_static/material-icons.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/notosanscjkjp.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/roboto.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/material-design-lite-1.3.0/material.deep_orange-red.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_materialdesign_theme.css" />
+    <link rel="stylesheet" href="../_static/notosanscjkjp.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/roboto.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.deep_orange-red.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
@@ -167,7 +166,7 @@ installation for any purpose on any kind of Kubernetes-based cloud infrastructur
 <p>You can use this on your laptop, in your on-prem datacentre or public cloud.
 With the power of <a class="reference external" href="http://kubernetes.io">Kubernetes</a>, many scenarios are possible.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
+<p class="admonition-title">Tip</p>
 <div class="line-block">
 <div class="line"><strong>tl;dr…</strong></div>
 </div>
@@ -176,12 +175,11 @@ With the power of <a class="reference external" href="http://kubernetes.io">Kube
 </pre></div>
 </div>
 <p>Wait. Regularly check logs and pods. Login with <code class="docutils literal notranslate"><span class="pre">dataverseAdmin:admin1</span></code>.</p>
-<table class="last docutils footnote" frame="void" id="id1" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td><em>Your mileage may vary due to storage classes. You really should look at the demos below.</em></td></tr>
-</tbody>
-</table>
+<dl class="footnote brackets">
+<dt class="label" id="id1"><span class="brackets">1</span></dt>
+<dd><p><em>Your mileage may vary due to storage classes. You really should look at the demos below.</em></p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="section" id="prerequisites-first-things-first">
@@ -200,8 +198,8 @@ CI/CD and your application? <em>Continue</em>.</p>
 </div>
 <p>You will at least need:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-kubectl">kubectl</a></li>
-<li><a class="reference external" href="https://git-scm.com/downloads">git</a> (or another VCS)</li>
+<li><p><a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-kubectl">kubectl</a></p></li>
+<li><p><a class="reference external" href="https://git-scm.com/downloads">git</a> (or another VCS)</p></li>
 </ul>
 <p>Depending on your use-case and targeted environment that might be just it.
 If something else is necessary, it’ll be documented in its respective documentation part.</p>
@@ -211,31 +209,34 @@ If something else is necessary, it’ll be documented in its respective document
 <p>If you never used Kubernetes, but want to deploy to production, you definitely
 should be reading some docs first. Some starting points:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://kubernetes.io/docs/tutorials/kubernetes-basics/">https://kubernetes.io/docs/tutorials/kubernetes-basics/</a></li>
-<li><a class="reference external" href="https://ramitsurana.github.io/awesome-kubernetes/">https://ramitsurana.github.io/awesome-kubernetes/</a></li>
+<li><p><a class="reference external" href="https://kubernetes.io/docs/tutorials/kubernetes-basics/">https://kubernetes.io/docs/tutorials/kubernetes-basics/</a></p></li>
+<li><p><a class="reference external" href="https://ramitsurana.github.io/awesome-kubernetes/">https://ramitsurana.github.io/awesome-kubernetes/</a></p></li>
 </ul>
 <div class="line-block">
 <div class="line"><strong>4. Grab a cluster</strong></div>
 </div>
 <p>You’ll need a running and fully configured Kubernetes cluster.</p>
 <ul class="simple">
-<li>Local options:<ul>
-<li><a class="reference external" href="https://k3s.io">k3s</a></li>
-<li><a class="reference external" href="https://kubernetes.io/docs/setup/learning-environment/minikube/">minikube</a></li>
-<li><a class="reference external" href="https://microk8s.io">microk8s</a></li>
-<li><a class="reference external" href="https://kind.sigs.k8s.io/">kind</a></li>
+<li><p>Local options:</p>
+<ul>
+<li><p><a class="reference external" href="https://k3s.io">k3s</a></p></li>
+<li><p><a class="reference external" href="https://kubernetes.io/docs/setup/learning-environment/minikube/">minikube</a></p></li>
+<li><p><a class="reference external" href="https://microk8s.io">microk8s</a></p></li>
+<li><p><a class="reference external" href="https://kind.sigs.k8s.io/">kind</a></p></li>
 </ul>
 </li>
-<li>Deploy your own cluster. Many tools to choose from. Examples:<ul>
-<li><a class="reference external" href="https://kubernetes.io/docs/setup/production-environment/tools/kops/">kops</a></li>
-<li><a class="reference external" href="https://kubernetes.io/docs/setup/production-environment/tools/kubespray/">kubespray</a></li>
+<li><p>Deploy your own cluster. Many tools to choose from. Examples:</p>
+<ul>
+<li><p><a class="reference external" href="https://kubernetes.io/docs/setup/production-environment/tools/kops/">kops</a></p></li>
+<li><p><a class="reference external" href="https://kubernetes.io/docs/setup/production-environment/tools/kubespray/">kubespray</a></p></li>
 </ul>
 </li>
-<li>Use a hosted solution. Some example services at<ul>
-<li>Google: <a class="reference external" href="https://cloud.google.com/kubernetes-engine">GKE</a></li>
-<li>Microsoft: <a class="reference external" href="https://azure.microsoft.com/services/kubernetes-service">Azure AKS</a></li>
-<li>Amazon: <a class="reference external" href="https://aws.amazon.com/de/eks">AWS EKS</a></li>
-<li>RedHat: <a class="reference external" href="https://www.openshift.com">OpenShift</a></li>
+<li><p>Use a hosted solution. Some example services at</p>
+<ul>
+<li><p>Google: <a class="reference external" href="https://cloud.google.com/kubernetes-engine">GKE</a></p></li>
+<li><p>Microsoft: <a class="reference external" href="https://azure.microsoft.com/services/kubernetes-service">Azure AKS</a></p></li>
+<li><p>Amazon: <a class="reference external" href="https://aws.amazon.com/de/eks">AWS EKS</a></p></li>
+<li><p>RedHat: <a class="reference external" href="https://www.openshift.com">OpenShift</a></p></li>
 </ul>
 </li>
 </ul>
@@ -246,11 +247,11 @@ should be reading some docs first. Some starting points:</p>
 DataCite, EZID or similar, you will need active accounts. Be sure to have
 access credentials around. As an alternative, you might want to use the FAKE provider.</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p>For more information on Dataverses supported providers:</p>
-<ul class="last simple">
-<li><a class="reference external" href="http://guides.dataverse.org/en/latest/installation/config.html#persistent-identifiers-and-publishing-datasets">Installation Guide: Persistent Identifiers and Publishing Datasets</a></li>
-<li><a class="reference external" href="http://guides.dataverse.org/en/latest/installation/config.html#doiprovider">Installation Guide: Configuration Option :DoiProvider</a></li>
+<ul class="simple">
+<li><p><a class="reference external" href="http://guides.dataverse.org/en/latest/installation/config.html#persistent-identifiers-and-publishing-datasets">Installation Guide: Persistent Identifiers and Publishing Datasets</a></p></li>
+<li><p><a class="reference external" href="http://guides.dataverse.org/en/latest/installation/config.html#doiprovider">Installation Guide: Configuration Option :DoiProvider</a></p></li>
 </ul>
 </div>
 </div>
@@ -260,30 +261,32 @@ access credentials around. As an alternative, you might want to use the FAKE pro
 <h3>1. Demo time!<a class="headerlink" href="#demo-time" title="Permalink to this headline">¶</a></h3>
 <p>Demos provide showcases what Dataverse can do for you. Currently pre-packaged:</p>
 <ul class="simple">
-<li>Local<ul>
-<li>Using <code class="docutils literal notranslate"><span class="pre">minikube</span></code>, see <span class="xref std std-doc">demo/minikube</span></li>
-<li>Using <code class="docutils literal notranslate"><span class="pre">k3s</span></code>, see <span class="xref std std-doc">demo/k3s</span></li>
+<li><p>Local</p>
+<ul>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">minikube</span></code>, see <span class="xref std std-doc">demo/minikube</span></p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">k3s</span></code>, see <span class="xref std std-doc">demo/k3s</span></p></li>
 </ul>
 </li>
-<li>Cloud-based<ul>
-<li>Using <code class="docutils literal notranslate"><span class="pre">kops</span></code> on Amazon EC2 VMs, see <span class="xref std std-doc">demo/aws-kops</span></li>
+<li><p>Cloud-based</p>
+<ul>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">kops</span></code> on Amazon EC2 VMs, see <span class="xref std std-doc">demo/aws-kops</span></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="developing-is-my-thing">
 <h3>2. Developing is my thing<a class="headerlink" href="#developing-is-my-thing" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">This needs yet to be refactored.</p>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>This needs yet to be refactored.</p>
 </div>
 <p>First, you will need to read up and get familiar with all of the above about production usage.
 More details about usage for developing Dataverse below.</p>
 <ul class="simple">
-<li>[Development container images](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md#development-images">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md#development-images</a>)</li>
-<li>[Prepare toolchain](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#prepare-toolchain">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#prepare-toolchain</a>)</li>
-<li>[Using local cluster](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#local-cluster">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#local-cluster</a>)</li>
-<li>[Using remote cluster](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#remote-cluster">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#remote-cluster</a>) (not yet supported)</li>
+<li><p>[Development container images](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md#development-images">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md#development-images</a>)</p></li>
+<li><p>[Prepare toolchain](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#prepare-toolchain">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#prepare-toolchain</a>)</p></li>
+<li><p>[Using local cluster](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#local-cluster">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#local-cluster</a>)</p></li>
+<li><p>[Using remote cluster](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#remote-cluster">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#remote-cluster</a>) (not yet supported)</p></li>
 </ul>
 <p>&lt;small&gt;
 &lt;details&gt;
@@ -301,20 +304,20 @@ not (or cannot) be included in Dataverse upstream.</p>
 </div>
 <div class="section" id="gimme-the-production-stuff">
 <h3>3. Gimme the <em>production</em> stuff<a class="headerlink" href="#gimme-the-production-stuff" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="index-1">
-<p class="first admonition-title">Todo</p>
-<p class="last">This needs yet to be refactored.</p>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>This needs yet to be refactored.</p>
 </div>
 <p>You should make yourself familiar with a series of documentation articles, linked below:</p>
 <ul class="simple">
-<li>[Container images](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md</a>)</li>
-<li>[Persistance storage](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/storage.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/storage.md</a>)</li>
-<li>[Detailed insight into inner workings](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/how-it-works.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/how-it-works.md</a>)</li>
-<li>[Using Kubernetes descriptors from this project](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/reuse.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/reuse.md</a>)</li>
-<li>[Configuration of Dataverse](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md</a>)</li>
-<li>[Secrets usage](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md</a>)</li>
-<li>[(Custom) Metadata Blocks](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/metadata.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/metadata.md</a>)</li>
-<li>[Maintenance Jobs and Little Helpers](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md</a>)</li>
+<li><p>[Container images](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md</a>)</p></li>
+<li><p>[Persistance storage](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/storage.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/storage.md</a>)</p></li>
+<li><p>[Detailed insight into inner workings](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/how-it-works.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/how-it-works.md</a>)</p></li>
+<li><p>[Using Kubernetes descriptors from this project](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/reuse.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/reuse.md</a>)</p></li>
+<li><p>[Configuration of Dataverse](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md</a>)</p></li>
+<li><p>[Secrets usage](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md</a>)</p></li>
+<li><p>[(Custom) Metadata Blocks](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/metadata.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/metadata.md</a>)</p></li>
+<li><p>[Maintenance Jobs and Little Helpers](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md</a>)</p></li>
 </ul>
 <p>Please be aware that this project currently only offers images and support
 for basic usage. Integrations are not yet part of this, but may be added as needed.
@@ -325,8 +328,8 @@ See also relevant docs within Dataverse guides and upstream projects.</p>
 <p>One of the true superpowers of Dataverse is its ability to integrate with external
 tools. Previewers, data analysis, data capturing and many more await you.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">Currently, none of these are supported or maintained by this project, although
+<p class="admonition-title">Hint</p>
+<p>Currently, none of these are supported or maintained by this project, although
 this is a mid-term goal. If you feel a need, raise an issue. You are most
 welcome to contribute.</p>
 </div>
@@ -394,7 +397,7 @@ welcome to contribute.</p>
 
     <div class="mdl-mini-footer__right-section">
         <div>&copy; Copyright 2019, Forschungszentrum Jülich GmbH and The President &amp; Fellows of Harvard College.</div>
-      <div>Generated by <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.4 using <a href="https://github.com/myyasuda/sphinx_materialdesign_theme">sphinx_materialdesign_theme</a>.</div>
+      <div>Generated by <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.2.0 using <a href="https://github.com/myyasuda/sphinx_materialdesign_theme">sphinx_materialdesign_theme</a>.</div>
     </div>
 </footer>
         </main>
