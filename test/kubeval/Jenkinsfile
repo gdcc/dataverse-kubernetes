@@ -41,23 +41,71 @@ pipeline {
           }
         }
         stage ("1.13.11") {
-          steps {
-            sh "${KUBEVAL_DIR}/lint-k8s.sh 1.13.11"
+          environment {
+            K8S_RELEASE = "${env.STAGE_NAME}"
+          }
+          stages {
+            stage ("K8s objects") {
+              steps {
+                sh "${KUBEVAL_DIR}/lint-k8s.sh ${env.K8S_RELEASE}"
+              }
+            }
+            stage ("Kustomize.io") {
+              steps {
+                sh "${KUBEVAL_DIR}/lint-kustomize.sh ${env.K8S_RELEASE}"
+              }
+            }
           }
         }
         stage ("1.14.7") {
-          steps {
-            sh "${KUBEVAL_DIR}/lint-k8s.sh 1.14.7"
+          environment {
+            K8S_RELEASE = "${env.STAGE_NAME}"
+          }
+          stages {
+            stage ("K8s objects") {
+              steps {
+                sh "${KUBEVAL_DIR}/lint-k8s.sh ${env.K8S_RELEASE}"
+              }
+            }
+            stage ("Kustomize.io") {
+              steps {
+                sh "${KUBEVAL_DIR}/lint-kustomize.sh ${env.K8S_RELEASE}"
+              }
+            }
           }
         }
         stage ("1.15.5") {
-          steps {
-            sh "${KUBEVAL_DIR}/lint-k8s.sh 1.15.4"
+          environment {
+            K8S_RELEASE = "${env.STAGE_NAME}"
+          }
+          stages {
+            stage ("K8s objects") {
+              steps {
+                sh "${KUBEVAL_DIR}/lint-k8s.sh ${env.K8S_RELEASE}"
+              }
+            }
+            stage ("Kustomize.io") {
+              steps {
+                sh "${KUBEVAL_DIR}/lint-kustomize.sh ${env.K8S_RELEASE}"
+              }
+            }
           }
         }
         stage ("1.16.0") {
-          steps {
-            sh "${KUBEVAL_DIR}/lint-k8s.sh 1.16.0"
+          environment {
+            K8S_RELEASE = "${env.STAGE_NAME}"
+          }
+          stages {
+            stage ("K8s objects") {
+              steps {
+                sh "${KUBEVAL_DIR}/lint-k8s.sh ${env.K8S_RELEASE}"
+              }
+            }
+            stage ("Kustomize.io") {
+              steps {
+                sh "${KUBEVAL_DIR}/lint-kustomize.sh ${env.K8S_RELEASE}"
+              }
+            }
           }
         }
       }
