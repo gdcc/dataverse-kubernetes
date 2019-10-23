@@ -1,0 +1,65 @@
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "${env.GIT_URL}"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/sphinx"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+pipeline {
+  agent any
+  stages {
+    stage('Clone') {
+      steps {
+        checkout scm
+      }
+    }
+    stage('Build and Deploy') {
+      when {
+        changeset "docs/**"
+      }
+      stages {
+        stage("Convert to HTML") {
+          agent {
+            dockerfile {
+              filename 'Dockerfile'
+              dir 'docs'
+              additionalBuildArgs '--pull'
+            }
+          }
+          steps {
+            sh "sphinx-build -b html docs build"
+            dir("build") {
+              stash name:'build', includes:'**'
+            }
+          }
+        }
+        stage('Deploy to GitHub') {
+          environment {
+            ID = "${env.GIT_COMMIT}"
+            AUTHOR = "Dataverse Bot"
+            EMAIL = "52299539+dataversebot@users.noreply.github.com"
+          }
+          steps {
+            git branch: 'gh-pages', url: "${env.GIT_URL}"
+            unstash "build"
+            withCredentials([usernamePassword(credentialsId: 'github-dataversebot', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+              sh "git commit --author='${env.AUTHOR} <${env.EMAIL}>' -au -m \"Update from Jenkins due to commit ${env.ID}\""
+              sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/IQSS/dataverse-kubernetes.git gh-pages')
+            }
+          }
+        }
+      }
+    }
+  }
+  post {
+    success {
+        setBuildStatus("Docs generated and shipped", "SUCCESS");
+    }
+    failure {
+        setBuildStatus("Docs generation failed", "FAILURE");
+    }
+  }
+}
