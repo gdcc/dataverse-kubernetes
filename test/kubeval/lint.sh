@@ -4,10 +4,10 @@ KUBEVAL_DIR=${KUBEVAL_DIR:-"test/kubeval"}
 
 echo "Running kubeval with schema for k8s v${K8S_RELEASE}"
 
-find k8s -name '*.yaml' ! -name 'kustomization.yaml' -print0 | xargs -0 "${KUBEVAL_DIR}/kubeval" -v ${K8S_RELEASE}
+find k8s -name '*.yaml'  -print0 | xargs -0 "${KUBEVAL_DIR}/kubeval" --skip-kinds Kustomization -v ${K8S_RELEASE}
 status_k8s=$?
 
-find docs -name '*.yaml' ! -name 'kustomization.yaml' ! -name 'patch*.yaml' -print0 | xargs -0 "${KUBEVAL_DIR}/kubeval" -v ${K8S_RELEASE}
+find personas -name '*.yaml' ! -name 'patch*.yaml' -print0 | xargs -0 "${KUBEVAL_DIR}/kubeval" --skip-kinds Kustomization -v ${K8S_RELEASE}
 status_docs=$?
 
 if [ "$status_k8s" = 0 ] && [ "$status_docs" = 0 ] ; then
