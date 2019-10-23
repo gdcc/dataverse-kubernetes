@@ -25,27 +25,27 @@ pipeline {
       parallel {
         stage ("K8s 1.12.10") {
           steps {
-            sh "${KUBEVAL_DIR}/lint.sh 1.12.10"
+            sh "${KUBEVAL_DIR}/lint-k8s.sh 1.12.10"
           }
         }
         stage ("K8s 1.13.11") {
           steps {
-            sh "${KUBEVAL_DIR}/lint.sh 1.13.11"
+            sh "${KUBEVAL_DIR}/lint-k8s.sh 1.13.11"
           }
         }
         stage ("K8s 1.14.7") {
           steps {
-            sh "${KUBEVAL_DIR}/lint.sh 1.14.7"
+            sh "${KUBEVAL_DIR}/lint-k8s.sh 1.14.7"
           }
         }
         stage ("K8s 1.15.5") {
           steps {
-            sh "${KUBEVAL_DIR}/lint.sh 1.15.4"
+            sh "${KUBEVAL_DIR}/lint-k8s.sh 1.15.4"
           }
         }
-        stage ("K8s 1.16.9") {
+        stage ("K8s 1.16.0") {
           steps {
-            sh "${KUBEVAL_DIR}/lint.sh 1.16.0"
+            sh "${KUBEVAL_DIR}/lint-k8s.sh 1.16.0"
           }
         }
       }
