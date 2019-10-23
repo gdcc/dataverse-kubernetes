@@ -16,7 +16,7 @@ spec:
         app.kubernetes.io/part-of: dataverse
     spec:
       containers:
-        - name: dv-bootstrap
+        - name: bootstrap
           image: iqss/dataverse-k8s
           command: ["scripts/bootstrap-job.sh"]
           envFrom:

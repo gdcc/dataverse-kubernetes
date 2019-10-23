@@ -3,53 +3,44 @@
 This how-to suggests you have a working [Minikube](https://kubernetes.io/docs/setup/minikube/)
 installation at hands. If not, follow the upstream instructions to get started.
 
-**IMPORTANT**
-* *Due to an upstream Kubernetes bug, documented in kubernetes/kubernetes#78308,*
-  *you will need to ensure not using K8s v1.13.6 or v1.14.2.*
-* Start your Minikube VM with `--kubernetes-version=v1.14.1` as a workaround!
-
+### Setup Minikube
 Please provide at least 4096 MB of RAM for the Minikube VM, as Dataverse will
 use **a lot** of RAM during deployment and at least 1024 MB when idle:
 ```
 minikube start --memory=4096
+minikube addon enable ingress
 ```
+*Note:* There have been mentions of a OOM-killed API Server on Windows using VirtualBox.
+When this happens, please delete and start over with 8096 MB memory.
 
-First you will need to create a physical volume to store data on:
-(You will not need to do this using Minikube equal or newer than v1.1.0)
+### Deploy Dataverse Demo
+Now let's create some resources with a habit of "fire'n'forget" (at least till
+its ready) to create a demo:
 ```
-kubectl create -f k8s/utils/pv-hostPath.yaml
-```
-
-Now let's create some secrets that will be used for Postgres, DataCite DOI
-registration and API unblocking:
-```
-kubectl create -f k8s/utils/demo-secrets.yaml
-```
-It deploys very simple non productive secrets, stored in cleartext at [demo-secrets.yaml](../k8s/utils/demo-secrets.yaml)
-
-Let's deploy PostgreSQL and Solr now:
-```
-kubectl apply -f k8s/utils/postgresql
-kubectl apply -f k8s/solr
-```
-
-Once PostgreSQL and Solr are ready, deploy Dataverse:
-```
-kubectl apply -f k8s/dataverse
-```
-
-Once the deployment finishes successfully, you will need to bootstrap the installation.
-You can simply create the job, it will wait for Postgres, Solr and Dataverse to be ready.
-```
-kubectl apply -f k8s/dataverse/jobs/bootstrap.yaml
+kubectl apply -k personas/minikube
 ```
 
 You can check the status of the containers and the bootstrapping job from
 the output of `kubectl get pods,jobs` and `kubectl logs`.
 
-If you want to use this basic deployment for development, testing or demo cases,
-you can just execute the following to open Dataverse in your browser:
+### Make Dataverse reachable via browser
+While you wait for the deployment to happen, you can add the `Ingress` IP address
+to your `/etc/hosts`:
 ```
-kubectl expose deployment dataverse --type=NodePort --name=dataverse-local
-minikube service dataverse-local
+kubectl get ingress
 ```
+Take a note of the IP address (it might take a while till it appears, try again)
+and add it to `/etc/hosts`:
+```
+IP.of.Ingress.here dataverse.demo
+```
+
+As soon as the deployment finished, you can reach your freshly baked Dataverse
+demo via your browser at http://dataverse.demo.
+
+Default login for this demo is `dataverseAdmin:admin1`. [See all secrets documentation](secrets.md).
+
+### A word on deployment times
+On a 3 year old laptop with 16 GB RAM, SSD, a Core i5-6300U and a fairly fast
+internet connection for image pulling it takes about 6 to 8 minutes from zero
+to hero, not including any installation time for minikube, VirtualBox or kubectl.
