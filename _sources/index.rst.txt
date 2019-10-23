@@ -10,6 +10,5 @@
     :maxdepth: 2
     :caption: Contents:
 
-..    ./get-started
-    basic/index
+    get-started/index
     ./roadmap

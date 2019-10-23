@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>Getting started &#8212; Dataverse on Kubernetes 4.16 documentation</title>
+
+    <link rel="stylesheet" href="../_static/material-icons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/notosanscjkjp.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/roboto.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/material-design-lite-1.3.0/material.deep_orange-red.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_materialdesign_theme.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Roadmap" href="../roadmap.html" />
+    <link rel="prev" title="Deploying, Running and Using Dataverse on Kubernetes" href="../index.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link is-active">Getting started</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+            <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/get-started/index.rst.txt" rel="nofollow">
+<i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          <a  class="mdl-navigation__link" href="../index.html">
+                  <i class="material-icons navigation-link-icon">home</i>
+                  Home
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://github.com/IQSS/dataverse-kubernetes">
+                  <i class="material-icons navigation-link-icon">link</i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="http://dataverse.org">
+                  <i class="material-icons navigation-link-icon">launch</i>
+                  Dataverse Project
+              </a>
+          
+              <a  class="mdl-navigation__link" href="http://guides.dataverse.org">
+                  <i class="material-icons navigation-link-icon">settings_applications</i>
+                  Dataverse Guides
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/dataverse-bot-think-k8s.png" alt="Dataverse on Kubernetes"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+<header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/dataverse-bot-think-k8s.png" alt="Dataverse on Kubernetes"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content">
+        
+  <div class="section" id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction-what-s-this-all-about">
+<h2>Introduction: what’s this all about?<a class="headerlink" href="#introduction-what-s-this-all-about" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://dataverse.org">The dataverse project</a> describes itself as:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">Dataverse is an open source web application to share, preserve, cite, explore,</div>
+<div class="line">and analyze research data. It facilitates making data available to others, and</div>
+<div class="line">allows you to replicate others’ work more easily. Researchers, journals, data</div>
+<div class="line">authors, publishers, data distributors, and affiliated institutions all receive</div>
+<div class="line">academic credit and web visibility.</div>
+</div>
+</div></blockquote>
+<p>This project aims at offering a new way to deploy, run and maintain a Dataverse
+installation for any purpose on any kind of Kubernetes-based cloud infrastructure.</p>
+<p>You can use this on your laptop, in your on-prem datacentre or public cloud.
+With the power of <a class="reference external" href="http://kubernetes.io">Kubernetes</a>, many scenarios are possible.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<div class="line-block">
+<div class="line"><strong>tl;dr…</strong></div>
+</div>
+<p>Quick’n’dirty demo persona on naked cluster <sup>[1]</sup>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl apply -k github.com/IQSS/dataverse-kubernetes
+</pre></div>
+</div>
+<p>Wait. Regularly check logs and pods. Login with <code class="docutils literal notranslate"><span class="pre">dataverseAdmin:admin1</span></code>.</p>
+<table class="last docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>Your mileage may vary due to storage classes. You really should look at the demos below.</em></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="prerequisites-first-things-first">
+<h2>Prerequisites: First things first.<a class="headerlink" href="#prerequisites-first-things-first" title="Permalink to this headline">¶</a></h2>
+<p>Before you start deploying, make sure to look at the following checklist:</p>
+<div class="line-block">
+<div class="line"><strong>1. Think first</strong></div>
+</div>
+<p>If you never touched a commandline, never thought about why using cloud
+infrastructure might be a good idea: maybe you should stick with the old,
+but paved and solid ways of installing complex applications like Dataverse.</p>
+<p>Keen to learn new technology? Be part of the future? Want to streamline
+CI/CD and your application? <em>Continue</em>.</p>
+<div class="line-block">
+<div class="line"><strong>2. Install tools</strong></div>
+</div>
+<p>You will at least need:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-kubectl">kubectl</a></li>
+<li><a class="reference external" href="https://git-scm.com/downloads">git</a> (or another VCS)</li>
+</ul>
+<p>Depending on your use-case and targeted environment that might be just it.
+If something else is necessary, it’ll be documented in its respective documentation part.</p>
+<div class="line-block">
+<div class="line"><strong>3. Grasp some knowledge</strong></div>
+</div>
+<p>If you never used Kubernetes, but want to deploy to production, you definitely
+should be reading some docs first. Some starting points:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://kubernetes.io/docs/tutorials/kubernetes-basics/">https://kubernetes.io/docs/tutorials/kubernetes-basics/</a></li>
+<li><a class="reference external" href="https://ramitsurana.github.io/awesome-kubernetes/">https://ramitsurana.github.io/awesome-kubernetes/</a></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>4. Grab a cluster</strong></div>
+</div>
+<p>You’ll need a running and fully configured Kubernetes cluster.</p>
+<ul class="simple">
+<li>Local options:<ul>
+<li><a class="reference external" href="https://k3s.io">k3s</a></li>
+<li><a class="reference external" href="https://kubernetes.io/docs/setup/learning-environment/minikube/">minikube</a></li>
+<li><a class="reference external" href="https://microk8s.io">microk8s</a></li>
+<li><a class="reference external" href="https://kind.sigs.k8s.io/">kind</a></li>
+</ul>
+</li>
+<li>Deploy your own cluster. Many tools to choose from. Examples:<ul>
+<li><a class="reference external" href="https://kubernetes.io/docs/setup/production-environment/tools/kops/">kops</a></li>
+<li><a class="reference external" href="https://kubernetes.io/docs/setup/production-environment/tools/kubespray/">kubespray</a></li>
+</ul>
+</li>
+<li>Use a hosted solution. Some example services at<ul>
+<li>Google: <a class="reference external" href="https://cloud.google.com/kubernetes-engine">GKE</a></li>
+<li>Microsoft: <a class="reference external" href="https://azure.microsoft.com/services/kubernetes-service">Azure AKS</a></li>
+<li>Amazon: <a class="reference external" href="https://aws.amazon.com/de/eks">AWS EKS</a></li>
+<li>RedHat: <a class="reference external" href="https://www.openshift.com">OpenShift</a></li>
+</ul>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>5. Choose persistent identifiers</strong></div>
+</div>
+<p>When you want to register datasets and/or files in your deployment to
+DataCite, EZID or similar, you will need active accounts. Be sure to have
+access credentials around. As an alternative, you might want to use the FAKE provider.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p>For more information on Dataverses supported providers:</p>
+<ul class="last simple">
+<li><a class="reference external" href="http://guides.dataverse.org/en/latest/installation/config.html#persistent-identifiers-and-publishing-datasets">Installation Guide: Persistent Identifiers and Publishing Datasets</a></li>
+<li><a class="reference external" href="http://guides.dataverse.org/en/latest/installation/config.html#doiprovider">Installation Guide: Configuration Option :DoiProvider</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="use-cases-what-installation-persona-are-you">
+<h2>Use Cases: What installation persona are you?<a class="headerlink" href="#use-cases-what-installation-persona-are-you" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="demo-time">
+<h3>1. Demo time!<a class="headerlink" href="#demo-time" title="Permalink to this headline">¶</a></h3>
+<p>Demos provide showcases what Dataverse can do for you. Currently pre-packaged:</p>
+<ul class="simple">
+<li>Local<ul>
+<li>Using <code class="docutils literal notranslate"><span class="pre">minikube</span></code>, see <span class="xref std std-doc">demo/minikube</span></li>
+<li>Using <code class="docutils literal notranslate"><span class="pre">k3s</span></code>, see <span class="xref std std-doc">demo/k3s</span></li>
+</ul>
+</li>
+<li>Cloud-based<ul>
+<li>Using <code class="docutils literal notranslate"><span class="pre">kops</span></code> on Amazon EC2 VMs, see <span class="xref std std-doc">demo/aws-kops</span></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="developing-is-my-thing">
+<h3>2. Developing is my thing<a class="headerlink" href="#developing-is-my-thing" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">This needs yet to be refactored.</p>
+</div>
+<p>First, you will need to read up and get familiar with all of the above about production usage.
+More details about usage for developing Dataverse below.</p>
+<ul class="simple">
+<li>[Development container images](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md#development-images">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md#development-images</a>)</li>
+<li>[Prepare toolchain](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#prepare-toolchain">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#prepare-toolchain</a>)</li>
+<li>[Using local cluster](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#local-cluster">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#local-cluster</a>)</li>
+<li>[Using remote cluster](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#remote-cluster">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#remote-cluster</a>) (not yet supported)</li>
+</ul>
+<p>&lt;small&gt;
+&lt;details&gt;
+&lt;summary&gt;If you think this is weird and/or cumbersome:&lt;/summary&gt;
+As long as K8s usage is not a first class citizen for IQSS, this project should
+not (or cannot) be included in Dataverse upstream.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`diff</span>
+<span class="pre">+</span> <span class="pre">We</span> <span class="pre">don't</span> <span class="pre">have</span> <span class="pre">to</span> <span class="pre">deal</span> <span class="pre">with</span> <span class="pre">upstream</span> <span class="pre">merge</span> <span class="pre">process</span> <span class="pre">for</span> <span class="pre">PRs</span> <span class="pre">and</span> <span class="pre">can</span> <span class="pre">move</span> <span class="pre">quicker.</span>
+<span class="pre">+</span> <span class="pre">We</span> <span class="pre">can</span> <span class="pre">use</span> <span class="pre">tools</span> <span class="pre">like</span> <span class="pre">Skaffold,</span> <span class="pre">Kustomization,</span> <span class="pre">etc</span> <span class="pre">only</span> <span class="pre">usable</span> <span class="pre">when</span> <span class="pre">living</span> <span class="pre">at</span> <span class="pre">the</span> <span class="pre">topmost</span> <span class="pre">level.</span>
+<span class="pre">-</span> <span class="pre">We</span> <span class="pre">have</span> <span class="pre">to</span> <span class="pre">deal</span> <span class="pre">with</span> <span class="pre">`git</span> <span class="pre">submodules`</span> <span class="pre">and</span> <span class="pre">somewhat</span> <span class="pre">bloated</span> <span class="pre">image</span> <span class="pre">builds.</span>
+<span class="pre">-</span> <span class="pre">We</span> <span class="pre">cannot</span> <span class="pre">use</span> <span class="pre">fancy</span> <span class="pre">Maven</span> <span class="pre">tools</span> <span class="pre">like</span> <span class="pre">JIB</span> <span class="pre">and</span> <span class="pre">others.</span>
+<span class="pre">`</span></code>
+&lt;/details&gt;
+&lt;/small&gt;</p>
+</div>
+<div class="section" id="gimme-the-production-stuff">
+<h3>3. Gimme the <em>production</em> stuff<a class="headerlink" href="#gimme-the-production-stuff" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">This needs yet to be refactored.</p>
+</div>
+<p>You should make yourself familiar with a series of documentation articles, linked below:</p>
+<ul class="simple">
+<li>[Container images](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md</a>)</li>
+<li>[Persistance storage](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/storage.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/storage.md</a>)</li>
+<li>[Detailed insight into inner workings](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/how-it-works.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/how-it-works.md</a>)</li>
+<li>[Using Kubernetes descriptors from this project](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/reuse.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/reuse.md</a>)</li>
+<li>[Configuration of Dataverse](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/config.md</a>)</li>
+<li>[Secrets usage](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/secrets.md</a>)</li>
+<li>[(Custom) Metadata Blocks](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/metadata.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/metadata.md</a>)</li>
+<li>[Maintenance Jobs and Little Helpers](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/little-helpers.md</a>)</li>
+</ul>
+<p>Please be aware that this project currently only offers images and support
+for basic usage. Integrations are not yet part of this, but may be added as needed.
+See also relevant docs within Dataverse guides and upstream projects.</p>
+</div>
+<div class="section" id="integrate-yourself">
+<h3>4. Integrate yourself!<a class="headerlink" href="#integrate-yourself" title="Permalink to this headline">¶</a></h3>
+<p>One of the true superpowers of Dataverse is its ability to integrate with external
+tools. Previewers, data analysis, data capturing and many more await you.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Currently, none of these are supported or maintained by this project, although
+this is a mid-term goal. If you feel a need, raise an issue. You are most
+welcome to contribute.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">Getting started</a><ul>
+<li><a class="reference internal" href="#introduction-what-s-this-all-about">Introduction: what’s this all about?</a></li>
+<li><a class="reference internal" href="#prerequisites-first-things-first">Prerequisites: First things first.</a></li>
+<li><a class="reference internal" href="#use-cases-what-installation-persona-are-you">Use Cases: What installation persona are you?</a><ul>
+<li><a class="reference internal" href="#demo-time">1. Demo time!</a></li>
+<li><a class="reference internal" href="#developing-is-my-thing">2. Developing is my thing</a></li>
+<li><a class="reference internal" href="#gimme-the-production-stuff">3. Gimme the <em>production</em> stuff</a></li>
+<li><a class="reference internal" href="#integrate-yourself">4. Integrate yourself!</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="../index.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L material-icons">arrow_back</i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>Deploying, Running and Using Dataverse on Kubernetes</div>
+         </div>
+     </a>
+     <a id="button-next" href="../roadmap.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+        <i class="pagenation-arrow-R material-icons">arrow_forward</i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>Roadmap</div>
+        </div>
+     </a>
+  </div>
+        <footer class="mdl-mini-footer">
+    <div class="mdl-mini-footer__left-section">
+      <div class="mdl-logo">Dataverse on Kubernetes</div>
+      <div>
+        
+        <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+</ul>
+
+      </div>
+    </div>
+
+    <div class="mdl-mini-footer__right-section">
+        <div>&copy; Copyright 2019, Forschungszentrum Jülich GmbH and The President &amp; Fellows of Harvard College.</div>
+      <div>Generated by <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.4 using <a href="https://github.com/myyasuda/sphinx_materialdesign_theme">sphinx_materialdesign_theme</a>.</div>
+    </div>
+</footer>
+        </main>
+    </div>
+  </body>
+</html>
