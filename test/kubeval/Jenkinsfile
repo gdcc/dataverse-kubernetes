@@ -74,7 +74,7 @@ pipeline {
             }
           }
         }
-        stage ("1.15.5") {
+        stage ("1.15.4") {
           environment {
             K8S_RELEASE = "${env.STAGE_NAME}"
           }
