@@ -15,7 +15,7 @@ pipeline {
     KUBEVAL_RELEASE= "0.14.0"
   }
   stages {
-    stage ("Prepare kubeval") {
+    stage ("Prepare") {
       steps {
         setBuildStatus("Awaiting KubeVal validation...", "PENDING")
         sh "${KUBEVAL_DIR}/prepare.sh"
@@ -23,27 +23,39 @@ pipeline {
     }
     stage ("KubeVal Linting") {
       parallel {
-        stage ("K8s 1.12.10") {
-          steps {
-            sh "${KUBEVAL_DIR}/lint-k8s.sh 1.12.10"
+        stage ("1.12.10") {
+          environment {
+            K8S_RELEASE = "${env.STAGE_NAME}"
+          }
+          stages {
+            stage ("K8s objects") {
+              steps {
+                sh "${KUBEVAL_DIR}/lint-k8s.sh ${env.K8S_RELEASE}"
+              }
+            }
+            stage ("Kustomize.io") {
+              steps {
+                sh "${KUBEVAL_DIR}/lint-kustomize.sh ${env.K8S_RELEASE}"
+              }
+            }
           }
         }
-        stage ("K8s 1.13.11") {
+        stage ("1.13.11") {
           steps {
             sh "${KUBEVAL_DIR}/lint-k8s.sh 1.13.11"
           }
         }
-        stage ("K8s 1.14.7") {
+        stage ("1.14.7") {
           steps {
             sh "${KUBEVAL_DIR}/lint-k8s.sh 1.14.7"
           }
         }
-        stage ("K8s 1.15.5") {
+        stage ("1.15.5") {
           steps {
             sh "${KUBEVAL_DIR}/lint-k8s.sh 1.15.4"
           }
         }
-        stage ("K8s 1.16.0") {
+        stage ("1.16.0") {
           steps {
             sh "${KUBEVAL_DIR}/lint-k8s.sh 1.16.0"
           }
