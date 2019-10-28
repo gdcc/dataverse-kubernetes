@@ -23,7 +23,7 @@ With the power of `Kubernetes <http://kubernetes.io>`_, many scenarios are possi
 .. tip::
 
   | **tl;dr...**
-  Quick'n'dirty demo persona on naked cluster :sup:`[1]`:
+  | Quick'n'dirty demo persona on naked cluster [1]_:
 
   .. code-block:: shell
 
@@ -45,6 +45,7 @@ Prerequisites: First things first.
 Before you start deploying, make sure to look at the following checklist:
 
 | **1. Think first**
+
 If you never touched a commandline, never thought about why using cloud
 infrastructure might be a good idea: maybe you should stick with the old,
 but paved and solid ways of installing complex applications like Dataverse.
@@ -53,6 +54,7 @@ Keen to learn new technology? Be part of the future? Want to streamline
 CI/CD and your application? *Continue*.
 
 | **2. Install tools**
+
 You will at least need:
 
 - `kubectl <https://kubernetes.io/docs/tasks/tools/install-kubectl>`_
@@ -62,6 +64,7 @@ Depending on your use-case and targeted environment that might be just it.
 If something else is necessary, it'll be documented in its respective documentation part.
 
 | **3. Grasp some knowledge**
+
 If you never used Kubernetes, but want to deploy to production, you definitely
 should be reading some docs first. Some starting points:
 
@@ -69,6 +72,7 @@ should be reading some docs first. Some starting points:
 - https://ramitsurana.github.io/awesome-kubernetes/
 
 | **4. Grab a cluster**
+
 You'll need a running and fully configured Kubernetes cluster.
 
 - Local options:
@@ -91,6 +95,7 @@ You'll need a running and fully configured Kubernetes cluster.
   - RedHat: `OpenShift <https://www.openshift.com>`_
 
 | **5. Choose persistent identifiers**
+
 When you want to register datasets and/or files in your deployment to
 DataCite, EZID or similar, you will need active accounts. Be sure to have
 access credentials around. As an alternative, you might want to use the FAKE provider.
