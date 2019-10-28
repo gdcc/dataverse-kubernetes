@@ -2,6 +2,12 @@
 Getting started
 ===============
 
+.. toctree::
+    :maxdepth: 2
+    :hidden:
+
+    demo/k3s
+
 ------------------------------------
 Introduction: what's this all about?
 ------------------------------------
@@ -57,7 +63,7 @@ CI/CD and your application? *Continue*.
 
 You will at least need:
 
-- `kubectl <https://kubernetes.io/docs/tasks/tools/install-kubectl>`_
+- `kubectl <https://kubernetes.io/docs/tasks/tools/install-kubectl>`_, at least version 1.14
 - `git <https://git-scm.com/downloads>`_ (or another VCS)
 
 Depending on your use-case and targeted environment that might be just it.
@@ -82,7 +88,7 @@ You'll need a running and fully configured Kubernetes cluster.
   - `microk8s <https://microk8s.io>`_
   - `kind <https://kind.sigs.k8s.io/>`_
 
-- Deploy your own cluster. Many tools to choose from. Examples:
+- Deploy your own (production) cluster. Many tools to choose from. Examples:
 
   - `kops <https://kubernetes.io/docs/setup/production-environment/tools/kops/>`_
   - `kubespray <https://kubernetes.io/docs/setup/production-environment/tools/kubespray/>`_
