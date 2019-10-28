@@ -15,8 +15,8 @@ development or demo purposes**.
 Start with setup of *k3s.io*
 ----------------------------
 
-First, setup a single node K3s cluster. Pick your poison. Once you
-have your cluster up and running, continue.
+First, setup a single node K3s cluster. As noted above, there are multiple
+options for this - one of them, using *k3d* is described below.
 
 As K3s removed all "in-tree" storage classes, you will need to provide
 one on your own. For simple purposes like demos or development, local storage
