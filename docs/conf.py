@@ -107,7 +107,8 @@ html_theme_options = {
         ('Home', 'index', False, 'home'),
         ("GitHub", "https://github.com/IQSS/dataverse-kubernetes", True, 'link'),
         ("Dataverse Project", "http://dataverse.org", True, 'launch'),
-        ("Dataverse Guides", "http://guides.dataverse.org", True, 'settings_applications')
+        ("Dataverse Guides", "http://guides.dataverse.org", True, 'settings_applications'),
+        ("IRC chat", "https://kiwiirc.com/client/irc.freenode.net/?nick=dataverse_k8s_?#dataverse", True, 'chat')
     ],
 
     # Customize css colors.
