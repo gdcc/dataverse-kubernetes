@@ -7,6 +7,7 @@ Getting started
     :hidden:
 
     demo/k3s
+    demo/minikube
 
 ------------------------------------
 Introduction: what's this all about?
