@@ -38,6 +38,8 @@ Now create a small test cluster for this demo:
   k3d create --publish 8080:80 --wait 0
   export KUBECONFIG="$(k3d get-kubeconfig --name='k3s-default')"
 
+.. image:: img/k3s-setup.png
+
 .. hint::
   Remember you need to expose the ``Ingress`` port, thus the ``--publish 8080:80``. Ingress will be reachable via http://localhost:8080 later.
 
@@ -58,11 +60,21 @@ Now start to deploy Dataverse plus any necessary services and bootstrap via Kust
 
   kubectl apply -k ./personas/k3s
 
+.. image:: img/k3s-deploy.png
+
 When bootstrapping job finished (see ``kubectl get job,pod`` and logs), you can
 "just access" Dataverse. *k3s.io* persona adds an ``Ingress`` route from
 your host to the service.
 
+.. image:: img/k3s-wait.png
+
+Wait a little longer...
+
+.. image:: img/k3s-done.png
+
 Point your favorite browser to http://localhost:8080 and enjoy your freshly backed Dataverse demo.
+
+.. image:: img/dataverse-localhost-8080.png
 
 .. hint::
 
@@ -79,4 +91,4 @@ On a 2016 laptop with
 - a fairly fast internet connection for image pulling
 
 it takes about **3 to 4 minutes** from zero to hero, not including installation time
-for Docker, k3d/k3s or kubectl.
+for Docker, k3d/k3s or kubectl. See also timestamps above.
