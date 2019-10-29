@@ -14,4 +14,5 @@
 
     get-started/index
     day1/index
+    day2/index
     ./roadmap

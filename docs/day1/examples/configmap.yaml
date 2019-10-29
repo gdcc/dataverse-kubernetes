@@ -1,0 +1,43 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dataverse
+  labels:
+    app.kubernetes.io/name: configmap
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: configmap
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
+data:
+  ### GENERAL SETTINGS
+  HOST_DNS_ADDRESS: data.example.org
+  POSTGRES_DATABASE: dataverse
+  dataverse_fqdn: data.example.org
+  dataverse_siteUrl: https://\${dataverse.fqdn}
+  dataverse_auth_password__reset__timeout__in__minutes: 30
+
+  ### CONTACT SETTINGS
+  CONTACT_MAIL: rdm@example.org
+  ADMIN_MAIL: &admin Example - Research Data Management <rdm@example.org>
+  db_SystemEmail: *admin
+
+  ### DOI SETTINGS
+  doi_baseurlstring: https://mds.test.datacite.org
+  doi_username: EXAMPLEORG.TEST
+  db_DoiProvider: DataCite
+  db_Protocol: doi
+  db_Authority: "10.12345"
+  db_Shoulder: EXAMPLE/
+
+  ### FILE STORAGE
+  dataverse_files_directory: /data
+  dataverse_files_storage__driver__id: "s3"
+  dataverse_files_s3__custom__endpoint__url: http://minio:9000
+  dataverse_files_s3__bucket__name: dataverse
+  # required for Minio!
+  dataverse_files_s3__path__style__access: "true"
+
+  ### CUSTOMIZATION
+  db_StatusMessageHeader: "Example.org is not yet in production"
+  db_StatusMessageText: "<br />Please do not save any real data, only use for testing and sneak-peek.<br /> How to login: coming soon!"

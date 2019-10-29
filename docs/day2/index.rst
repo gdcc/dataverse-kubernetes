@@ -1,5 +1,5 @@
 ==================
-Day 1 - Deployment
+Day 2 - Operations
 ==================
 
 .. toctree::
@@ -7,5 +7,5 @@ Day 1 - Deployment
     :caption: Contents:
     :hidden:
 
-    ./architecture
-    ./config
+    ../day1/config
+    ../day1/secrets
