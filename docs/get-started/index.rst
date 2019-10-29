@@ -9,10 +9,6 @@ Getting started
     demo/k3s
     demo/minikube
 
-------------------------------------
-Introduction: what's this all about?
-------------------------------------
-
 `The dataverse project <http://dataverse.org>`_ describes itself as:
 
   | Dataverse is an open source web application to share, preserve, cite, explore,
@@ -21,6 +17,9 @@ Introduction: what's this all about?
   | authors, publishers, data distributors, and affiliated institutions all receive
   | academic credit and web visibility.
 
+------------------------------------
+Introduction: what's this all about?
+------------------------------------
 This project aims at offering a new way to deploy, run and maintain a Dataverse
 installation for any purpose on any kind of Kubernetes-based cloud infrastructure.
 
@@ -38,7 +37,7 @@ With the power of `Kubernetes <http://kubernetes.io>`_, many scenarios are possi
 
   Wait. Regularly check logs and pods. Login with ``dataverseAdmin:admin1``.
 
-  .. [1] *Your mileage may vary due to storage classes. You really should look at the demos below.*
+  .. [1] *Your mileage may vary due to storage classes. You really should look at the* :ref:`demos <demos>` *below.*
 
 
 
@@ -121,6 +120,8 @@ access credentials around. As an alternative, you might want to use the FAKE pro
 ---------------------------------------------
 Use Cases: What installation persona are you?
 ---------------------------------------------
+
+.. _demos:
 
 1. Demo time!
 -------------
