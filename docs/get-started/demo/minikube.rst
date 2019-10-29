@@ -106,6 +106,10 @@ Now access your freshly baked Dataverse demo via your browser at http://localhos
 
 .. image:: img/dataverse-localhost-8080.png
 
+.. hint::
+
+  Default login for this demo is ``dataverseAdmin:admin1``. See :doc:`/day1/secrets`.
+
 A word on deployment times
 --------------------------
 
