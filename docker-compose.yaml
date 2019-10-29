@@ -13,7 +13,7 @@ services:
   solr:
     image: iqss/solr-k8s
     expose:
-      - 8963
+      - 8983
 
   dataverse:
     build:
