@@ -9,8 +9,9 @@
     find us on `IRC <https://kiwiirc.com/client/irc.freenode.net/?nick=dataverse_k8s_?#dataverse>`_ or Twitter.
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 4
     :hidden:
 
     get-started/index
+    day1/index
     ./roadmap
