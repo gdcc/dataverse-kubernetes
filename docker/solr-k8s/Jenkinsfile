@@ -16,7 +16,10 @@ pipeline {
     hublogin = "dockerhub-dataversebot"
     registry = "https://registry.hub.docker.com"
   }
-  triggers { cron('H H(0-4) * * *') }
+  triggers {
+    cron('H H(0-4) * * *')
+    githubPush()
+  }
   stages {
     stage('build') {
       when {
