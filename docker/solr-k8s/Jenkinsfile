@@ -16,7 +16,10 @@ pipeline {
     hublogin = "dockerhub-dataversebot"
     registry = "https://registry.hub.docker.com"
   }
-  triggers { cron('H H(0-4) * * *') }
+  triggers {
+    cron('H H(0-4) * * *')
+    githubPush()
+  }
   stages {
     stage('build') {
       when {
@@ -47,10 +50,13 @@ pipeline {
       parallel {
         stage('release') {
           when { buildingTag() }
+          environment {
+            imageTag = "${TAG_NAME.substring(1)}"
+          }
           steps {
             script {
               docker.withRegistry("${env.registry}", "${env.hublogin}") {
-                docker_image.push("${env.TAG_NAME}")
+                docker_image.push("${env.imageTag}")
               }
             }
           }
