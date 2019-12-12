@@ -14,21 +14,24 @@ Initial Deployment Procedure
 ----------------------------
 
 The below image shows all necessary steps by "you" (the user activity on the left)
-or your deployment framework (like Kustomize.io, Helm or similar)
+or (preferably) your deployment framework (like Kustomize.io, Helm or similar)
 on your behalf for a new deployment of Dataverse. It also explains what happens
 in the background on an overview level. For more details please look at the demos or code.
 
 .. uml::
+  :width: 100%
 
   @startuml
+  !includeurl "https://raw.githubusercontent.com/michiel/plantuml-kubernetes-sprites/master/resource/k8s-sprites-unlabeled-25pct.iuml"
+
   actor User
-  participant "Secrets" as S
-  participant "ConfigMap" as CM
-  participant "PostgreSQL" as P
-  participant "Dataverse" as D
-  participant "Bootstrap Job" as BJ
-  participant "Configure Job" as CJ
-  participant "Solr"
+  participant "<color:#royalblue><$secret></color>\nSecrets" as S
+  participant "<color:#royalblue><$cm></color>\nConfigMap" as CM
+  participant "<color:#royalblue><$pod></color>\nPostgreSQL" as P
+  participant "<color:#royalblue><$pod></color>\nDataverse" as D
+  participant "<color:#royalblue><$job></color>\nBootstrap Job" as BJ
+  participant "<color:#royalblue><$job></color>\nConfigure Job" as CJ
+  participant "<color:#royalblue><$pod></color>\nSolr" as Solr
 
   == Deploy application ==
 
@@ -108,7 +111,9 @@ This happens when using the image `iqss/dataverse-k8s <https://hub.docker.com/r/
 .. uml::
 
   @startuml
-  participant Kubernetes as K
+  !includeurl "https://raw.githubusercontent.com/michiel/plantuml-kubernetes-sprites/master/resource/k8s-sprites-unlabeled-25pct.iuml"
+
+  participant "<color:#royalblue><$pod></color>\nContainer" as K
   participant Tini
   note right Tini: "Tiny init"\ngithub.com/krallin/tini
   participant "Entrypoint" as E

@@ -50,6 +50,8 @@ extensions = [
     'sphinxcontrib.plantuml'
 ]
 
+plantuml_output_format = 'png'
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['.templates']
 
