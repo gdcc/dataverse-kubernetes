@@ -147,8 +147,8 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['.static']
 
-html_favicon = "images/favicon.png"
-html_logo = "images/dataverse-bot-think-k8s.png"
+html_favicon = "img/favicon.png"
+html_logo = "img/dataverse-bot-think-k8s.png"
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
