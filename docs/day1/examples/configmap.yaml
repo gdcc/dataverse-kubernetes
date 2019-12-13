@@ -40,4 +40,4 @@ data:
 
   ### CUSTOMIZATION
   db_StatusMessageHeader: "Example.org is not yet in production"
-  db_StatusMessageText: "<br />Please do not save any real data, only use for testing and sneak-peek.<br /> How to login: coming soon!"
+  db_StatusMessageText: "<br />Please do not save any real data, only use for testing and sneak-peek."

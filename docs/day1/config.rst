@@ -54,17 +54,16 @@ server).
 
 .. note::
 
-  Currently some JVM options have dashes in them, which is no allowed character for
-  an environment variable. As a workaround, replace any dash with `__`. It will
-  be transformed back into `-` internally when the container starts. See example below.
+  Currently many JVM options have dashes in them, which is no allowed character for
+  an environment variable. As a workaround, replace any dash with ``__`` (double underscore).
+  Will be transformed back into a ``-`` internally when the container starts. See example below.
 
 
 
-Examples (:ref:`full example <configmap>`):
+Examples (see below :ref:`full-example`):
 
 .. literalinclude:: examples/configmap.yaml
-    :lines: 16-18,26-27,34
-
+    :lines: 12,16-18,26-27,34
 
 
 .. warning::
@@ -85,55 +84,50 @@ to get set everytime the container starts. To be consistent and easy to use,
 the same `ConfigMap` used for JVM options can be used for these settings,
 but you need to create a `Job` or even a `CronJob` to apply them.
 
-*Note:* Of course you can choose to use your own tools and scripts for this.
-Basically its just `curl` calls to the Admin API.
+.. note::
 
-#### Provide a setting
+  Of course you can choose to use your own tools and scripts for this.
+  Basically its just `curl` calls to the Admin API.
 
-1. Pick a [Database setting](http://guides.dataverse.org/en/latest/installation/config.html#database-settings)
-2. Remove the `:` and replace it with `db_`. Keep the Pascal case!
-3. Put the transformed value into the `ConfigMap` `.data`.
+Provide settings
+^^^^^^^^^^^^^^^^
+
+1. Pick a `Database setting <http://guides.dataverse.org/en/latest/installation/config.html#database-settings>`_
+2. Remove the ``:``` and replace it with ``db_``. Keep the Pascal case!
+3. Put the transformed value into the ``ConfigMap.data``.
 4. Add your value, which can be any value you see in the docs. Keep in mind:
    when you need to use JSON, format it as a string!
+5. When you need to **delete** a setting, just provide an *empty* value.
 
-Example:
-```yaml
----
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: dataverse
-  labels:
-    app: dataverse
-data:
-  # Skipping JVM options here. See above.
-  db_SystemEmail: "Ghostbusters <slimer@buh.net>"
-  db_Languages: '[{ "locale":"en", "title":"English" }, { "locale":"fr", "title":"Français" }]'
-```
-**DO NOT USE THIS FOR PASSWORDS OR KEYS!** Those are done via k8s secrets, see below.
+Examples (see below :ref:`full-example`):
 
-#### Delete a setting
-When you need to **delete** a setting, just provide an *empty* value.
+.. literalinclude:: examples/configmap.yaml
+    :lines: 12,27-31,42-43
 
-#### Apply settings
-Remember: you will need to update the `ConfigMap` when you want to apply changes.
+.. warning::
+
+  **DO NOT USE THIS FOR PASSWORDS!** Those are done via Kubernetes ``Secrets``, see :doc:`day1/secrets`.
+
+Apply settings
+^^^^^^^^^^^^^^
+Remember: you will need to update your ``ConfigMap`` when you want to apply changes.
 You need to think about in which file you keep the map - having it in two locations
 is a bad idea. It's always a good idea to put it in revision control.
 
-```
-# Update ConfigMap:
-kubectl apply -f k8s/dataverse/configmap.yaml
-# Deploy a new config job:
-kubectl create -f k8s/dataverse/jobs/configure.yaml
-```
+.. code::
+
+  # Update ConfigMap:
+  kubectl apply -f k8s/dataverse/configmap.yaml
+  # Deploy a new config job:
+  kubectl create -f k8s/dataverse/jobs/configure.yaml
 
 You might consider providing a `CronJob` for scheduled, regular updates.
 
 
+.. _full-example:
 
-
-Example ``ConfigMap``
----------------------
+Full configuration example
+--------------------------
 
 Below you can find an example ``ConfigMap`` using all three types of variables:
 
