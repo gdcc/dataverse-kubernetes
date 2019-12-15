@@ -47,7 +47,8 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.viewcode',
     'sphinx.ext.graphviz',
-    'sphinxcontrib.plantuml'
+    'sphinxcontrib.plantuml',
+    'recommonmark'
 ]
 
 plantuml_output_format = 'png'
