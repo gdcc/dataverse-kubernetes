@@ -20,7 +20,7 @@ from datetime import datetime
 
 # -- Project information -----------------------------------------------------
 
-project = u'Dataverse on Kubernetes'
+project = u'Dataverse Cloud & Container Guide'
 copyright = u'%d, Forschungszentrum Jülich GmbH and The President & Fellows of Harvard College' % datetime.now().year
 author = u'Oliver Bertuch'
 
