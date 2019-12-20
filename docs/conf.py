@@ -41,6 +41,7 @@ release = version
 # ones.
 extensions = [
     'sphinx.ext.intersphinx',
+    'sphinx.ext.autosectionlabel',
     'sphinx.ext.todo',
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
@@ -80,6 +81,7 @@ exclude_patterns = [u'.build', 'Thumbs.db', '.DS_Store']
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 
+autosectionlabel_prefix_document = True
 
 # -- Options for HTML output -------------------------------------------------
 

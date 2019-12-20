@@ -39,8 +39,8 @@ to this user on any volumes (except secrets) used for the below directories.
   Mount [secrets](#secrets-and-credentials) tree here. Also available as `$SECRETS_DIR`.
 
 - **/data** <br />
-  Mount a volume to save uploaded data here. Used for temporary file storage when
-  using a remote storage like S3. You might need to replicate this data or place
+  Mount a volume to save uploaded research data here. Used for temporary file storage only
+  when using a remote storage like S3. You might need to replicate this data or place
   on a shared filestorage in multi-instance installations. Also available as `$DATA_DIR`.
 
 - **/metadata** <br />
@@ -51,8 +51,9 @@ to this user on any volumes (except secrets) used for the below directories.
 
 - **/docroot** <br />
   Mount a volume here to store i18n language bundle files, sitemaps, images for
-  Dataverses, etc here. You might need to replicate this data or place on a shared
-  filestorage in multi-instance installations. Also available as `$DOCROOT_DIR`.
+  Dataverses, logos, custom themes and stylesheets, etc here. You might need to
+  replicate this data or place on a shared filestorage in multi-instance installations.
+  Also available as `$DOCROOT_DIR`.
 
 - **/opt/dataverse/...** <br />
   Installation root of application server, WAR files, scripts etc. See `Dockerfile`
