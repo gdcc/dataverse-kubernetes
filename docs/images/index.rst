@@ -20,3 +20,4 @@ images to be used for Dataverse deployment and maintenance.
 
     build
     dataverse-k8s
+    solr-k8s

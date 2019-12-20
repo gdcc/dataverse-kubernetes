@@ -10,7 +10,7 @@ This container image enables you to run [Dataverse](https://dataverse.org), a
 Java EE based web application for research data management, on a container platform.
 
 It is primarily targeted to be used in production on [Kubernetes](https://kubernetes.io),
-but if you follow the same conventions, it should be able to use it with other tools
+but if you follow the same conventions, you should be able to use it with other tools
 like [Docker](https://docker.io) or [podman](https://podman.io).
 
 ## Supported tags
