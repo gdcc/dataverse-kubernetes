@@ -61,22 +61,25 @@ to this user on any volumes (except secrets) used for the below directories.
 
 ### Secrets and Credentials
 
-Currently understood secrets in the container, mounted at `$SECRETS_DIR` as a
-tree of directories and files:
+Currently understood secrets in the container, mounted at `$SECRETS_DIR` (see
+above) as a tree of directories and files:
 
 1. `rserve/password` - optional, only needed when using a RServe server.
 2. `doi/password` - needed when you use DOIs for PIDs.
 3. `db/password` - required - guess why?
 4. `api/key` - required because you want the *unblock-key* for anything serious.
-5. `s3/access-key` and `s3/secret-key` - needed when you want to use S3 storage. See #28.
-6. `admin/password` - optional, provision a password for the `dataverseAdmin` account.
+5. `s3/access-key` and `s3/secret-key` - needed when you want to use S3 storage. See docs on using S3.
+6. `admin/password` - optional, provision a password for the `dataverseAdmin` account. Defaults to `admin1`.
 
 A [password alias](https://docs.oracle.com/cd/E19798-01/821-1751/ghgqc/index.html)
 is automatically created and used for those that are set via JVM options, no need
-to provide those yourself. (see [default.config](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/bin/default.config))
+to provide them yourself.
 
-You can of course map other parts of the secret like usernames to an environment
-variable like `doi_username` etc.
+During container startup, environment variables are used inside entrypoint scripts
+for the non-secret parts of credentials. See [default.config](https://dataverse-k8s.readthedocs.io/en/latest/day1/config.html#default-config)
+for a list.
+
+More about secrets can be found in [the guide](https://dataverse-k8s.readthedocs.io/en/latest/day1/secrets.html).
 
 ### Update policy
 

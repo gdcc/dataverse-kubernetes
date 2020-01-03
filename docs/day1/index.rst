@@ -9,4 +9,5 @@ Day 1 - Deployment
 
     ./architecture
     ./config
+    ./secrets
     ./storage
