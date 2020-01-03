@@ -155,8 +155,8 @@ in the upstream documentation and below.
 .. todo::
   Write more things, link stuff.
 
-Please use [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) and *mount them as volumes*.
-See also [here](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume).
+Please use `Kubernetes Secrets <https://kubernetes.io/docs/concepts/configuration/secret/>`_ and *mount them as volumes*.
+See also `here <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume>`_.
 
 
 Secure storage and distribution
