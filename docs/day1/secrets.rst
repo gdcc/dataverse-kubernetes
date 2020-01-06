@@ -149,22 +149,45 @@ Every admin admires sleeping at nighttimes and not putting out fires.
 Secure usage
 ^^^^^^^^^^^^
 
-Read more about `distributing credentials in Kubernetes <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/>`_
+The most important thing to understand is how to deal with secret information
+when configuring Dataverse and using services. Obviously you will need to inject
+the secret data into running containers. There are multiple ways to do so, but
+to be safe there are "best practices":
+
+1. Use `Kubernetes Secrets <https://kubernetes.io/docs/concepts/configuration/secret/>`_
+   to store secret information. No excuses.
+2. Prefer `mounting secrets as (memory-backed) text files <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume>`_
+   in containers rather than pushing into environment variables (easier to sneak
+   on those than files).
+
+Read more about `securely injecting credentials in containers <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/>`_
 in the upstream documentation and below.
 
-.. todo::
-  Write more things, link stuff.
+.. note::
 
-Please use `Kubernetes Secrets <https://kubernetes.io/docs/concepts/configuration/secret/>`_ and *mount them as volumes*.
-See also `here <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume>`_.
-
+  For bigger clusters, applications, levels of security, etc. this might
+  be insufficient. You should read articles on third-party tools, like
+  `this <https://blog.aquasec.com/managing-kubernetes-secrets>`_ and others.
 
 Secure storage and distribution
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. todo::
-  -> Secure storage
-  -> Encrypt etcd
-  -> Sealed Secretes
-  -> Systems like Vault etc
-  -> env vs file
+Right under the container level there are some other attack vectors, where a
+maleficent guy could sneak on your secrets:
+
+1. Cluster communication between your services, K8s services and K8s nodes
+2. Stored secrets, used harddisks
+
+There are checklists for being production ready with a K8s cluster. Use 'em.
+`Example <https://www.replex.io/blog/kubernetes-in-production-best-practices-for-governance-cost-management-and-security-and-access-control>`_.
+
+Some basics (taken from `here <https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked>`_):
+
+- Secure communication by using TLS wherever possible.
+- Especially secure communication with ``etcd``, which holds your secret data decrypted.
+- Let ``etcd`` `encrypt its data when at rest <https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/>`_.
+
+You should also think about your deployment workflow for secrets. It might be a
+good idea to use tools like `Vault <https://vault.io>`_. If you like `GitOps <https://www.weave.works/technologies/gitops>`_,
+take a look at the `concept of sealed secrets <https://learnk8s.io/kubernetes-secrets-in-git>`_
+(multiple implementation around).
