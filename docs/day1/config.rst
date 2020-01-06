@@ -4,8 +4,8 @@ Configuration
 
 .. warning::
 
-  | **DO. NOT. SET. ANY. PASSWORDS. IN. ENVIRONMENT. VARIABLES.**
-  | Use ``Secrets`` for this. See :doc:`day1/secrets`.
+  | **DO. NOT. SET. ANY. PLAIN. PASSWORD. IN. ANY.** ``ConfigMap`` **.**
+  | (Or ``Deployment``, ``Pod``, ...) Use ``Secrets`` for this. See :doc:`secrets`.
 
 For usage on Kubernetes, all configuration can be stored in a ``ConfigMap``.
 
@@ -68,7 +68,7 @@ Examples (see below :ref:`full-example`):
 
 .. warning::
 
-  **DO NOT USE THIS FOR PASSWORDS!** Those are done via Kubernetes ``Secrets``, see :doc:`day1/secrets`.
+  **DO NOT USE THIS** ``ConfigMap`` **FOR PASSWORDS!** Those are done via Kubernetes ``Secrets``, see :doc:`secrets`.
 
 
 
@@ -106,7 +106,7 @@ Examples (see below :ref:`full-example`):
 
 .. warning::
 
-  **DO NOT USE THIS FOR PASSWORDS!** Those are done via Kubernetes ``Secrets``, see :doc:`day1/secrets`.
+  **DO NOT USE THIS** ``ConfigMap`` **FOR PASSWORDS!** Those are done via Kubernetes ``Secrets``, see :doc:`secrets`.
 
 Apply settings
 ^^^^^^^^^^^^^^
@@ -122,6 +122,15 @@ is a bad idea. It's always a good idea to put it in revision control.
   kubectl create -f k8s/dataverse/jobs/configure.yaml
 
 You might consider providing a `CronJob` for scheduled, regular updates.
+
+Alternative approaches
+######################
+
+There's also `stakater/Reloader <https://github.com/stakater/Reloader>`_, a tool
+to auto-reload resources. To use it, you will need to 1) change metadata of
+deployments (easy) and 2) change the image to include an entrypoint script that runs
+the configuration script on boot (not so easy). Feel free to leave feedback in
+the project if you are interested having this builtin.
 
 
 .. _full-example:
