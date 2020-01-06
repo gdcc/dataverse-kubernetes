@@ -75,6 +75,7 @@ Simply use Docker or other build tool again (almost like above, but different pa
 .. code-block:: shell
 
   docker build -t iqss/dataverse-k8s:test -f docker/dataverse-k8s/glassfish-dev/Dockerfile .
+  docker build -t iqss/solr-k8s:test docker/solr-k8s
 
 Automatic build with Skaffold
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
