@@ -50,6 +50,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.graphviz',
     'sphinxcontrib.plantuml',
+    'sphinxcontrib.contentui',
     'recommonmark'
 ]
 
