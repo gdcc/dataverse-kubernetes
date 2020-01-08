@@ -2,8 +2,8 @@
 Prepare environment
 ===================
 
-Toolchain
----------
+Install Toolchain
+-----------------
 
 For efficient workflows, tools make life easier. Please install:
 
@@ -36,8 +36,8 @@ When you opt for using a local cluster (see below), add:
 
 
 
-Cluster
--------
+Spin up cluster
+---------------
 
 Wether you need a test, ephemeral, staging or whatever cluster, using the tools
 above is just one example how to do it. Take this as a proven working path, but
@@ -89,8 +89,8 @@ Currently only using a :ref:`development/index:Local cluster` with ``kind`` is s
 
 
 
-Source files
-------------
+Clone source files
+------------------
 
 For building images from any branch or commit of Dataverse, you need to have
 it in your (Docker) build context. Easily achieved by running the following
@@ -104,8 +104,11 @@ after cloning the project (``master`` branch):
 This will checkout the upstream Dataverse project into ``./dataverse``, pulling
 the ``develop`` branch and tags. Please read the below carefully.
 
-Moving on to your target
-^^^^^^^^^^^^^^^^^^^^^
+
+
+
+Checkout target branch
+----------------------
 
 When a release in this project is tagged, the submodule is updated to point to
 the latest commit available upstream. For any real world scenarios, you will
@@ -114,14 +117,22 @@ need to checkout something different.
 If you want a feature branch, add your fork or whatever necessary: just follow normal
 ``git submodule`` routines.
 
-Example to switch to latest ``develop``:
+Example: Switch to latest ``develop``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: shell
 
   cd ./dataverse
   git checkout develop
 
-Example to switch to a feature branch in a GitHub fork:
+.. hint::
+
+  Please remember: the above will only switch to latest ``develop`` when you
+  just synced the module. Otherwise you will need to pull upstream changes,
+  like with any git repository.
+
+Example: Switch to feature branch in (your) fork
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: shell
 
