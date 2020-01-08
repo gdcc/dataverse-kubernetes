@@ -9,3 +9,4 @@ Day 2 - Operations
 
     ../day1/config
     ../day1/secrets
+    ./job-metadata
