@@ -124,12 +124,7 @@ Example: Switch to latest ``develop``
 
   cd ./dataverse
   git checkout develop
-
-.. hint::
-
-  Please remember: the above will only switch to latest ``develop`` when you
-  just synced the module. Otherwise you will need to pull upstream changes,
-  like with any git repository.
+  git pull origin develop:develop
 
 Example: Switch to feature branch in (your) fork
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
