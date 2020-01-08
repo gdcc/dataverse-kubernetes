@@ -104,6 +104,29 @@ after cloning the project (``master`` branch):
 This will checkout the upstream Dataverse project into ``./dataverse``, pulling
 the ``develop`` branch and tags. Please read the below carefully.
 
+.. tip::
+
+  1. For more on how to use Git Submodules, have a look
+     `here <https://medium.com/@porteneuve/mastering-git-submodules-34c65e940407>`_,
+     `here <https://chrisjean.com/git-submodules-adding-using-removing-and-updating>`_,
+     `here <https://gist.github.com/gitaarik/8735255>`_ or
+     `here <https://lmgtfy.com/?q=git+submodule>`_.
+  2. You can even point your IDE to this new subfolder and it will work like a champ.
+
+.. note::
+
+  .. toggle-header::
+    :header: You think this is weird and/or cumbersome? *Expand/hide*
+
+    As long as K8s usage is not a first class citizen for IQSS, this project should
+    not (or cannot) be included in Dataverse upstream.
+
+    .. code-block:: diff
+
+      + We don't have to deal with upstream merge process for PRs and can move independent and quicker.
+      + We can use tools like Skaffold, Kustomization, etc only usable when living at the topmost level.
+      - We have to deal with `git submodules` and somewhat bloated image builds.
+      - We cannot use fancy Maven tools like JIB and others.
 
 
 
@@ -136,27 +159,3 @@ Example: Switch to feature branch in (your) fork
   git fetch poikilotherm
   git pull poikilotherm poikilotherm/5974-oidc-impl:testbranch
   git checkout testbranch
-
-.. tip::
-
-  1. For more on how to use Git Submodules, have a look
-     `here <https://medium.com/@porteneuve/mastering-git-submodules-34c65e940407>`_,
-     `here <https://chrisjean.com/git-submodules-adding-using-removing-and-updating>`_,
-     `here <https://gist.github.com/gitaarik/8735255>`_ or
-     `here <https://lmgtfy.com/?q=git+submodule>`_.
-  2. You can even point your IDE to this new subfolder and it will work like a champ.
-
-.. note::
-
-  .. toggle-header::
-    :header: You think this is weird and/or cumbersome? *Expand/hide*
-
-    As long as K8s usage is not a first class citizen for IQSS, this project should
-    not (or cannot) be included in Dataverse upstream.
-
-    .. code-block:: diff
-
-      + We don't have to deal with upstream merge process for PRs and can move independent and quicker.
-      + We can use tools like Skaffold, Kustomization, etc only usable when living at the topmost level.
-      - We have to deal with `git submodules` and somewhat bloated image builds.
-      - We cannot use fancy Maven tools like JIB and others.
