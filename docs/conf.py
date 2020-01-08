@@ -41,6 +41,7 @@ release = version
 # ones.
 extensions = [
     'sphinx.ext.intersphinx',
+    'sphinx.ext.extlinks',
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.todo',
     'sphinx.ext.mathjax',
@@ -82,6 +83,11 @@ exclude_patterns = [u'.build', 'Thumbs.db', '.DS_Store']
 pygments_style = None
 
 autosectionlabel_prefix_document = True
+
+extlinks = {
+    'issue': ('https://github.com/IQSS/dataverse-kubernetes/issues/%s', 'issue '),
+    'issueDV': ('https://github.com/IQSS/dataverse/issues/%s', 'issue ')
+}
 
 # -- Options for HTML output -------------------------------------------------
 
