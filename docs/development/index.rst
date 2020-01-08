@@ -36,6 +36,21 @@ build, tag and deploy for you. For a deeper insight, read docs at https://skaffo
 As you will need to access services, be sure to add ``--port-forward``.
 See also `port forward docs <https://skaffold.dev/docs/how-tos/portforward>`_.
 
+Example workflow for local development
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. uml::
+
+  @startuml
+  (*) -right-> "Prepare toolchain,\ncluster & source files"
+  -right-> "Edit source files" as E
+  -right-> "skaffold run"
+  --> "Port forward"
+  -left-> "Access Dataverse in browser"
+  -up-> E
+  @enduml
+
+
 .. important::
 
   You might choose not to use ``skaffold dev``, as build and deploy times are long.
