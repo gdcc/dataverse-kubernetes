@@ -20,4 +20,5 @@ The Dataverse Cloud & Container Guide
     day1/index
     day2/index
     images/index
+    development/index
     ./roadmap
