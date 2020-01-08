@@ -1,6 +1,6 @@
 .. tip::
 
-  This document is primarily targeted at people developing the Dataverse
+  This section is primarily targeted at people developing the Dataverse
   application on a Kubernetes platform, run CI jobs or similar.
 
 =================
@@ -17,51 +17,59 @@ More development topics:
 .. toctree::
     :maxdepth: 2
 
+    ./prepare
     ./mail
-
-
-
-Prepare toolchain
------------------
-
-For efficient workflows, tools make life easier. Please install:
-
-1. `skaffold <https://skaffold.dev/docs/getting-started/#installing-skaffold>`_
-2. `kustomize <https://github.com/kubernetes-sigs/kustomize/blob/master/docs/INSTALL.md>`_
-   (necessary as long as `this issue <https://github.com/GoogleContainerTools/skaffold/issues/1781>`_  hasn't been resolved)
-
-When you opt for using a local cluster, add:
-
-1. `Docker <https://docs.docker.com/install>`_
-2. `kind <https://kind.sigs.k8s.io/docs/user/quick-start>`_ (currently the only supported option)
-
-The tools mentioned in :doc:`/get-started/index` are obligatory.
-
-You might consider using a tooling management tool (ha!) like `ASDF <https://asdf-vm.com>`_
-for installation and keeping up-to-date.
 
 
 
 Workflow
 --------
 
-While you can build and deploy everything manually, it will be easier to
-let Skaffold take care of everything.
+**STOP.** You did :doc:`preparation for this <prepare>`, did ya? Go ahead.
 
-Running ``skaffold run`` or ``skaffold dev`` will build, tag and deploy for you.
-For a deeper insight, read docs at https://skaffold.dev/docs.
+While you can build images manually (see below) and deploy manually, it will be
+much easier to let Skaffold take care of it.
+
+Running ``skaffold run`` or ``skaffold dev`` from the root of the project will
+build, tag and deploy for you. For a deeper insight, read docs at https://skaffold.dev/docs.
 
 As you will need to access services, be sure to add ``--port-forward``.
 See also `port forward docs <https://skaffold.dev/docs/how-tos/portforward>`_.
 
-**Before running Skaffold for the first time** be sure to have a cluster at hands.
-You can check via ``kubectl``. Currently only using a local cluster with ``kind``
-is supported by this project, see next section. *PRs welcome.*
+.. important::
+
+  You might choose not to use ``skaffold dev``, as build and deploy times are long.
+  Using it means every saved file will trigger the deploy chain, which is pretty
+  expensive.
+
+.. warning::
+
+  Currently only using a local cluster with ``kind`` is supported by this
+  project when using Skaffold. See :ref:`preparing cluster <development/prepare:Cluster>`.
+  *PRs welcome.*
+
+
+
+
+Build development images manually
+---------------------------------
+
+In most cases, you will want to let tools automatically build new images for you.
+See below for your options.
+
+Simply use Docker or other build tool again (almost like above, but different path):
+
+.. code-block:: shell
+
+  docker build -t iqss/dataverse-k8s:test -f docker/dataverse-k8s/glassfish-dev/Dockerfile .
+  docker build -t iqss/solr-k8s:test docker/solr-k8s
+
+.. note:: Currently there is no Solr development image. This is likely to change.
 
 
 
 A word on waiting
-^^^^^^^^^^^^^^^^^
+-----------------
 
 Be aware that initial builds and deployments take lots of time due to cold caches.
 Recurring builds and deployments will be much faster, although you will still
@@ -86,49 +94,6 @@ Typically, when there is no change to ``pom.xml`` and build caches are warmed up
 - and Glassfish startup + WAR deployment about 3 minutes.
 
 :subscript:`How about some coffee?`
-
-Local cluster
--------------
-
-The easiest way to work with a local cluster is using `kind <https://kind.sigs.k8s.io/docs/user/quick-start>`_,
-which is an abbreviation for **K**\ ubernetes **IN D**\ ocker.
-
-Skaffold supports this out of the box. Using ``kind``, your context will be set
-to sth. like *"@kind"*, which triggers loading images into a local ``kind`` cluster
-instead of pushing to a remote registry.
-
-After installing Docker and ``kind``, you simply need to run:
-
-.. code-block:: shell
-
-  kind create cluster
-
-or - if your prefer a specific K8s version, e.g. `1.14.6`:
-
-.. code-block:: shell
-
-  kind create cluster --image kindest/node:v1.14.6
-
-.. note::
-
-  Please note that ``kind`` might have some troubles with changing host networks and
-  switching to a new DNS resolver. You might need to rebuild the cluster, which is
-  no big deal (very fast).
-
-If you want to use ``k3s``, ``minikube``, ``microk8s`` or similar, please consult the
-Skaffold docs, search via Google, etc. Again: *PRs welcome.*
-
-Remote cluster
---------------
-
-Currently only using a :ref:`development/index:Local cluster` with ``kind`` is supported by this project.
-*PRs and ideas welcome.*
-
-.. hint::
-
-  We'll most likely need `Kaniko <https://github.com/GoogleContainerTools/kaniko>`_
-  or similar for that in your cluster, as Docker Hub must not be cluttered.
-
 
 
 Future ideas
