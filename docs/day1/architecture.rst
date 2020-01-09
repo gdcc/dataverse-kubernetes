@@ -1,37 +1,37 @@
-# Inner workings of Dataverse Kubernetes application
+============
+Architecture
+============
 
-Please familiarize yourself with the architecture of Dataverse if not already
-done: http://guides.dataverse.org/en/latest/installation
-
-It helps a lot knowing how things are connected in Dataverse to understand
-what happens when using Kubernetes in addition.
+Please familiarize yourself with the `architecture of Dataverse <http://guides.dataverse.org/en/latest/installation>`_
+if not already done: it helps a lot knowing how things are connected in Dataverse
+to also understand using it as a Kubernetes application.
 
 In this chapter you may find detailed documentation about how things are
-connected together in this Kubernetes application in a visual way.
+connected together in this Kubernetes application in a visual way (UML sequence diagrams).
 In doubt consult the scripts and descriptors in this repository.
 
-## Initial Deployment Procedure
+Initial Deployment Procedure
+----------------------------
 
-The below image shows all necessary steps by "you" (the user activity on the left) or your deployment
-framework (like Kustomization, Terraform, Ansible and similar) on your behalf for a new deployment of Dataverse.
-It also explains what happens in the background on an overview level.
-For more details please look at the demos or code.
+The below image shows all necessary steps by "you" (the user activity on the left)
+or (preferably) your deployment framework (like Kustomize.io, Helm or similar)
+on your behalf for a new deployment of Dataverse. It also explains what happens
+in the background on an overview level. For more details please look at the demos or code.
 
-*The below image is loaded from Garvizo. It might be not shown completely. Try reloading and empty cache.*
+.. uml::
+  :width: 100%
 
-![Alt text](https://g.gravizo.com/source/mark_deployment?https%3A%2F%2Fraw.githubusercontent.com%2FIQSS%2FDataverse-kubernetes%2Fmaster%2Fdocs%2Fhow-it-works.md)
-<details>
-<summary></summary>
-mark_deployment
   @startuml
+  !includeurl "https://raw.githubusercontent.com/michiel/plantuml-kubernetes-sprites/master/resource/k8s-sprites-unlabeled-25pct.iuml"
+
   actor User
-  participant "Secrets" as S
-  participant "ConfigMap" as CM
-  participant "PostgreSQL" as P
-  participant "Dataverse" as D
-  participant "Bootstrap Job" as BJ
-  participant "Configure Job" as CJ
-  participant "Solr"
+  participant "<color:#royalblue><$secret></color>\nSecrets" as S
+  participant "<color:#royalblue><$cm></color>\nConfigMap" as CM
+  participant "<color:#royalblue><$pod></color>\nPostgreSQL" as P
+  participant "<color:#royalblue><$pod></color>\nDataverse" as D
+  participant "<color:#royalblue><$job></color>\nBootstrap Job" as BJ
+  participant "<color:#royalblue><$job></color>\nConfigure Job" as CJ
+  participant "<color:#royalblue><$pod></color>\nSolr" as Solr
 
   == Deploy application ==
 
@@ -93,25 +93,35 @@ mark_deployment
   == Start using ==
   User -> D: Start accessing Dataverse
   @enduml
-mark_deployment
-</details>
 
-## Dataverse Container Startup
 
-When the Kubernetes pod containing the application server container starts (using the
-image [iqss/dataverse-k8s](https://hub.docker.com/r/iqss/dataverse-k8s) by default, but you might derive or use your own), the following
-happens:
 
-![Alt text](https://g.gravizo.com/source/mark_container_startup?https%3A%2F%2Fraw.githubusercontent.com%2FIQSS%2FDataverse-kubernetes%2Fmaster%2Fdocs%2Fhow-it-works.md)
-<details>
-<summary></summary>
-mark_container_startup
+
+
+Dataverse Container Startup
+---------------------------
+
+When the Kubernetes pod containing the application server container starts,
+one of the following happens, dependent on the type of image you are using.
+
+Glassfish release flavor
+^^^^^^^^^^^^^^^^^^^^^^^^
+This happens when using the image `iqss/dataverse-k8s <https://hub.docker.com/r/iqss/dataverse-k8s>`_ or a derived image.
+
+.. uml::
+
   @startuml
+  !includeurl "https://raw.githubusercontent.com/michiel/plantuml-kubernetes-sprites/master/resource/k8s-sprites-unlabeled-25pct.iuml"
+
+  participant "<color:#royalblue><$pod></color>\nContainer" as K
   participant Tini
-  note left Tini: "Tiny init"\ngithub.com/krallin/tini
+  note right Tini: "Tiny init"\ngithub.com/krallin/tini
   participant "Entrypoint" as E
   participant "Init script" as I
   participant "Appserver" as A
+
+  create Tini
+  K -> Tini: Start
 
   create E
   Tini -> E: Start
@@ -122,6 +132,7 @@ mark_container_startup
   I -> A: Start
   activate A
   I -> A: Configure password aliases
+  I -> A: Configure keys for S3
   I -> A: Configure resources
   I -> A: Configure Dataverse\nJVM options
   I -> A: Stop
@@ -136,7 +147,3 @@ mark_container_startup
   Tini -> A: Keep running until container stops
   A -> A: Autodeploy WAR
   @enduml
-mark_container_startup
-</details>
-
-##
