@@ -53,13 +53,4 @@ to re-export all citation metadata. A simple job does the trick:
 Having a large set of published dataverses and datasets, you might want to run
 this during off-hours.
 
-See also `upstream docs <http://guides.dataverse.org/en/latest/admin/metadataexport.html>`_.
-
-
-
-Update Solr Search Index
-------------------------
-
-.. todo::
-
-  Needs fixing for release 4.17 containing necessary (upstream) scripts.
+See also :guide_dv:`admin/metadataexport.html`.
