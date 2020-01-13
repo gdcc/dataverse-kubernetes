@@ -33,6 +33,8 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /opt/solr/server/solr/collection1/data
+            - name: schema
+              mountPath: /schema
           env:
             - name: SOLR_PORT  # Otherwise, this is wrongfully set by K8s.
               value: "8983"
@@ -50,6 +52,22 @@ spec:
             httpGet:
               path: /solr/collection1/admin/ping
               port: index
+        - name: schema-sidecar
+          image: iqss/solr-k8s
+          command: ["/tini", "--", "/scripts/schema/sidecar.sh"]
+          ports:
+            - name: webhook
+              containerPort: 9000
+          volumeMounts:
+            - name: schema
+              mountPath: "/schema"
+          readinessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 60
+            failureThreshold: 2
+            httpGet:
+              path: /
+              port: webhook
       initContainers:
         - name: volume-mount-hack
           image: giantswarm/tiny-tools
@@ -61,3 +79,5 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: solr
+        - name: schema
+          emptyDir: {}
