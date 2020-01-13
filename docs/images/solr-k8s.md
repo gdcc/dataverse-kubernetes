@@ -43,10 +43,15 @@ to this user on any volumes used for the below directories.
 
 - **/opt/solr/server/solr/collection1/conf** <br />
   Configuration files like `solrconfig.xml` or `schema.xml` live here. Also available as `$COLLECTION_DIR/conf`.
-  Please read the upstream docs about metadata blocks and Solr schema: [updating
-  Solr schema](http://guides.dataverse.org/en/4.16/admin/metadatacustomization.html#updating-the-solr-schema).
 - **/opt/solr/server/solr/collection1/data** <br />
   Mount a volume to persist the actual index. Also available as `$COLLECTION_DIR/data`.
+- **/schema** <br />
+  You can place your customized Solr Index fields configuration here.
+  Solr will try to read from `schema_dv_mdb_copies.xml` and `schema_dv_mdb_fields.xml`
+  on startup or fallback to those shipped with the image.
+  Please read the detailed docs about Solr schema provisioning:
+   - [Upstream: updating Solr schema](http://guides.dataverse.org/en/4.17/admin/metadatacustomization.html#updating-the-solr-schema).
+   - [Kubernetes `Job`s for Search Index](https://dataverse-k8s.rtfd.io/en/4.16/day2/job-index.html)
 
 ### Secrets and Credentials
 
