@@ -16,7 +16,7 @@ spec:
       targetPort: 8983
       protocol: TCP
     - port: 9000
-      name: schema
+      name: webhook
       targetPort: 9000
       protocol: TCP
   selector:
