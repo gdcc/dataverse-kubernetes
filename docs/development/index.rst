@@ -60,7 +60,7 @@ Example workflow for local development
 .. warning::
 
   Currently only using a local cluster with ``kind`` is supported by this
-  project when using Skaffold. See :ref:`preparing cluster <development/prepare:Cluster>`.
+  project when using Skaffold. See :ref:`preparing cluster <development/prepare:Spin up Cluster>`.
   *PRs welcome.*
 
 

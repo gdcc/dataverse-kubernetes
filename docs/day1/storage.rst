@@ -38,7 +38,7 @@ there, some hints how to cope with that on Kubernetes:
 
   * - **/metadata**
     - Custom metadata schema area
-    - To :doc:`roll your own custom metadata blocks </day2/jobs/metadata>`,
+    - To :doc:`roll your own custom metadata blocks </day2/job-metadata>`,
       you need to populate this directory. A sidecar pattern is likely to be a
       good fit for this, retrieving data from remote (like a Git repository).
 
