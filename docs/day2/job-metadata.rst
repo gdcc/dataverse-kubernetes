@@ -4,41 +4,41 @@ Metadata Blocks Job
 
 This is about handling upstream changes to "system" metadata blocks and
 how to handle custom metadata block support.
-See also `upstream documentation about customizing metadata <http://guides.dataverse.org/en/latest/admin/metadatacustomization.html>`_.
 
-Add custom metadata blocks
---------------------------
+- :guide_dv:`Upstream documentation about customizing metadata <admin/metadatacustomization.html>`
+- :guide_dv:`List of default, upstream supported metadata schemas <user/appendix.html#metadata-references>`
 
-Deploying metadata is reusing the :doc:`/images/dataverse-k8s` by default.
-You need to drop metadata TSV files to the ``/metadata`` directory of the jobs
-container (see also :ref:`important directories of dataverse-k8s <images/dataverse-k8s:Important Directories>`)
+.. _meta-update:
 
-This can happen via
+Deploy and update Dataverse metadata blocks
+-------------------------------------------
 
-- custom/derived images
-- volume mounts
-- ``ConfigMap`` file mounts
-- sidecar container(s), downloading/cloning/checking out/...
+Many upstream releases contain changes to the upstream metadata schemas.
+Simply deploy a "metadata update job".
 
-.. hint::
-
-  ``ConfigMaps`` seem to be the easiest option, but in case you use large or large
-  amounts of custom metadata blocks, you might consider using a different.
-
-
-
-Update Dataverse metadata blocks
---------------------------------
-
-Simply deploy a metadata update job:
+Deploying your own custom schemas can be done in the same way. You will need to
+get your custom metadata inside that job somehow, see below.
 
 .. code-block:: shell
 
   kubectl create -f k8s/dataverse/jobs/metadata-update.yaml
 
-.. hint::
+.. important::
 
-  Remember: you will need to get your custom metadata inside that job somehow, see above.
+  Please be sure to read :doc:`job-index` thoroughly, too. You might need to
+  reindex, depending on changes.
+
+.. uml::
+
+  @startuml
+  start
+  :Find all TSV in /metadata (and /opt/dataverse);
+  :Load all schemas via POST;
+  :Trigger webhook to reconfigure Solr Index;
+  stop
+  @enduml
+
+.. _meta-export:
 
 Force re-export of citation metadata after update
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -53,4 +53,25 @@ to re-export all citation metadata. A simple job does the trick:
 Having a large set of published dataverses and datasets, you might want to run
 this during off-hours.
 
-See also :guide_dv:`admin/metadataexport.html`.
+See also :guide_dv:`upstream admin guide <admin/metadataexport.html>` about
+metadata exports.
+
+How to get custom metadata blocks inside the job
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Deploying metadata is reusing the :doc:`/images/dataverse-k8s` by default.
+You need to drop metadata TSV files to the ``/metadata`` directory of the jobs
+container (see also :ref:`important directories of dataverse-k8s <images/dataverse-k8s:Important Directories>`)
+
+This can happen via
+
+- custom/derived images
+- volume mounts
+- ``ConfigMap`` file mounts
+- sidecar container(s), downloading/cloning/checking out/...
+
+.. hint::
+
+  1. ``ConfigMaps`` seem to be the easiest option, but in case you use large or large
+     amounts of custom metadata blocks, you might choose differently.
+  2. You could override upstream blocks this way. *You shouldn't do it.* Up to you.

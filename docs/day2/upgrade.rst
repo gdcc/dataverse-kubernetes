@@ -20,7 +20,11 @@ deployment (you might want to schedule that for off-hours).
 
 We will try to point out any of those in our release notes.
 
+A list of jobs usefull during upgrades:
 
+- :ref:`meta-update`
+- :ref:`meta-export`
+- :ref:`reindex`
 
 Image releases (IR)
 -------------------
