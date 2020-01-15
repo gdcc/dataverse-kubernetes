@@ -43,4 +43,4 @@ spec:
           secret:
             secretName: dataverse-api
       restartPolicy: Never
-  backoffLimit: 4
+  backoffLimit: 0
