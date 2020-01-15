@@ -139,31 +139,10 @@ Demos provide showcases what Dataverse can do for you. Currently pre-packaged:
 2. Developing is my thing
 -------------------------
 
-.. todo::
-  This needs yet to be refactored.
+There is an entire section in this guide dealing with how to use this project
+for developing Dataverse, run development snapshots for tech demos, etc.
 
-First, you will need to read up and get familiar with all of the above about production usage.
-More details about usage for developing Dataverse below.
-
-* [Development container images](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md#development-images)
-* [Prepare toolchain](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#prepare-toolchain)
-* [Using local cluster](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#local-cluster)
-* [Using remote cluster](https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#remote-cluster) (not yet supported)
-
-<small>
-<details>
-<summary>If you think this is weird and/or cumbersome:</summary>
-As long as K8s usage is not a first class citizen for IQSS, this project should
-not (or cannot) be included in Dataverse upstream.
-
-```diff
-+ We don't have to deal with upstream merge process for PRs and can move quicker.
-+ We can use tools like Skaffold, Kustomization, etc only usable when living at the topmost level.
-- We have to deal with `git submodules` and somewhat bloated image builds.
-- We cannot use fancy Maven tools like JIB and others.
-```
-</details>
-</small>
+Please go to :doc:`development docs here </development/index>`.
 
 3. Gimme the *production* stuff
 ----------------------------------

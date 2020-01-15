@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/contentui.css" />
     <link rel="stylesheet" href="../_static/notosanscjkjp.css" type="text/css" />
     <link rel="stylesheet" href="../_static/roboto.css" type="text/css" />
     <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.deep_orange-red.min.css" type="text/css" />
@@ -22,6 +23,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/contentui.js"></script>
     <script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -128,6 +130,7 @@ Show Source
 <li class="toctree-l2"><a class="reference internal" href="../day1/secrets.html">Credentials and Secrets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day2/upgrade.html">Upgrading</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day2/job-metadata.html">Metadata Blocks Job</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2/job-index.html">Search Index Jobs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../images/index.html">Container Images</a><ul>
@@ -137,6 +140,7 @@ Show Source
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../development/index.html">Development usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../development/prepare.html">Prepare environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../development/mail.html">Catch mails</a></li>
 </ul>
 </li>
@@ -183,6 +187,7 @@ Show Source
 <li class="toctree-l2"><a class="reference internal" href="../day1/secrets.html">Credentials and Secrets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day2/upgrade.html">Upgrading</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day2/job-metadata.html">Metadata Blocks Job</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day2/job-index.html">Search Index Jobs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../images/index.html">Container Images</a><ul>
@@ -192,6 +197,7 @@ Show Source
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../development/index.html">Development usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../development/prepare.html">Prepare environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../development/mail.html">Catch mails</a></li>
 </ul>
 </li>
@@ -338,35 +344,13 @@ access credentials around. As an alternative, you might want to use the FAKE pro
 </div>
 <div class="section" id="developing-is-my-thing">
 <h3>2. Developing is my thing<a class="headerlink" href="#developing-is-my-thing" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="id3">
-<p class="admonition-title">Todo</p>
-<p>This needs yet to be refactored.</p>
-</div>
-<p>First, you will need to read up and get familiar with all of the above about production usage.
-More details about usage for developing Dataverse below.</p>
-<ul class="simple">
-<li><p>[Development container images](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md#development-images">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/images.md#development-images</a>)</p></li>
-<li><p>[Prepare toolchain](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#prepare-toolchain">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#prepare-toolchain</a>)</p></li>
-<li><p>[Using local cluster](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#local-cluster">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#local-cluster</a>)</p></li>
-<li><p>[Using remote cluster](<a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#remote-cluster">https://github.com/IQSS/dataverse-kubernetes/blob/master/docs/rundev.md#remote-cluster</a>) (not yet supported)</p></li>
-</ul>
-<p>&lt;small&gt;
-&lt;details&gt;
-&lt;summary&gt;If you think this is weird and/or cumbersome:&lt;/summary&gt;
-As long as K8s usage is not a first class citizen for IQSS, this project should
-not (or cannot) be included in Dataverse upstream.</p>
-<p><code class="docutils literal notranslate"><span class="pre">`diff</span>
-<span class="pre">+</span> <span class="pre">We</span> <span class="pre">don't</span> <span class="pre">have</span> <span class="pre">to</span> <span class="pre">deal</span> <span class="pre">with</span> <span class="pre">upstream</span> <span class="pre">merge</span> <span class="pre">process</span> <span class="pre">for</span> <span class="pre">PRs</span> <span class="pre">and</span> <span class="pre">can</span> <span class="pre">move</span> <span class="pre">quicker.</span>
-<span class="pre">+</span> <span class="pre">We</span> <span class="pre">can</span> <span class="pre">use</span> <span class="pre">tools</span> <span class="pre">like</span> <span class="pre">Skaffold,</span> <span class="pre">Kustomization,</span> <span class="pre">etc</span> <span class="pre">only</span> <span class="pre">usable</span> <span class="pre">when</span> <span class="pre">living</span> <span class="pre">at</span> <span class="pre">the</span> <span class="pre">topmost</span> <span class="pre">level.</span>
-<span class="pre">-</span> <span class="pre">We</span> <span class="pre">have</span> <span class="pre">to</span> <span class="pre">deal</span> <span class="pre">with</span> <span class="pre">`git</span> <span class="pre">submodules`</span> <span class="pre">and</span> <span class="pre">somewhat</span> <span class="pre">bloated</span> <span class="pre">image</span> <span class="pre">builds.</span>
-<span class="pre">-</span> <span class="pre">We</span> <span class="pre">cannot</span> <span class="pre">use</span> <span class="pre">fancy</span> <span class="pre">Maven</span> <span class="pre">tools</span> <span class="pre">like</span> <span class="pre">JIB</span> <span class="pre">and</span> <span class="pre">others.</span>
-<span class="pre">`</span></code>
-&lt;/details&gt;
-&lt;/small&gt;</p>
+<p>There is an entire section in this guide dealing with how to use this project
+for developing Dataverse, run development snapshots for tech demos, etc.</p>
+<p>Please go to <a class="reference internal" href="../development/index.html"><span class="doc">development docs here</span></a>.</p>
 </div>
 <div class="section" id="gimme-the-production-stuff">
 <h3>3. Gimme the <em>production</em> stuff<a class="headerlink" href="#gimme-the-production-stuff" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="id4">
+<div class="admonition-todo admonition" id="id3">
 <p class="admonition-title">Todo</p>
 <p>This needs yet to be refactored.</p>
 </div>
