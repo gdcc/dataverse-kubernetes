@@ -11,3 +11,4 @@ Day 2 - Operations
     ../day1/secrets
     ./upgrade
     ./job-metadata
+    ./job-index

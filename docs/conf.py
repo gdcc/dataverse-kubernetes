@@ -87,7 +87,8 @@ autosectionlabel_prefix_document = True
 
 extlinks = {
     'issue': ('https://github.com/IQSS/dataverse-kubernetes/issues/%s', 'issue '),
-    'issueDV': ('https://github.com/IQSS/dataverse/issues/%s', 'issue ')
+    'issue_dv': ('https://github.com/IQSS/dataverse/issues/%s', 'issue '),
+    'guide_dv': ('http://guides.dataverse.org/en/'+version+'/%s', 'upstream docs ')
 }
 
 # -- Options for HTML output -------------------------------------------------

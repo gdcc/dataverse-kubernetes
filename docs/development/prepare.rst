@@ -77,7 +77,7 @@ Skaffold docs, search via Google, etc. Again: *PRs welcome.*
 Remote cluster
 ^^^^^^^^^^^^^^
 
-Currently only using a :ref:`development/index:Local cluster` with ``kind`` is supported by this project.
+Currently only using a :ref:`development/prepare:Local cluster` with ``kind`` is supported by this project.
 *PRs and ideas welcome.*
 
 .. hint::
@@ -108,9 +108,9 @@ the ``develop`` branch and tags. Please read the below carefully.
 
   1. For more on how to use Git Submodules, have a look
      `here <https://medium.com/@porteneuve/mastering-git-submodules-34c65e940407>`_,
-     `here <https://chrisjean.com/git-submodules-adding-using-removing-and-updating>`_,
-     `here <https://gist.github.com/gitaarik/8735255>`_ or
-     `here <https://lmgtfy.com/?q=git+submodule>`_.
+     `or here <https://chrisjean.com/git-submodules-adding-using-removing-and-updating>`_,
+     `maybe here <https://gist.github.com/gitaarik/8735255>`_ or
+     `or last resort <https://lmgtfy.com/?q=git+submodule>`_.
   2. You can even point your IDE to this new subfolder and it will work like a champ.
 
 .. note::

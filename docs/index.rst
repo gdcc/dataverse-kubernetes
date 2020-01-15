@@ -9,7 +9,7 @@ The Dataverse Cloud & Container Guide
   | This is a **community driven and supported project**, unsupported by `IQSS <https://www.iq.harvard.edu/>`_, Harvard.
   | Current main drivers are `Forschungszentrum Jülich <http://www.fz-juelich.de>`_ and `DANS KNAW <https://dans.knaw.nl>`_.
   |
-  | If you need help, please `open an issue <https://github.com/IQSS/dataverse-kubernetes/issues/new>`_ or
+  | If you need help, please :issue:`open an issue <new>` or
     find us on `IRC <https://kiwiirc.com/client/irc.freenode.net/?nick=dataverse_k8s_?#dataverse>`_ or Twitter.
 
 .. toctree::
