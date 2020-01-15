@@ -46,6 +46,9 @@ fi
 echo "${TSVS}" | xargs -n1 -I "%mdb%" sh -c "echo -n \"Loading %mdb%: \"; curl -sS -f -H \"Content-type: text/tab-separated-values\" -X POST --data-binary \"@%mdb%\" \"${DATAVERSE_URL}/api/admin/datasetfield/load?unblock-key=${API_KEY}\" 2>&1 | jq -M '.status'"
 
 # Trigger Solr Index configuration update
+echo "--------------"
+echo "Firing webhook for Solr update. Response following:"
+echo "--------------"
 curl --header "Content-Type: application/json" \
      --request POST -sS -f \
      --data "`jq -Mn --arg key "${API_KEY}" --arg url "${DATAVERSE_URL}" '{ "api_key": $key, "dataverse_url": $url }'`" \
