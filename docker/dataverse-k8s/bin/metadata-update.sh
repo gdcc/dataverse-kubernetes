@@ -43,7 +43,11 @@ if [ $fail -eq 0 ]; then
 fi
 
 # Load metadata blocks
-echo "${TSVS}" | xargs -n1 -I "%mdb%" sh -c "echo -n \"Loading %mdb%: \"; curl -sS -f -H \"Content-type: text/tab-separated-values\" -X POST --data-binary \"@%mdb%\" \"${DATAVERSE_URL}/api/admin/datasetfield/load?unblock-key=${API_KEY}\" 2>&1 | jq -M '.status'"
+while IFS= read -r TSV; do
+  echo -n "Loading ${TSV}: "
+  OUTPUT=`curl -sS -f -H "Content-type: text/tab-separated-values" -X POST --data-binary "@${TSV}" "${DATAVERSE_URL}/api/admin/datasetfield/load?unblock-key=${API_KEY}" 2>&1 || echo -n ""`
+  echo "$OUTPUT" | jq -rM '.status' 2>/dev/null || echo -e 'FAILED\n' "$OUTPUT"
+done <<< "${TSVS}"
 
 # Trigger Solr Index configuration update
 echo "--------------"
