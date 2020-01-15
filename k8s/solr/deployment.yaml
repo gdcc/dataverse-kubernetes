@@ -73,11 +73,23 @@ spec:
           image: giantswarm/tiny-tools
           command: ["sh", "-c", "chown -c 8983:8983 /data"]
           volumeMounts:
-          - name: data
-            mountPath: /data
+            - name: data
+              mountPath: /data
+        - name: schema-init
+          image: iqss/solr-k8s
+          command: ["/scripts/schema/init.sh"]
+          volumeMounts:
+            - name: schema
+              mountPath: /schema
+            - name: api-secret
+              mountPath: "/scripts/schema/api"
+              readOnly: true
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: solr
         - name: schema
           emptyDir: {}
+        - name: api-secret
+          secret:
+            secretName: dataverse-api
