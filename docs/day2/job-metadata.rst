@@ -57,7 +57,7 @@ See also :guide_dv:`upstream admin guide <admin/metadataexport.html>` about
 metadata exports.
 
 How to get custom metadata blocks inside the job
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------------------
 
 Deploying metadata is reusing the :doc:`/images/dataverse-k8s` by default.
 You need to drop metadata TSV files to the ``/metadata`` directory of the jobs
@@ -75,3 +75,15 @@ This can happen via
   1. ``ConfigMaps`` seem to be the easiest option, but in case you use large or large
      amounts of custom metadata blocks, you might choose differently.
   2. You could override upstream blocks this way. *You shouldn't do it.* Up to you.
+
+Example with ``curl`` init container
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You could create a ``Job`` based on ``k8s/dataverse/jobs/metadata-update.yaml``,
+which you extend like below.
+(:download:`Download full example <examples/metadata-update-w-init.yaml>`)
+
+.. literalinclude:: examples/metadata-update-w-init.yaml
+   :language: yaml
+   :lines: 19,20,26,30-32,33,44-54,55,59-60
+   :name: metadata-update-w-init

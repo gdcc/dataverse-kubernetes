@@ -1,0 +1,62 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: metadata-update-dataverse-
+  labels:
+    app.kubernetes.io/name: metadata-update
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: job
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: metadata-update
+        app.kubernetes.io/part-of: dataverse
+    spec:
+      containers:
+        - name: metadata-update
+          image: iqss/dataverse-k8s
+          command: ['scripts/metadata-update.sh']
+          envFrom:
+            - configMapRef:
+                name: dataverse
+          volumeMounts:
+            - name: api-secret
+              mountPath: "/opt/dataverse/secrets/api"
+              readOnly: true
+            - name: custom-metadata
+              mountPath: /metadata
+              readOnly: true
+      initContainers:
+        - name: check-solr-ready
+          image: giantswarm/tiny-tools
+          command: ['sh', '-c',
+            'until curl -sS -f "http://${SOLR_SERVICE_HOST}:${SOLR_SERVICE_PORT}/solr/collection1/admin/ping" 2>&1 | grep "status.:.OK";
+            do echo waiting for solr; sleep 3; done;']
+        - name: check-dataverse-ready
+          image: giantswarm/tiny-tools
+          command: ['sh', '-c',
+            'until curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/robots.txt" -m 2 2>&1 > /dev/null;
+            do echo waiting for dataverse; sleep 15; done;']
+        - name: get-metadata
+          image: giantswarm/tiny-tools
+          command:
+            - "curl"
+          args:
+            - "-sSo"
+            - "/metadata/test.tsv"
+            - "https://gist.githubusercontent.com/poikilotherm/e54660ab99a24b12e5179621c9c7efb5/raw/960085c8277ad33fa1e52f3c16a38ec6df3ef281/test.tsv"
+          volumeMounts:
+            - name: custom-metadata
+              mountPath: /metadata
+      volumes:
+        - name: api-secret
+          secret:
+            secretName: dataverse-api
+        - name: custom-metadata
+          emptyDir: {}
+      restartPolicy: Never
+  backoffLimit: 0
