@@ -1,15 +1,11 @@
 [
   {
     "id": "update-schema",
-    "execute-command": "/bin/bash",
+    "execute-command": "./update.sh",
     "command-working-directory": "/scripts/schema/",
     "response-message": "Schema update triggered.",
     "include-command-output-in-response": true,
     "include-command-output-in-response-on-error": true,
-    "pass-arguments-to-command":
-    [
-      { "source": "string", "name": "updateSchemaMDB.sh" }
-    ],
     "pass-environment-to-command":
     [
       { "source": "string", "name": "http://localhost:8983", "envname": "SOLR_URL"},
