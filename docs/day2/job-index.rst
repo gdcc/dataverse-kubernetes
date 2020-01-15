@@ -148,3 +148,8 @@ metadata blocks have been uploaded.
 
   To understand the above, please keep in mind that init, sidecar and
   main Solr container share ``/schema`` via ``emptyDir`` volume.
+
+.. seealso::
+
+  Webhooks implemented using https://github.com/adnanh/webhook and extendable
+  if necessary.
