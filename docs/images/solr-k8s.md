@@ -51,9 +51,14 @@ to this user on any volumes used for the below directories.
   You can place your customized Solr Index fields configuration here.
   Solr will try to read from `schema_dv_mdb_copies.xml` and `schema_dv_mdb_fields.xml`
   on startup or fallback to those shipped with the image (see above).
+  Also available as `$SCHEMA_DIR`
+
   Please read the detailed docs about Solr schema provisioning:
    - [Upstream: updating Solr schema](http://guides.dataverse.org/en/4.17/admin/metadatacustomization.html#updating-the-solr-schema).
    - [Kubernetes `Job`s for Search Index](https://dataverse-k8s.rtfd.io/en/4.16/day2/job-index.html)
+- **/scripts** <br />
+  A collection of scripts for init containers and sidecars. See guide for more
+  information on those scripts. Also available as `$SCRIPT_DIR`.
 
 ### Secrets and Credentials
 

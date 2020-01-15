@@ -41,8 +41,9 @@ This configuration resides in ``${$COLLECTION_DIR}/conf`` (see also
 
 Dataverse provides an :guide_dv:`API endpoint to retrieve a Solr schema configuration
 <admin/metadatacustomization.html#updating-the-solr-schema>` fitting the metadata
-schemas present in your Dataverse installation. We use the upstream script
-``updateSchemaMDB.sh`` to generate an updated configuration and reload Solr.
+schemas present in your Dataverse installation. We use a forked version of the
+`upstream script <https://github.com/IQSS/dataverse/blob/master/conf/solr/7.3.1/updateSchemaMDB.sh>`_
+at ``$SCRIPT_DIR/schema/update.sh`` to generate an updated configuration and reload Solr.
 
 .. important::
 
@@ -60,16 +61,6 @@ This is done gracefully with a fallback to the default upstream metadata.
 Unless you change those, worst case is loosing searchability of custom
 metadata when configuration is not available during startup.
 
-... when updating metadata schemas
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-A sidecar container of Solr ``Pod``, executed by a webhook. This webhook is
-fired by the :ref:`metadata update <meta-update>` ``Job`` for you, once
-metadata blocks have been uploaded.
-
-How it works (visualization)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 .. uml::
 
   @startuml
@@ -84,31 +75,61 @@ How it works (visualization)
   end box
   participant "<color:#royalblue><$pod></color>\nDataverse" as DV
 
+  == Startup ==
+
   activate SI
-  SI -> SI : Call //updateSchemaMDB.sh//
+  SI -> SI : Call //update.sh//
   activate SI
   SI -> DV ++ : Request metadata fields
   DV --> SI -- : Send fields
-  SI -> SI : Create Solr configuration
-  SI -> SI : Write to ///schema//
+  SI -> SI : Write Solr configuration to ///schema//
   SI --> SI : Trigger //RELOAD// (will fail on purpose)
   deactivate SI
 
-  create Solr
-  SI -> Solr : Hand over
+  SI --> SI : Fail gracefully
   destroy SI
+  create SS
+  SI --> SS : //init done//
+  create Solr
+  SI --> Solr : //init done//
+
+  @enduml
+
+.. hint::
+
+  To understand the above, please keep in mind that init, sidecar and
+  main Solr container share ``/schema`` via ``emptyDir`` volume.
+
+... when updating metadata schemas
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A sidecar container of Solr ``Pod``, executed by a webhook. This webhook is
+fired by the :ref:`metadata update <meta-update>` ``Job`` for you, once
+metadata blocks have been uploaded.
+
+.. uml::
+
+  @startuml
+  !includeurl "https://raw.githubusercontent.com/michiel/plantuml-kubernetes-sprites/master/resource/k8s-sprites-unlabeled-25pct.iuml"
+  hide footbox
+
+  participant "<color:#royalblue><$job></color>\nMetadata Update Job" as MDJ
+  box "Solr Pod"
+    participant "<color:#royalblue><$pod></color>\nSchema Sidecar" as SS
+    participant "<color:#royalblue><$pod></color>\nSolr" as Solr
+  end box
+  participant "<color:#royalblue><$pod></color>\nDataverse" as DV
 
   MDJ -> SS : Fire webhook
   activate SS
 
-  SS -> SS : Check request,\nTranslate parameters,\nCall //updateSchemaMDB.sh//
+  SS -> SS : Check request,\nTranslate parameters,\nCall //update.sh//
   activate SS
 
   SS -> DV ++ : Request metadata fields
   DV --> SS -- : Send fields
 
-  SS -> SS : Create Solr configuration
-  SS -> SS : Write to ///schema//
+  SS -> SS : Write Solr configuration to ///schema//
   SS -> Solr : Trigger //RELOAD//
   activate Solr
 
@@ -125,5 +146,5 @@ How it works (visualization)
 
 .. hint::
 
-  To understand the above, please keep in mind that sidecar container and
+  To understand the above, please keep in mind that init, sidecar and
   main Solr container share ``/schema`` via ``emptyDir`` volume.
