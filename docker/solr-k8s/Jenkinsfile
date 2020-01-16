@@ -34,7 +34,7 @@ pipeline {
       }
       steps {
         script {
-          docker_image = docker.build("iqss/solr-k8s:${env.imagetag}", "--pull -f ${env.dockerfile} ${env.context}")
+          docker_image = docker.build("iqss/solr-k8s:${env.imagetag}", "--pull ${env.context}")
         }
       }
     }
