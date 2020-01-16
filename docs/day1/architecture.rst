@@ -53,6 +53,8 @@ in the background on an overview level. For more details please look at the demo
   create D
   User -> D: Deploy Dataverse from iqss/dataverse-k8s
   D -> D: Init container:\nFix volume permissions
+  D <<-->> P: wait for
+  D <<-->> Solr: wait for
   D -> D: Deploy app
   note right: see also in detail at\n"Container Startup"
   D -> P: Persistance Framework:\nCreate tables
