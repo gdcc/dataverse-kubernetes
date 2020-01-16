@@ -13,18 +13,21 @@ pipeline {
   environment {
     dockerfile = "./docker/dataverse-k8s/glassfish/Dockerfile"
     context = "."
-    imagetag = "build-${env.BUILD_ID}"
+    imagetag = "build-${env.BRANCH_NAME}"
     hublogin = "dockerhub-dataversebot"
     registry = "https://registry.hub.docker.com"
   }
   triggers { cron('H H(0-4) * * *') }
   stages {
+    stage('checkout') {
+      steps { checkout scm }
+    }
     stage('build') {
       when {
         anyOf {
           changeset "docker/dataverse-k8s/**"
           triggeredBy 'TimerTrigger'
-          tag "v4.*"
+          tag ""
         }
       }
       steps {
@@ -38,16 +41,14 @@ pipeline {
         anyOf {
           changeset "docker/dataverse-k8s/**"
           triggeredBy 'TimerTrigger'
-          tag "v4.*"
-        }
-        anyOf {
-          branch 'master'
-          tag "v4.*"
+          tag ""
         }
       }
       parallel {
         stage('release') {
-          when { buildingTag() }
+          when {
+            tag "v4.*"
+          }
           environment {
             imageTag = "${TAG_NAME.substring(1)}"
           }
@@ -60,6 +61,9 @@ pipeline {
           }
         }
         stage('latest') {
+          when {
+            branch 'master'
+          }
           steps {
             script {
               docker.withRegistry("${env.registry}", "${env.hublogin}") {
