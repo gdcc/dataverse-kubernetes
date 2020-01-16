@@ -10,3 +10,6 @@ resources:
   - mailcatcher.yaml
 
 images:
+
+patches:
+  - patch-memory.yaml

@@ -27,6 +27,11 @@ spec:
       containers:
         - name: dataverse
           image: iqss/dataverse-k8s
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "4Gi"
           ports:
             - containerPort: 8080
           envFrom:

@@ -95,6 +95,8 @@ asadmin set-log-levels org.glassfish.grizzly.http.server.util.RequestUtils=SEVER
 asadmin set server-config.network-config.protocols.protocol.http-listener-1.http.comet-support-enabled="true"
 # SAX parser options
 asadmin create-jvm-options "\-Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl"
+# Set Max Heap Space (see also https://www.eclipse.org/openj9/docs/xxinitialrampercentage)
+asadmin create-jvm-options "\-XX\:MaxRAMPercentage=${MAX_RAM_PERCENTAGE%.*}.00"
 
 # 3. Domain based configuration options
 # Set Dataverse environment variables

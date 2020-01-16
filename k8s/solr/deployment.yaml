@@ -27,6 +27,11 @@ spec:
       containers:
         - name: solr
           image: iqss/solr-k8s
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "4Gi"
           ports:
             - name: index
               containerPort: 8983
