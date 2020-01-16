@@ -27,6 +27,11 @@ spec:
       containers:
         - name: dataverse
           image: iqss/dataverse-k8s
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "4Gi"
           ports:
             - containerPort: 8080
           envFrom:
@@ -69,6 +74,16 @@ spec:
               mountPath: /data
             - name: docroot
               mountPath: /docroot
+        - name: check-db-ready
+          image: postgres:9.6
+          command: ['sh', '-c',
+            'until pg_isready -h "${POSTGRESQL_SERVICE_HOST}" -p "${POSTGRESQL_SERVICE_PORT}";
+            do echo waiting for database; sleep 3; done;']
+        - name: check-solr-ready
+          image: giantswarm/tiny-tools
+          command: ['sh', '-c',
+            'until curl -sS -f "http://${SOLR_SERVICE_HOST}:${SOLR_SERVICE_PORT}/solr/collection1/admin/ping" 2>&1 | grep "status.:.OK";
+            do echo waiting for solr; sleep 3; done;']
       volumes:
         - name: files
           persistentVolumeClaim:

@@ -9,7 +9,7 @@ FROM centos:7
 LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
 ARG TINI_VERSION=v0.18.0
-ARG VERSION=4.16
+ARG VERSION=4.17
 ARG DOMAIN=domain1
 
 ENV HOME_DIR=/opt/dataverse\
@@ -22,7 +22,7 @@ ENV HOME_DIR=/opt/dataverse\
     SECRETS_DIR=/opt/dataverse/secrets\
     GLASSFISH_PKG=http://download.java.net/glassfish/4.1/release/glassfish-4.1.zip\
     GLASSFISH_SHA1=704a90899ec5e3b5007d310b13a6001575827293\
-    WELD_PKG=http://central.maven.org/maven2/org/jboss/weld/weld-osgi-bundle/2.2.10.SP1/weld-osgi-bundle-2.2.10.SP1-glassfish4.jar\
+    WELD_PKG=https://repo1.maven.org/maven2/org/jboss/weld/weld-osgi-bundle/2.2.10.SP1/weld-osgi-bundle-2.2.10.SP1-glassfish4.jar\
     GRIZZLY_PKG=http://guides.dataverse.org/en/latest/_downloads/glassfish-grizzly-extra-all.jar\
     PGDRIVER_PKG=https://jdbc.postgresql.org/download/postgresql-42.2.5.jar\
     DATAVERSE_VERSION=${VERSION}\
