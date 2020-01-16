@@ -12,7 +12,7 @@ pipeline {
   agent any
   environment {
     context = "docker/solr-k8s"
-    imagetag = "build-${env.BUILD_ID}"
+    imagetag = "build-${env.BRANCH_NAME}"
     hublogin = "dockerhub-dataversebot"
     registry = "https://registry.hub.docker.com"
   }
@@ -21,17 +21,20 @@ pipeline {
     githubPush()
   }
   stages {
+    stage('checkout') {
+      steps { checkout scm }
+    }
     stage('build') {
       when {
         anyOf {
           changeset "docker/solr-k8s/**"
           triggeredBy 'TimerTrigger'
-          tag "v4.*"
+          tag ""
         }
       }
       steps {
         script {
-          docker_image = docker.build("iqss/solr-k8s:${env.imagetag}", "--pull ${env.context}")
+          docker_image = docker.build("iqss/solr-k8s:${env.imagetag}", "--pull -f ${env.dockerfile} ${env.context}")
         }
       }
     }
@@ -40,16 +43,14 @@ pipeline {
         anyOf {
           changeset "docker/solr-k8s/**"
           triggeredBy 'TimerTrigger'
-          tag "v4.*"
-        }
-        anyOf {
-          branch 'master'
-          tag "v4.*"
+          tag ""
         }
       }
       parallel {
         stage('release') {
-          when { buildingTag() }
+          when {
+            tag "v4.*"
+          }
           environment {
             imageTag = "${TAG_NAME.substring(1)}"
           }
@@ -62,6 +63,9 @@ pipeline {
           }
         }
         stage('latest') {
+          when {
+            branch 'master'
+          }
           steps {
             script {
               docker.withRegistry("${env.registry}", "${env.hublogin}") {
