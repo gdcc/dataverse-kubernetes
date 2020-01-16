@@ -54,6 +54,11 @@ To configure these limits, simply configure it in the ``Deployment`` object:
               limits:
                 memory: "4Gi"
 
+.. important::
+
+  You can easily apply your settings by using a patch and kustomize. Please find
+  an example in the demo persona directory ``/persona/demo``.
+
 .. seealso::
 
   For development or demo use, you'll be good in most cases with much less.
@@ -78,3 +83,8 @@ To configure these limits, simply configure it in the ``Deployment`` object:
                 env:
                   - name: MAX_RAM_PERCENTAGE
                     value: "50"
+
+  How much RAM is used at max for Java Heap can be easily adjusted by using the
+  JVM option ``-XX:MaxRAMPercentage=xx.xx``. For your convenience this has been
+  simplified by supporting an environment variable ``${MAX_RAM_PERCENTAGE}``,
+  see hidden example above.
