@@ -1,13 +1,23 @@
-apiVersion: skaffold/v1beta14
+---
+apiVersion: skaffold/v2alpha2
 kind: Config
 build:
   artifacts:
-  - image: iqss/dataverse-k8s
-    context: .
-    docker:
-      dockerfile: docker/dataverse-k8s/glassfish-dev/Dockerfile
-  - image: iqss/solr-k8s
-    context: docker/solr-k8s
+    - image: iqss/dataverse-k8s
+      context: .
+      docker:
+        dockerfile: docker/dataverse-k8s/glassfish-dev/Dockerfile
+    - image: iqss/solr-k8s
+      context: docker/solr-k8s
   local: {}
 deploy:
-  kustomize: {}
+  kustomize:
+    path: personas/dev
+
+profiles:
+  - name: init
+    deploy:
+      kustomize:
+        path: personas/demo
+      kubectl:
+        manifests: ["k8s/dataverse/jobs/bootstrap.yaml"]

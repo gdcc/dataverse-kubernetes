@@ -5,9 +5,6 @@ bases:
   - solr
   - dataverse
 
-resources:
-  - dataverse/jobs/bootstrap.yaml
-
 images:
   - name: iqss/dataverse-k8s
     newTag: "4.16"
