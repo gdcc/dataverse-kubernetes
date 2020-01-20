@@ -51,6 +51,7 @@ extensions = [
     'sphinx.ext.graphviz',
     'sphinxcontrib.plantuml',
     'sphinxcontrib.contentui',
+    'sphinxcontrib.images',
     'recommonmark'
 ]
 
