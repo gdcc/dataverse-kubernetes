@@ -19,5 +19,3 @@ profiles:
     deploy:
       kustomize:
         path: personas/demo
-      kubectl:
-        manifests: ["k8s/dataverse/jobs/bootstrap.yaml"]

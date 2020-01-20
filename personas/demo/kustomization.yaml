@@ -4,6 +4,7 @@ kind: Kustomization
 bases:
   - postgresql
   - ../../k8s
+  - ../../k8s/dataverse/jobs
 
 resources:
   - secrets.yaml

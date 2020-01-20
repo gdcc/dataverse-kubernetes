@@ -37,7 +37,7 @@ its ready) to create a demo:
 
 .. code-block:: shell
 
-  kubectl apply -k personas/minikube
+  kubectl apply -k personas/demo-minikube
 
 .. image:: img/minikube-deploy.png
 
