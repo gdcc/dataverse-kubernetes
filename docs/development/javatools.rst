@@ -22,6 +22,45 @@ Metrics and Performance with VisualVM
 Debugging with JDWP
 ^^^^^^^^^^^^^^^^^^^
 
+On startup, when the environment variable ``ENABLE_JDWP=1``, the application
+server is configured to list on port ``${JDWP_PORT}`` defaulting to 9009.
+
+You might set this variables in any way you like. On Kubernetes, the easiest way
+is likely to be via the Dataverse ``ConfigMap`` (see also :doc:`/day1/config`):
+
+.. code-block:: yaml
+
+  # [...]
+  data:
+    ENABLE_JDWP: "1"
+    JDWP_PORT: "9009"
+
+You will need to port-forward this to your host. Example:
+
+.. code-block:: shell
+
+  kubectl port-forward deployment/dataverse 9009
+
+Then configure your IDE to connect to the remote debugger. Below is an example
+for IntelliJ IDEA:
+
+.. thumbnail:: img/jdwp-idea-port.png
+  :group: jdwp
+  :title: Port forwarding with kubectl
+  :width: 24%
+.. thumbnail:: img/jdwp-idea-config.png
+  :group: jdwp
+  :title: Remote debugger configuration in IntelliJ IDEA
+  :width: 24%
+.. thumbnail:: img/jdwp-idea-connect.png
+  :group: jdwp
+  :title: Remote debugger in IntelliJ IDEA connected
+  :width: 24%
+.. thumbnail:: img/jdwp-idea-breakpoint.png
+  :group: jdwp
+  :title: Remote debugger at work
+  :width: 24%
+
 
 
 Hot-Reploy of evolving parts with JRebel
