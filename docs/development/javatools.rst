@@ -17,13 +17,59 @@ You should not (and cannot) enable this in production.
 Metrics and Performance with VisualVM
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+On startup, when the environment variable ``ENABLE_JMX=1``, the application
+server is configured to listen on port ``4000`` and ``4001`` for JMX & RMI traffic
+from ``localhost``. This cannot be changed.
+
+You might set this variable in any way you like. On Kubernetes, the easiest way
+is likely to be via the Dataverse ``ConfigMap`` (see also :doc:`/day1/config`):
+
+.. code-block:: yaml
+
+  # [...]
+  data:
+    ENABLE_JMX: "1"
+
+You will need to port-forward this to your host. Example:
+
+.. code-block:: shell
+
+  kubectl port-forward deployment/dataverse 4000 4001 8080
+
+A well known tool for memory, thread and sample analysis is `VisualVM <https://visualvm.github.io/>`_.
+After installing and activating the port forwarding, connect VisualVM to
+the running JMX service like this:
+
+.. code-block:: shell
+
+  visualvm --openjmx localhost:4000
+
+.. thumbnail:: img/jmx-port.png
+  :group: jmx
+  :title: Port forwarding with kubectl
+  :width: 24%
+.. thumbnail:: img/jmx-visualvm-overview.png
+  :group: jmx
+  :title: VisualVM: overview of connected JVM
+  :width: 24%
+.. thumbnail:: img/jmx-visualvm-memory.png
+  :group: jmx
+  :title: VisualVM: memory of connected JVM
+  :width: 24%
+.. thumbnail:: img/jmx-visualvm-threads.png
+  :group: jmx
+  :title: VisualVM: threads of connected JVM
+  :width: 24%
+
+
+
 
 
 Debugging with JDWP
 ^^^^^^^^^^^^^^^^^^^
 
 On startup, when the environment variable ``ENABLE_JDWP=1``, the application
-server is configured to list on port ``${JDWP_PORT}`` defaulting to 9009.
+server is configured to listen on port ``${JDWP_PORT}`` defaulting to 9009.
 
 You might set this variables in any way you like. On Kubernetes, the easiest way
 is likely to be via the Dataverse ``ConfigMap`` (see also :doc:`/day1/config`):
@@ -39,7 +85,7 @@ You will need to port-forward this to your host. Example:
 
 .. code-block:: shell
 
-  kubectl port-forward deployment/dataverse 9009
+  kubectl port-forward deployment/dataverse 9009 8080
 
 Then configure your IDE to connect to the remote debugger. Below is an example
 for IntelliJ IDEA:
