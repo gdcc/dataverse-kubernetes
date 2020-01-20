@@ -6,16 +6,14 @@
 
 ############# BUILD DATAVERSE #############
 
-FROM maven:3.5-jdk-8 as builder
+FROM iqss/dataverse-k8s:build-cache as builder
 # copy the project files
 COPY dataverse/local_lib ./local_lib
 COPY dataverse/pom.xml ./pom.xml
-# build all dependencies for offline use
-RUN mvn de.qaware.maven:go-offline-maven-plugin:resolve-dependencies
-# copy your other files
+# copy your source files
 COPY dataverse/src ./src
-# build for release (in offline mode)
-RUN mvn -o package -DskipTests
+# build WAR with maven
+RUN mvn package -DskipTests
 
 ############# BUILD IMAGE #############
 FROM iqss/dataverse-k8s
