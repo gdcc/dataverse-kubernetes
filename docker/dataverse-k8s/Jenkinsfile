@@ -59,7 +59,7 @@ pipeline {
           }
           steps {
             script {
-              docker.withRegistry("${env.DOCKER_REGISTRY}", "${env.DOCKER_HUB_LOGIN}") {
+              docker.withRegistry("${env.DOCKER_REGISTRY}", "${env.DOCKER_HUB_CRED}") {
                 docker_image.push("${env.DOCKER_IMAGE_TAG}")
               }
             }

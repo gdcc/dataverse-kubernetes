@@ -16,6 +16,7 @@ like [Docker](https://docker.io) or [podman](https://podman.io).
 ## Supported tags
 
 - `latest`: master branch based build ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/glassfish/Dockerfile))
+- `build-cache`: a maven cache image to speedup dev builds, refreshed every night based on latest upstream `develop`. ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/build-cache/Dockerfile), [`Jenkinsfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/build-cache/Jenkinsfile))
 - `4.16`, ..., `4.15.1`, ..., `4.11`: stable (tagged) releases
   - Using [upstream release schema](https://github.com/IQSS/dataverse/releases/) down to `4.11`.
   - See also [list on Docker Hub](https://hub.docker.com/r/iqss/dataverse-k8s/tags?page=1&ordering=last_updated&name=4.)
