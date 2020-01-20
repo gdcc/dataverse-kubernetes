@@ -22,7 +22,7 @@ for alias in rserve doi db
 do
   if [ -f ${SECRETS_DIR}/$alias/password ]; then
     cat ${SECRETS_DIR}/$alias/password | sed -e "s#^#AS_ADMIN_ALIASPASSWORD=#" > /tmp/$alias
-    asadmin $ASADMIN_OPTS create-password-alias --passwordfile /tmp/$alias ${alias}_password_alias
+    asadmin create-password-alias --passwordfile /tmp/$alias ${alias}_password_alias
     rm /tmp/$alias
   else
     echo "WARNING: Could not find 'password' secret for ${alias} in ${SECRETS_DIR}. Check your Kubernetes Secrets and their mounting!"
