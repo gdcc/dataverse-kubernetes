@@ -12,7 +12,7 @@ When developing Dataverse, testing a new feature not yet shipped in a release or
 running integration tests you have a need to deploy all moving parts into
 a (more or less) ephemeral environment.
 
-More development topics:
+Please prepare your environment first:
 
 .. toctree::
     :maxdepth: 2
@@ -25,16 +25,38 @@ More development topics:
 Workflow
 --------
 
-**STOP.** You did :doc:`preparation for this <prepare>`, did ya? Go ahead.
-
 While you can build images manually (see below) and deploy manually, it will be
 much easier to let Skaffold take care of it.
 
 Running ``skaffold run`` or ``skaffold dev`` from the root of the project will
-build, tag and deploy for you. For a deeper insight, read docs at https://skaffold.dev/docs.
+build, tag and deploy for you.
 
-As you will need to access services, be sure to add ``--port-forward``.
-See also `port forward docs <https://skaffold.dev/docs/how-tos/portforward>`_.
+For a deeper insight, read docs at https://skaffold.dev/docs.
+
+Initial deployment
+^^^^^^^^^^^^^^^^^^
+
+**STOP.** You did :doc:`preparation for this <prepare>`, did ya? Go ahead.
+
+Now lets no more time, and create our initial deployment, already using your
+checked out branch of Dataverse:
+
+.. code-block:: shell
+
+  skaffold run -p init
+
+:subscript:`(Between us: this will simply deploy the demo persona and the bootstrap job for you.)`
+
+While you are waiting for the deployment to finish
+(see :ref:`development/index:A word on waiting` for more), think about how you
+will access your cluster. Your options:
+
+1. When using ``skaffold dev`` (see below!), you can add ``--port-forward``.
+   See also `port forward docs <https://skaffold.dev/docs/how-tos/portforward>`_.
+   This is currently not possible with ``run`` mode.
+2. When using Minikube, see :ref:`get-started/demo/minikube:Make Dataverse reachable via browser`
+3. When using KinD, easiest way forward is ``kubectl port-forward``. ``Ingress``
+   is also possible, see `upstream doc <https://kind.sigs.k8s.io/docs/user/ingress>`_.
 
 Example workflow for local development
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

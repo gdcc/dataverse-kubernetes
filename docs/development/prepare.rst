@@ -7,14 +7,15 @@ Install Toolchain
 
 For efficient workflows, tools make life easier. Please install:
 
-1. `skaffold <https://skaffold.dev/docs/getting-started/#installing-skaffold>`_
-2. `kustomize <https://github.com/kubernetes-sigs/kustomize/blob/master/docs/INSTALL.md>`_
-   (necessary as long as `this issue <https://github.com/GoogleContainerTools/skaffold/issues/1781>`_  hasn't been resolved)
+1. `skaffold`_, v1.2.0
+2. `kustomize`_, v2.0.3 (same as in ``kubectl``, necessary as long as
+   `this issue <https://github.com/GoogleContainerTools/skaffold/issues/1781>`_
+   hasn't been resolved)
 
 When you opt for using a local cluster (see below), add:
 
-1. `Docker <https://docs.docker.com/install>`_
-2. `kind <https://kind.sigs.k8s.io/docs/user/quick-start>`_ (currently the only supported option)
+1. `minikube`_ or
+2. `kind`_, v0.7.0 plus `Docker <https://docs.docker.com/install>`_
 
 .. important::
 
@@ -40,30 +41,46 @@ Spin up cluster
 ---------------
 
 Wether you need a test, ephemeral, staging or whatever cluster, using the tools
-above is just one example how to do it. Take this as a proven working path, but
-feel free to roll your own and give feedback.
+outlined here is just *one* example how to do it. Take this as a proven working
+path, but feel free to roll your own and give feedback.
 
 Local cluster
 ^^^^^^^^^^^^^
+When running on your laptop or workstation, you have two options.
+Either use ``minikube`` or ``kind``.
 
-The easiest way to work with a local cluster is using `kind <https://kind.sigs.k8s.io/docs/user/quick-start>`_,
-which is an abbreviation for **K**\ ubernetes **IN D**\ ocker.
+Minikube is easier to get started with, but uses more resources.
+KinD is not so easy, but very low on resource usage. Up to you.
+
+If you want to use ``k3s``, ``microk8s`` or similar, please consult the
+Skaffold docs, search via Google, etc. Again: *PRs welcome.*
+
+Minikube
+''''''''
+
+Please follow :ref:`get-started/demo/minikube:Start with setup of *minikube* VM`
+to create your cluster. No need to deploy yet, we are just preparing for now.
+
+**K**\ ubernetes **IN** **D**\ ocker ("KinD")
+'''''''''''''''''''''''''''''''''''''''''''''
 
 Skaffold supports this out of the box. Using ``kind``, your context will be set
-to sth. like *"@kind"*, which triggers loading images into a local ``kind`` cluster
+to sth. like *"kind-kind"*, which triggers loading images into a local ``kind`` cluster
 instead of pushing to a remote registry.
 
-After installing Docker and ``kind``, you simply need to run:
+After installing Docker and ``kind``, you simply need to run (context will be
+set for you):
 
 .. code-block:: shell
 
   kind create cluster
 
-or - if your prefer a specific K8s version, e.g. `1.14.6`:
+.. toggle-header::
+  :header: If you prefer a specific K8s version, e.g. `1.14.6` *expand/hide*
 
-.. code-block:: shell
+  .. code-block:: shell
 
-  kind create cluster --image kindest/node:v1.14.6
+    kind create cluster --image kindest/node:v1.14.6
 
 .. note::
 
@@ -71,8 +88,6 @@ or - if your prefer a specific K8s version, e.g. `1.14.6`:
   switching to a new DNS resolver. You might need to rebuild the cluster, which is
   no big deal (very fast).
 
-If you want to use ``k3s``, ``minikube``, ``microk8s`` or similar, please consult the
-Skaffold docs, search via Google, etc. Again: *PRs welcome.*
 
 Remote cluster
 ^^^^^^^^^^^^^^
@@ -159,3 +174,8 @@ Example: Switch to feature branch in (your) fork
   git fetch poikilotherm
   git pull poikilotherm poikilotherm/5974-oidc-impl:testbranch
   git checkout testbranch
+
+.. _skaffold: https://skaffold.dev/docs/getting-started/#installing-skaffold
+.. _kustomize: https://github.com/kubernetes-sigs/kustomize/blob/master/docs/INSTALL.md
+.. _kind: https://kind.sigs.k8s.io/docs/user/quick-start
+.. _minikube: https://kubernetes.io/docs/setup/learning-environment/minikube
