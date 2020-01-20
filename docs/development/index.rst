@@ -19,6 +19,7 @@ Please prepare your environment first:
 
     ./prepare
     ./mail
+    ./javatools
 
 
 

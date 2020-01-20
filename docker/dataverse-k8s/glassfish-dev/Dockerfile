@@ -19,9 +19,18 @@ RUN mvn package -DskipTests
 FROM iqss/dataverse-k8s
 LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
+ENV JREBEL_LIB=/opt/dataverse/jrebel/lib/libjrebel64.so
+RUN wget --no-verbose -O "${HOME_DIR}/jrebel.zip" http://dl.zeroturnaround.com/jrebel-stable-nosetup.zip && \
+    unzip -q "${HOME_DIR}/jrebel.zip" -d "${HOME_DIR}"
+
 # Copy files for the application
 COPY --chown=glassfish:glassfish --from=builder /target/dataverse-*.war ${HOME_DIR}/dvinstall/dataverse.war
 COPY --chown=glassfish:glassfish dataverse/scripts/api/data ${HOME_DIR}/dvinstall/data
 COPY --chown=glassfish:glassfish dataverse/scripts/api/*.sh ${HOME_DIR}/dvinstall/
 COPY --chown=glassfish:glassfish dataverse/scripts/database/reference_data.sql ${HOME_DIR}/dvinstall/
 COPY --chown=glassfish:glassfish dataverse/conf/jhove/* ${HOME_DIR}/dvinstall/
+
+# Copy across docker scripts
+COPY --chown=glassfish:glassfish docker/dataverse-k8s/bin/* docker/dataverse-k8s/glassfish/bin/* docker/dataverse-k8s/glassfish-dev/bin/* ${SCRIPT_DIR}/
+RUN mkdir -p ${SCRIPT_DIR}/init.d && \
+    chmod +x ${SCRIPT_DIR}/*
