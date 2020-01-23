@@ -9,4 +9,4 @@ resources:
 
 images:
   - name: iqss/dataverse-k8s
-    newTag: "4.16"
+    newTag: "4.17"
