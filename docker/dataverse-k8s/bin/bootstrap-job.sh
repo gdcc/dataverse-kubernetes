@@ -14,7 +14,10 @@ set -euo pipefail
 DATAVERSE_SERVICE_HOST=${DATAVERSE_SERVICE_HOST:-"dataverse"}
 DATAVERSE_SERVICE_PORT=${DATAVERSE_SERVICE_PORT:-"8080"}
 DATAVERSE_URL=${DATAVERSE_URL:-"http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT}"}
-SOLR_K8S_HOST=${SOLR_K8S_HOST:-${SOLR_SERVICE_HOST}}
+# The Solr Service IP is always available under its name within the same namespace.
+# If people want to use a different Solr than we normally deploy, they have the
+# option to override.
+SOLR_K8S_HOST=${SOLR_K8S_HOST:-"solr"}
 
 # Check postgres and API key secrets are available
 if [ ! -s "${SECRETS_DIR}/db/password" ]; then
