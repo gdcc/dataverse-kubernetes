@@ -19,7 +19,7 @@ TOKEN=$(curl -sS -f -H "Content-Type: application/json" -X POST -d ${LOGIN_PAYLO
 
 # Send a PATCH request to update the description of the repository
 echo "Sending PATCH request"
-REPO_URL="https://hub.docker.com/v2/repositories/${DOCKER_IMAGE}/"
+REPO_URL="https://hub.docker.com/v2/repositories/${DOCKER_IMAGE_NAME}/"
 RESPONSE_CODE=$(curl -sS -f --write-out %{response_code} --output /dev/null -H "Authorization: JWT ${TOKEN}" -X PATCH --data-urlencode full_description@${DESCRIPTION_FILE} ${REPO_URL})
 echo "Received response code: $RESPONSE_CODE"
 
