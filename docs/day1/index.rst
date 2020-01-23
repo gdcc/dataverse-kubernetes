@@ -7,7 +7,8 @@ Day 1 - Deployment
     :caption: Contents:
     :hidden:
 
-    ./architecture
+    ./init-deploy
+    ./job-bootstrap
     ./config
     ./secrets
     ./resources

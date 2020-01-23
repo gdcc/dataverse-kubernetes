@@ -123,6 +123,34 @@ is a bad idea. It's always a good idea to put it in revision control.
 
 You might consider providing a `CronJob` for scheduled, regular updates.
 
+Details of the configuration job
+################################
+
+.. uml::
+
+  @startuml
+  !includeurl "https://raw.githubusercontent.com/michiel/plantuml-kubernetes-sprites/master/resource/k8s-sprites-unlabeled-25pct.iuml"
+
+  actor User
+  participant "<color:#royalblue><$secret></color>\nSecrets" as S
+  participant "<color:#royalblue><$cm></color>\nConfigMap" as CM
+  participant "<color:#royalblue><$pod></color>\nPostgreSQL" as P
+  participant "<color:#royalblue><$pod></color>\nDataverse" as D
+  participant "<color:#royalblue><$job></color>\nConfigure Job" as CJ
+
+  create CJ
+  User -> CJ: Deploy Configure Job
+  S -> CJ: Pass API key
+  CM -> CJ: Pass settings
+  CJ <<-->> D: wait for
+  ...After Dataverse ready......
+  CJ -> D: Configure Dataverse DB-based\nsettings via API
+  activate D
+  D -> P: Store settings
+  return
+  destroy CJ
+  @enduml
+
 Alternative approaches
 ######################
 
