@@ -5,7 +5,6 @@ metadata:
   name: postgresql
 spec:
   storageClassName: local-path
-  selector:
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -13,7 +12,6 @@ metadata:
   name: dataverse-files
 spec:
   storageClassName: local-path
-  selector:
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -21,7 +19,6 @@ metadata:
   name: dataverse-docroot
 spec:
   storageClassName: local-path
-  selector:
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -29,4 +26,3 @@ metadata:
   name: solr
 spec:
   storageClassName: local-path
-  selector:
