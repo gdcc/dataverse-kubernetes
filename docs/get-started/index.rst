@@ -75,7 +75,8 @@ If you never used Kubernetes, but want to deploy to production, you definitely
 should be reading some docs first. Some starting points:
 
 - https://kubernetes.io/docs/tutorials/kubernetes-basics/
-- https://ramitsurana.github.io/awesome-kubernetes/
+- https://ramitsurana.github.io/awesome-kubernetes
+- https://kubernetes-on-aws.readthedocs.io/en/latest/admin-guide/kubernetes-in-production.html
 
 | **4. Grab a cluster**
 
