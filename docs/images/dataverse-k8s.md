@@ -36,7 +36,7 @@ This image possesses a user `dataverse` with `uid=1000`. The application server
 is running as `dataverse`, **not** `root`. Please remember to grant write permission
 to this user on any volumes (except secrets) used for the below directories.
 
-- **/opt/dataverse/secrets** <br />
+- **/secrets** <br />
   Mount [secrets](#secrets-and-credentials) tree here. Also available as `$SECRETS_DIR`.
 
 - **/data** <br />

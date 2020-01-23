@@ -25,7 +25,7 @@ spec:
                 name: dataverse
           volumeMounts:
             - name: api-secret
-              mountPath: "/opt/dataverse/secrets/api"
+              mountPath: "/secrets/api"
               readOnly: true
             - name: custom-metadata
               mountPath: /metadata

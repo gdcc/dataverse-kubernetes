@@ -82,7 +82,7 @@ username, password and database name for the Dataverse PostgreSQL service:
                       optional: true
               volumeMounts:
                 - name: db-secret
-                  mountPath: "/opt/dataverse/secrets/db"
+                  mountPath: "/secrets/db"
                   readOnly: true
           volumes:
             - name: db-secret
