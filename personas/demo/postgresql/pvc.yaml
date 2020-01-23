@@ -15,6 +15,3 @@ spec:
   resources:
     requests:
       storage: 3G
-  selector:
-    matchLabels:
-      backup: "False"
