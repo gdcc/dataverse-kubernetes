@@ -9,7 +9,8 @@ FROM centos:7
 LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
 ARG TINI_VERSION=v0.18.0
-ARG VERSION=4.17
+ARG JMX_EXPORTER_VERSION=0.12.0
+ARG VERSION=4.18
 ARG DOMAIN=domain1
 
 ENV HOME_DIR=/opt/dataverse\
@@ -19,14 +20,15 @@ ENV HOME_DIR=/opt/dataverse\
     DATA_DIR=/data\
     DOCROOT_DIR=/docroot\
     METADATA_DIR=/metadata\
-    SECRETS_DIR=/opt/dataverse/secrets\
+    SECRETS_DIR=/secrets\
     GLASSFISH_PKG=http://download.java.net/glassfish/4.1/release/glassfish-4.1.zip\
     GLASSFISH_SHA1=704a90899ec5e3b5007d310b13a6001575827293\
     WELD_PKG=https://repo1.maven.org/maven2/org/jboss/weld/weld-osgi-bundle/2.2.10.SP1/weld-osgi-bundle-2.2.10.SP1-glassfish4.jar\
     GRIZZLY_PKG=http://guides.dataverse.org/en/latest/_downloads/glassfish-grizzly-extra-all.jar\
     PGDRIVER_PKG=https://jdbc.postgresql.org/download/postgresql-42.2.5.jar\
     DATAVERSE_VERSION=${VERSION}\
-    DATAVERSE_PKG=https://github.com/IQSS/dataverse/releases/download/v${VERSION}/dvinstall.zip
+    DATAVERSE_PKG=https://github.com/IQSS/dataverse/releases/download/v${VERSION}/dvinstall.zip\
+    JMX_EXPORTER_PKG=https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_EXPORTER_VERSION}/jmx_prometheus_javaagent-${JMX_EXPORTER_VERSION}.jar
 ENV PATH="${PATH}:${GLASSFISH_DIR}/bin"
 
 # Install prerequisites
@@ -91,6 +93,10 @@ RUN ${GLASSFISH_DIR}/bin/asadmin start-domain && \
 # Install PostgreSQL JDBC driver in AppServer
 RUN wget --no-verbose -O postgresql.jar ${PGDRIVER_PKG} && \
     mv postgresql.jar ${GLASSFISH_DIR}/glassfish/lib
+
+# Get Prometheus JMX Exporter Java Agent (see https://github.com/prometheus/jmx_exporter)
+RUN wget --no-verbose -O ${HOME}/jmx_exporter_agent.jar ${JMX_EXPORTER_PKG} && \
+    echo -e "---\n{}" > ${HOME}/jmx_exporter_config.yaml
 
 # Retrieve the Dataverse install package, extract and remove ZIP,
 #   remove Harvard custom metadatablocks

@@ -9,6 +9,7 @@ Day 2 - Operations
 
     ../day1/config
     ../day1/secrets
+    ./monitoring
     ./upgrade
     ./job-metadata
     ./job-index
