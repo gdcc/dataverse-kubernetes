@@ -12,7 +12,7 @@ CURRENT=`echo "${2:-$(git describe --tag --abbrev=0)}" | tr -d "v"`
 NEW=`echo ${1:-${CURRENT}} | tr -d "v"`
 
 # find all relevant files and replace inline with sed
-find ./*.md ./*.yaml ./docs ./k8s ./docker -type f \
+find ./*.rst ./*.yaml ./docs ./k8s ./docker -type f \
     -not -path "./docs/release-notes/*" \
     -not -iname "*.svg" \
     -exec sed -i -e "s#${CURRENT}#${NEW}#g" {} \;
