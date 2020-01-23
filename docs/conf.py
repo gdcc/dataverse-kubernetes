@@ -25,7 +25,7 @@ copyright = u'%d, Forschungszentrum Jülich GmbH and The President & Fellows of 
 author = u'Oliver Bertuch'
 
 # The short X.Y version
-version = u'4.18'
+version = u'4.18.1'
 # The full version, including alpha/beta/rc tags
 release = version
 

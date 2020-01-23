@@ -10,7 +10,7 @@ LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
 ARG WEBHOOK_VERSION=2.6.11
 ARG TINI_VERSION=v0.18.0
-ARG VERSION=4.18
+ARG VERSION=4.18.1
 ARG COLLECTION=collection1
 ENV SOLR_OPTS="-Dsolr.jetty.request.header.size=102400"\
     COLLECTION_DIR=/opt/solr/server/solr/${COLLECTION}\
