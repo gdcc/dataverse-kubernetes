@@ -131,6 +131,34 @@ variable `ADMIN_PASSWORD`.
    2. This is a bootstrap-time-only option. You cannot reset your password this way.
 
 
+Example: Builtin Users API Key
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, your installation is secured to not allow other builtin users next
+to ``dataverseAdmin``. If you need or want to change this, you can provision a
+secret value to the ``BuiltinUsers.KEY`` setting when bootstrapping.
+
+As this is an extension to the API, you need to extend your API secret as
+shown below.
+
+.. code-block:: yaml
+
+   kind: Secret
+   # ...
+   metadata:
+     name: dataverse-api
+     # ...
+   stringData:
+     key: your-super-secret-unblock-key
+     userskey: your-even-more-secure-BuiltinUsers.KEY-value
+
+During bootstrap, the mounted secret at `${SECRETS_DIR}/api/userskey` is read
+and provisioned.
+
+.. note::
+
+  This is a bootstrap-time-only option. This cannot be set by configuration job
+  by design. You still could use a manual ``curl`` call.
 
 
 

@@ -71,6 +71,7 @@ above) as a tree of directories and files:
 4. `api/key` - required because you want the *unblock-key* for anything serious.
 5. `s3/access-key` and `s3/secret-key` - needed when you want to use S3 storage. See docs on using S3.
 6. `admin/password` - optional, provision a password for the `dataverseAdmin` account. Defaults to `admin1`.
+7. `api/userskey` - optional, provision a `BuiltinUsers.KEY`, which is necessary to create builtin users via API. Defaults to not available.
 
 A [password alias](https://docs.oracle.com/cd/E19798-01/821-1751/ghgqc/index.html)
 is automatically created and used for those that are set via JVM options, no need
