@@ -1,6 +1,6 @@
 # Image "dataverse-k8s"
 
-[![Upstream](https://img.shields.io/badge/Dataverse-v4.17-important.svg)](https://github.com/IQSS/dataverse/releases/v4.17)
+[![Upstream](https://img.shields.io/badge/Dataverse-v4.18-important.svg)](https://github.com/IQSS/dataverse/releases/v4.18)
 [![Hub](https://img.shields.io/static/v1.svg?label=image&message=dataverse-k8s&logo=docker)](https://hub.docker.com/r/iqss/dataverse-k8s)
 ![Pulls](https://img.shields.io/docker/pulls/iqss/dataverse-k8s)
 [![RTD](https://img.shields.io/readthedocs/dataverse-k8s)](https://dataverse-k8s.readthedocs.io)
@@ -17,11 +17,11 @@ like [Docker](https://docker.io) or [podman](https://podman.io).
 
 - `latest`: master branch based build ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/glassfish/Dockerfile))
 - `build-cache`: a maven cache image to speedup dev builds, refreshed every night based on latest upstream `develop`. ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/build-cache/Dockerfile), [`Jenkinsfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/build-cache/Jenkinsfile))
-- `4.17`, ..., `4.15.1`, ..., `4.11`: stable (tagged) releases
+- `4.18`, ..., `4.15.1`, ..., `4.11`: stable (tagged) releases
   - Using [upstream release schema](https://github.com/IQSS/dataverse/releases/) down to `4.11`.
   - See also [list on Docker Hub](https://hub.docker.com/r/iqss/dataverse-k8s/tags?page=1&ordering=last_updated&name=4.)
     for releases
-  - Last stable tag ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/v4.17/docker/dataverse-k8s/glassfish/Dockerfile))
+  - Last stable tag ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/v4.18/docker/dataverse-k8s/glassfish/Dockerfile))
 
 ## Quick reference
 
