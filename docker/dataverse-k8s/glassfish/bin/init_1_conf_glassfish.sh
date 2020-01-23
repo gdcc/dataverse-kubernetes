@@ -97,6 +97,12 @@ asadmin set server-config.network-config.protocols.protocol.http-listener-1.http
 asadmin create-jvm-options "\-Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl"
 # Set Max Heap Space (see also https://www.eclipse.org/openj9/docs/xxinitialrampercentage)
 asadmin create-jvm-options "\-XX\:MaxRAMPercentage=${MAX_RAM_PERCENTAGE%.*}.00"
+# If configured, enable Prometheus JMX agent
+# 3. Enable JDWP (debugger)
+if [ "x${ENABLE_JMX_EXPORT}" = "x1" ]; then
+  echo "Enabling Prometheus JMX Exporter Java Agent on port ${JMX_EXPORTER_PORT} and config at ${JMX_EXPORTER_CONFIG}."
+  asadmin create-jvm-options "\-javaagent\:${HOME}/jmx_exporter_agent.jar=${JMX_EXPORTER_PORT}\:${JMX_EXPORTER_CONFIG}"
+fi
 
 # 3. Domain based configuration options
 # Set Dataverse environment variables
