@@ -6,15 +6,15 @@ The Dataverse Java EE application needs to access remote resources like
 a PostgreSQL database or a persistent identifier service like DataCite.
 For this you'll need credentials, which are meant to be kept secret.
 
+Besides credentials, you might need to think of certificates, too, depending
+on your actual setup. Your mileage may vary.
+
 Credentials in Dataverse application container
 ----------------------------------------------
 
 Credentials used in Dataverse may be found in the upstream `Installation
 Guide <http://guides.dataverse.org/en/latest/installation>`_, mostly in the
 `config section <http://guides.dataverse.org/en/latest/installation/config.html>`_.
-
-Besides the credentials, you might need to think of certificates, too, depending
-on your actual setup. Your mileage may vary.
 
 Concept
 ^^^^^^^
@@ -215,7 +215,20 @@ Some basics (taken from `here <https://kubernetes.io/blog/2018/07/18/11-ways-not
 - Especially secure communication with ``etcd``, which holds your secret data decrypted.
 - Let ``etcd`` `encrypt its data when at rest <https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/>`_.
 
-You should also think about your deployment workflow for secrets. It might be a
-good idea to use tools like `Vault <https://vault.io>`_. If you like `GitOps <https://www.weave.works/technologies/gitops>`_,
-take a look at the `concept of sealed secrets <https://learnk8s.io/kubernetes-secrets-in-git>`_
-(multiple implementation around).
+Secrets deployment tooling
+''''''''''''''''''''''''''
+
+You should also think about your deployment workflow for secrets:
+
+- It might be a good idea to use tools like `Vault <https://vault.io>`_ in big environments or teams.
+- If you like `GitOps <https://www.weave.works/technologies/gitops>`_, take a
+  look at the `concept of sealed secrets <https://learnk8s.io/kubernetes-secrets-in-git>`_.
+
+  - Kamus: https://github.com/Soluto/kamus
+  - Sealed Secrets: https://github.com/bitnami-labs/sealed-secrets
+
+- Even simpler, not requiring a K8s ``Controller``:
+
+  - Mozilla SOPS: https://github.com/mozilla/sops
+    (`Experimental Kustomize support <https://www.agilicus.com/safely-secure-secrets-a-sops-plugin-for-kustomize/>`_ & others)
+  - `Keepass <https://keepass.info>`_ database + :download:`decrypt.py Python script <scripts/decrypt.py>` using `PyKeePass <https://pypi.org/project/pykeepass>`_
