@@ -4,7 +4,7 @@
 # You may obtain a copy of the License at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-FROM solr:7.3.1
+FROM solr:7.7
 
 LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
