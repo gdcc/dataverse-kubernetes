@@ -19,6 +19,7 @@ It aims at day-1 deployments and day-2 operations.
 * Documentation: https://dataverse-k8s.rtfd.io
 * Support: https://github.com/IQSS/dataverse-kubernetes/issues
 * Roadmap: https://dataverse-k8s.rtfd.io/en/latest/roadmap.html
+* Slides: http://talks.bertuch.name/dataverse-k8s-20200124/
 
 If you would like to contribute, you are most welcome. Head over to the
 `contribution guide <https://dataverse-k8s.rtfd.io/en/latest/contribute.html>`_
