@@ -67,3 +67,6 @@ fi
 curl -sS -X PUT -d "`cat ${SECRETS_DIR}/api/key`" "${DATAVERSE_URL}/api/admin/settings/:BlockedApiKey"
 curl -sS -X PUT -d unblock-key "${DATAVERSE_URL}/api/admin/settings/:BlockedApiPolicy"
 curl -sS -X PUT -d admin,test "${DATAVERSE_URL}/api/admin/settings/:BlockedApiEndpoints"
+
+# Initial configuration of Dataverse
+exec ${SCRIPT_DIR}/config-job.sh

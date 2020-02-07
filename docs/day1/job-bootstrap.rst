@@ -11,6 +11,10 @@ can find the Solr Search index. It will default to ``solr:8983``, but can be
 overridden by setting a hostname or IP in ``SOLR_K8S_HOST`` via ``ConfigMap``
 (see :doc:`config`).
 
+When the very basic configuration has been done, the configuration given in the
+``ConfigMap`` will be applied, like you would
+:ref:`run a configure Kubernetes job <day1/config:Details of the configuration job>`.
+
 .. uml::
 
   @startuml
@@ -39,6 +43,8 @@ overridden by setting a hostname or IP in ``SOLR_K8S_HOST`` via ``ConfigMap``
   activate D
   BJ -> D: Configure Solr location\n+ admin contact
   BJ -> D: Block API with unblock-key
+  D -> P: Store settings
+  BJ -> D: Configure Dataverse DB-based\nsettings via API (like a Config Job)
   D -> P: Store settings
   return
   destroy BJ
