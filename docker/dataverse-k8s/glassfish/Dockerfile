@@ -33,7 +33,8 @@ ENV PATH="${PATH}:${GLASSFISH_DIR}/bin"
 
 # Install prerequisites
 RUN yum install -y java-1.8.0-openjdk-headless epel-release unzip curl wget && \
-    yum install -y postgresql jq ImageMagick
+    yum install -y postgresql jq ImageMagick && \
+    yum clean all
 
 # Create and set the Glassfish user and working directory owned by the new user
 RUN groupadd -g 1000 glassfish && \
