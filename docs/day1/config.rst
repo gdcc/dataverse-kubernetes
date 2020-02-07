@@ -123,6 +123,11 @@ is a bad idea. It's always a good idea to put it in revision control.
 
 You might consider providing a `CronJob` for scheduled, regular updates.
 
+.. seealso::
+
+  :doc:`job-bootstrap` will also apply initial settings for you, no need to run
+  a job until you change your configuration again.
+
 Details of the configuration job
 ################################
 

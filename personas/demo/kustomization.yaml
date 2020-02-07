@@ -12,5 +12,6 @@ resources:
 
 images:
 
-patches:
+patchesStrategicMerge:
+  - configmap.yaml
   - patch-memory.yaml
