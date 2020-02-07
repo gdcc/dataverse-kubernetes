@@ -39,7 +39,7 @@ pipeline {
         stage('Deploy to GitHub') {
           environment {
             ID = "${env.GIT_COMMIT}"
-            AUTHOR = "Dataverse Bot"
+            AUTHOR = "Dataverse Robot Kitten"
             EMAIL = "52299539+dataversebot@users.noreply.github.com"
           }
           steps {
