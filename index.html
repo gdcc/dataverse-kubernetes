@@ -2,28 +2,33 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
-    <title>The Dataverse Cloud &amp; Container Guide &#8212; Dataverse Cloud &amp; Container Guide 4.16 documentation</title>
+    <title>The Dataverse Cloud &amp; Container Guide &#8212; Dataverse Cloud &amp; Container Guide 4.18.1 documentation</title>
 
     <link rel="stylesheet" href="_static/material-icons.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/contentui.css" />
-    <link rel="stylesheet" href="_static/notosanscjkjp.css" type="text/css" />
-    <link rel="stylesheet" href="_static/roboto.css" type="text/css" />
-    <link rel="stylesheet" href="_static/material-design-lite-1.3.0/material.deep_orange-red.min.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxcontrib-images/LightBox2/lightbox2/css/lightbox.css" />
+    <link rel="stylesheet" type="text/css" href="_static/notosanscjkjp.css" />
+    <link rel="stylesheet" type="text/css" href="_static/roboto.css" />
+    <link rel="stylesheet" type="text/css" href="_static/material-design-lite-1.3.0/material.deep_orange-red.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_materialdesign_theme.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/contentui.js"></script>
+    <script type="text/javascript" src="_static/sphinxcontrib-images/LightBox2/lightbox2/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/sphinxcontrib-images/LightBox2/lightbox2/js/lightbox.min.js"></script>
+    <script type="text/javascript" src="_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
     <script type="text/javascript" src="_static/sphinx_materialdesign_theme.js"></script>
     <link rel="shortcut icon" href="_static/favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -118,7 +123,8 @@ Show Source
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="day1/index.html">Day 1 - Deployment</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day1/architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day1/init-deploy.html">Initial Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day1/job-bootstrap.html">Bootstrap Job</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day1/config.html">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day1/secrets.html">Credentials and Secrets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day1/resources.html">Resources and Usage</a></li>
@@ -128,6 +134,7 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="day2/index.html">Day 2 - Operations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="day1/config.html">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day1/secrets.html">Credentials and Secrets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day2/monitoring.html">Monitoring</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day2/upgrade.html">Upgrading</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day2/job-metadata.html">Metadata Blocks Job</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day2/job-index.html">Search Index Jobs</a></li>
@@ -142,6 +149,7 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="development/index.html">Development usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="development/prepare.html">Prepare environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="development/mail.html">Catch mails</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development/javatools.html">Java Development Tools</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
@@ -176,7 +184,8 @@ Show Source
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="day1/index.html">Day 1 - Deployment</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day1/architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day1/init-deploy.html">Initial Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day1/job-bootstrap.html">Bootstrap Job</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day1/config.html">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day1/secrets.html">Credentials and Secrets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day1/resources.html">Resources and Usage</a></li>
@@ -186,6 +195,7 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="day2/index.html">Day 2 - Operations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="day1/config.html">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day1/secrets.html">Credentials and Secrets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day2/monitoring.html">Monitoring</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day2/upgrade.html">Upgrading</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day2/job-metadata.html">Metadata Blocks Job</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day2/job-index.html">Search Index Jobs</a></li>
@@ -200,6 +210,7 @@ Show Source
 <li class="toctree-l1"><a class="reference internal" href="development/index.html">Development usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="development/prepare.html">Prepare environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="development/mail.html">Catch mails</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development/javatools.html">Java Development Tools</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
@@ -219,7 +230,7 @@ Show Source
 <div class="section" id="deploying-running-and-using-dataverse-on-kubernetes">
 <h2>Deploying, Running and Using Dataverse on Kubernetes<a class="headerlink" href="#deploying-running-and-using-dataverse-on-kubernetes" title="Permalink to this headline">¶</a></h2>
 <img alt="https://raw.githubusercontent.com/IQSS/dataverse-kubernetes/master/docs/img/title-composition.png" src="https://raw.githubusercontent.com/IQSS/dataverse-kubernetes/master/docs/img/title-composition.png" />
-<p><a class="reference external" href="https://dataverse.org"><img alt="Dataverse badge" src="https://img.shields.io/badge/Dataverse-v4.16-important.svg" /></a>
+<p><a class="reference external" href="https://dataverse.org"><img alt="Dataverse badge" src="https://img.shields.io/badge/Dataverse-v4.18.1-important.svg" /></a>
 <a class="reference external" href="https://jenkins.dataverse.org/blue/organizations/jenkins/dataverse-k8s%2FKubeval%20Linting/activity?branch=master"><img alt="Validation badge" src="https://jenkins.dataverse.org/job/dataverse-k8s/job/Kubeval%20Linting/job/master/badge/icon?subject=kubeval&amp;status=valid&amp;color=purple" /></a>
 <a class="reference external" href="https://hub.docker.com/r/iqss/dataverse-k8s"><img alt="DockerHub dataverse-k8s badge" src="https://img.shields.io/static/v1.svg?label=image&amp;message=dataverse-k8s&amp;logo=docker" /></a>
 <a class="reference external" href="https://hub.docker.com/r/iqss/solr-k8s"><img alt="DockerHub solr-k8s badge" src="https://img.shields.io/static/v1.svg?label=image&amp;message=solr-k8s&amp;logo=docker" /></a>
@@ -230,16 +241,16 @@ Show Source
 objects on how to run Dataverse on a Kubernetes cluster.</p>
 <p>It aims at day-1 deployments and day-2 operations.</p>
 <ul class="simple">
-<li><p>Documentation: <a class="reference external" href="https://dataverse-k8s.rtfd.io">https://dataverse-k8s.rtfd.io</a></p></li>
-<li><p>Support: <a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/issues">https://github.com/IQSS/dataverse-kubernetes/issues</a></p></li>
-<li><p>Roadmap: <a class="reference external" href="https://dataverse-k8s.rtfd.io/en/latest/roadmap.html">https://dataverse-k8s.rtfd.io/en/latest/roadmap.html</a></p></li>
+<li>Documentation: <a class="reference external" href="https://dataverse-k8s.rtfd.io">https://dataverse-k8s.rtfd.io</a></li>
+<li>Support: <a class="reference external" href="https://github.com/IQSS/dataverse-kubernetes/issues">https://github.com/IQSS/dataverse-kubernetes/issues</a></li>
+<li>Roadmap: <a class="reference external" href="https://dataverse-k8s.rtfd.io/en/latest/roadmap.html">https://dataverse-k8s.rtfd.io/en/latest/roadmap.html</a></li>
 </ul>
 <p>If you would like to contribute, you are most welcome. Head over to the
 <a class="reference external" href="https://dataverse-k8s.rtfd.io/en/latest/contribute.html">contribution guide</a>
 for details.</p>
 <div class="admonition important">
-<p class="admonition-title">Important</p>
-<div class="line-block">
+<p class="first admonition-title">Important</p>
+<div class="last line-block">
 <div class="line">This is a <strong>community driven and supported project</strong>, unsupported by <a class="reference external" href="https://www.iq.harvard.edu/">IQSS</a>, Harvard.</div>
 <div class="line">Current main drivers are <a class="reference external" href="http://www.fz-juelich.de">Forschungszentrum Jülich</a> and <a class="reference external" href="https://dans.knaw.nl">DANS KNAW</a>.</div>
 <div class="line"><br /></div>
@@ -292,7 +303,7 @@ find us on <a class="reference external" href="https://kiwiirc.com/client/irc.fr
 
     <div class="mdl-mini-footer__right-section">
         <div>&copy; Copyright 2020, Forschungszentrum Jülich GmbH and The President &amp; Fellows of Harvard College.</div>
-      <div>Generated by <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1 using <a href="https://github.com/myyasuda/sphinx_materialdesign_theme">sphinx_materialdesign_theme</a>.</div>
+      <div>Generated by <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5 using <a href="https://github.com/myyasuda/sphinx_materialdesign_theme">sphinx_materialdesign_theme</a>.</div>
     </div>
 </footer>
         </main>
