@@ -51,6 +51,11 @@ RUN wget --no-verbose -O /tini https://github.com/krallin/tini/releases/download
     gpg --batch --verify /tini.asc /tini && \
     chmod +x /tini
 
+# Install esh template engine from Github
+RUN wget --no-verbose -O esh https://raw.githubusercontent.com/jirutka/esh/v0.3.0/esh && \
+    echo 'fe030e23fc1383780d08128eecf322257cec743b esh' | sha1sum -c - && \
+    chmod +x esh && mv esh /usr/local/bin
+
 USER glassfish
 WORKDIR ${HOME_DIR}
 
