@@ -35,3 +35,27 @@ if [ `env | grep -Ee '^(db)_' 2>&1 > /dev/null` ]; then
 else
   echo "--- none found ---"
 fi
+
+# Parse and configure authentication providers
+echo "Deploying authentication providers:"
+if [ -n "${AUTH_PROVIDERS+x}" ]; then
+  # iterate all providers in array
+  for k in $(echo "${AUTH_PROVIDERS}" | jq '. | keys | .[]'); do
+    # get provider element, do nice logging and create tempfile
+    PROVIDER=`echo "$AUTH_PROVIDERS" | jq -r ".[$k]"`
+    echo -n "Loading `echo "${PROVIDER}" | jq -r ".id"`: "
+    TMPFILE=`mktemp`
+
+    # templating magic with esh
+    echo "${PROVIDER}" | esh - > "${TMPFILE}"
+
+    # upload with nice logging
+    OUTPUT=`curl -sSf -H "Content-type: application/json" -X POST --upload-file "${TMPFILE}" "${DATAVERSE_URL}/api/admin/authenticationProviders?unblock-key=${API_KEY}" 2>&1 || echo -n ""`
+    echo "$OUTPUT" | jq -rM '.status' 2>/dev/null || echo -e 'FAILED\n' "$OUTPUT"
+
+    # cleanup behind us, delete tempfile
+    rm "${TMPFILE}"
+  done
+else
+  echo "--- none found ---"
+fi
