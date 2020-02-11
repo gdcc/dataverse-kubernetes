@@ -171,7 +171,12 @@ the project if you are interested having this builtin.
 Full configuration example
 --------------------------
 
-Below you can find an example ``ConfigMap`` using all three types of variables:
+Below you can find an example ``ConfigMap`` using all three types of variables.
+
+.. seealso::
+
+  Most likely you'll be interested in configuration of :doc:`/day3/auth`, too.
+  It's left out here to stay in focus.
 
 .. literalinclude:: examples/configmap.yaml
     :caption: configmap.yaml
