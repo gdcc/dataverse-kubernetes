@@ -27,6 +27,9 @@ spec:
             - name: api-secret
               mountPath: "/secrets/api"
               readOnly: true
+            - name: provider-secrets
+              mountPath: "/secrets/providers"
+              readOnly: true
       initContainers:
         - name: check-dataverse-ready
           image: giantswarm/tiny-tools
@@ -37,5 +40,9 @@ spec:
         - name: api-secret
           secret:
             secretName: dataverse-api
+        - name: provider-secrets
+          secret:
+            secretName: dataverse-providers
+            optional: true
       restartPolicy: Never
   backoffLimit: 4
