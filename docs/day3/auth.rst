@@ -52,7 +52,8 @@ following:
 Add providers to ``ConfigMap``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 To create a configuration usable in your Kubernetes deployment, simply add them
-to your ``ConfigMap`` as shown in the below example.
+to your Dataverse ``ConfigMap``, familiar from :doc:`/day1/config`, as shown in
+the below example.
 
 Again, please make yourself familiar with upstream documentation about
 `OpenID Connect <http://guides.dataverse.org/en/latest/installation/oidc.html>`_
