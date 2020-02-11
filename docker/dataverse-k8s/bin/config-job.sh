@@ -19,17 +19,19 @@ API_KEY=`cat ${SECRETS_DIR}/api/key`
 
 # Set Database options based on environment variables db_XXX from ConfigMap
 echo "Setting Database options for Dataverse:"
-env | grep -Ee "^(db)_" | sort -fd
-env -0 | grep -z -Ee "^(db)_" | while IFS='=' read -r -d '' k v; do
-    KEY=`echo "${k}" | sed -e 's/^db_/:/'`
-    echo "Handling ${KEY}=${v}."
-    if [[ -z "${v}" ]]; then
-      # empty var => delete the setting
-      curl -X DELETE "${DATAVERSE_URL}/api/admin/settings/${KEY}?unblock-key=${API_KEY}"
-    else
-      # set the setting
-      curl -X PUT -d "${v}" "${DATAVERSE_URL}/api/admin/settings/${KEY}?unblock-key=${API_KEY}"
-    fi
-done
-
-# TODO: think about how to POST the configs for OAuth, etc
+if [ `env | grep -Ee '^(db)_' 2>&1 > /dev/null` ]; then
+  env | grep -Ee '^(db)_' | sort -fd
+  env -0 | grep -z -Ee "^(db)_" | while IFS='=' read -r -d '' k v; do
+      KEY=`echo "${k}" | sed -e 's/^db_/:/'`
+      echo "Handling ${KEY}=${v}."
+      if [[ -z "${v}" ]]; then
+        # empty var => delete the setting
+        curl -X DELETE "${DATAVERSE_URL}/api/admin/settings/${KEY}?unblock-key=${API_KEY}"
+      else
+        # set the setting
+        curl -X PUT -d "${v}" "${DATAVERSE_URL}/api/admin/settings/${KEY}?unblock-key=${API_KEY}"
+      fi
+  done
+else
+  echo "--- none found ---"
+fi
