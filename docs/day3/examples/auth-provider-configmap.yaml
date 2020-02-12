@@ -1,0 +1,25 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dataverse
+data:
+  AUTH_PROVIDERS: |
+        [
+          {
+            "id": "github",
+            "factoryAlias": "oauth2",
+            "title": "GitHub",
+            "subtitle": "",
+            "factoryData": "type: github | userEndpoint: NONE | clientId: <%= $(cat $SECRETS_DIR/providers/github_clientid) %> | clientSecret: <%= $(cat $SECRETS_DIR/providers/github_clientsecret) %>",
+            "enabled": true
+          },
+          {
+            "id": "orcid",
+            "factoryAlias": "oauth2",
+            "title": "ORCID",
+            "subtitle": "",
+            "factoryData": "type: orcid | userEndpoint: https://api.sandbox.orcid.org/v2.0/{ORCID}/person | clientId: <%= $(cat $SECRETS_DIR/providers/orcid_clientid) %> | clientSecret: <%= $(cat $SECRETS_DIR/providers/orcid_clientsecret) %>",
+            "enabled": true
+          }
+        ]

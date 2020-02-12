@@ -12,7 +12,7 @@ on your behalf for a new deployment of Dataverse. It also explains what happens
 in the background on an overview level.
 
 When you are done with the initial deployment, you have to :doc:`bootstrap </day1/job-bootstrap>`
-and :doc:`configure </day1/config>`.
+(and :doc:`configure </day1/config>`, which is done during bootstrapping, too).
 
 Maybe you should just read :doc:`/get-started/index` and follow that before going into details.
 
