@@ -26,7 +26,7 @@ for details.
 
 
 
-.. |Dataverse badge| image:: https://img.shields.io/badge/Dataverse-v4.18.1-important.svg
+.. |Dataverse badge| image:: https://img.shields.io/badge/Dataverse-v4.19-important.svg
    :target: https://dataverse.org
 .. |Validation badge| image:: https://jenkins.dataverse.org/job/dataverse-k8s/job/Kubeval%20Linting/job/master/badge/icon?subject=kubeval&status=valid&color=purple
    :target: https://jenkins.dataverse.org/blue/organizations/jenkins/dataverse-k8s%2FKubeval%20Linting/activity?branch=master
