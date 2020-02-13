@@ -45,6 +45,7 @@ RUN wget --no-verbose -O dvinstall.zip ${DATAVERSE_PKG} && \
     mkdir -p ${COLLECTION_DIR}/conf && \
     mv dvinstall/solrconfig.xml ${COLLECTION_DIR}/conf/solrconfig.xml && \
     mv dvinstall/schema*.xml ${COLLECTION_DIR}/conf/ && \
+    mv dvinstall/updateSchemaMDB.sh ${SCHEMA_SCRIPT_DIR}/ && \
     rm -rf dvinstall dvinstall.zip
 
 # Edit schema.xml to include /schema located files, but fallback to default
