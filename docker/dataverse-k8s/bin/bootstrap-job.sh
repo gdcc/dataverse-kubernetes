@@ -55,15 +55,14 @@ sed -i -e "s#dataverse@mailinator.com#${CONTACT_MAIL}#" data/user-admin.json
 # 4.) Configure Solr location
 curl -sS -X PUT -d "${SOLR_K8S_HOST}:8983" "${DATAVERSE_URL}/api/admin/settings/:SolrHostColonPort"
 
-# 5.) Configure system email (otherwise no email will be send)
-curl -sS -X PUT -d "${ADMIN_MAIL}" "${DATAVERSE_URL}/api/admin/settings/:SystemEmail"
-
-# 6.) Block access to the API endpoints, but allow for request with key from secret
+# 5.) Provision builtin users key to enable creation of more builtin users
 if [ -s "${SECRETS_DIR}/api/userskey" ]; then
   curl -sS -X PUT -d "`cat ${SECRETS_DIR}/api/userskey`" "${DATAVERSE_URL}/api/admin/settings/BuiltinUsers.KEY"
 else
   curl -sS -X DELETE "${DATAVERSE_URL}/api/admin/settings/BuiltinUsers.KEY"
 fi
+
+# 6.) Block access to the API endpoints, but allow for request with key from secret
 curl -sS -X PUT -d "`cat ${SECRETS_DIR}/api/key`" "${DATAVERSE_URL}/api/admin/settings/:BlockedApiKey"
 curl -sS -X PUT -d unblock-key "${DATAVERSE_URL}/api/admin/settings/:BlockedApiPolicy"
 curl -sS -X PUT -d admin,test "${DATAVERSE_URL}/api/admin/settings/:BlockedApiEndpoints"
