@@ -31,6 +31,7 @@ pipeline {
         anyOf {
           changeset "docker/dataverse-k8s/**"
           triggeredBy 'TimerTrigger'
+          triggeredBy cause: "UserIdCause"
           tag ""
         }
       }
@@ -46,6 +47,7 @@ pipeline {
           changeset "docker/dataverse-k8s/**"
           changeset "docs/images/dataverse-k8s.md"
           triggeredBy 'TimerTrigger'
+          triggeredBy cause: "UserIdCause"
           tag ""
         }
       }

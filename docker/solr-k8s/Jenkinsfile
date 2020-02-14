@@ -30,6 +30,7 @@ pipeline {
         anyOf {
           changeset "docker/solr-k8s/**"
           triggeredBy 'TimerTrigger'
+          triggeredBy cause: "UserIdCause"
           tag ""
         }
       }
@@ -45,6 +46,7 @@ pipeline {
           changeset "docker/solr-k8s/**"
           changeset "docs/images/solr-k8s.md"
           triggeredBy 'TimerTrigger'
+          triggeredBy cause: "UserIdCause"
           tag ""
         }
       }
