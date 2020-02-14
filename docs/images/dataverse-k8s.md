@@ -1,6 +1,6 @@
 # Image "dataverse-k8s"
 
-[![Upstream](https://img.shields.io/badge/Dataverse-v4.18.1-important.svg)](https://github.com/IQSS/dataverse/releases/v4.18.1)
+[![Upstream](https://img.shields.io/badge/Dataverse-v4.19-important.svg)](https://github.com/IQSS/dataverse/releases/v4.19)
 [![Hub](https://img.shields.io/static/v1.svg?label=image&message=dataverse-k8s&logo=docker)](https://hub.docker.com/r/iqss/dataverse-k8s)
 ![Pulls](https://img.shields.io/docker/pulls/iqss/dataverse-k8s)
 [![RTD](https://img.shields.io/readthedocs/dataverse-k8s)](https://dataverse-k8s.readthedocs.io)
@@ -17,11 +17,11 @@ like [Docker](https://docker.io) or [podman](https://podman.io).
 
 - `latest`: master branch based build ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/glassfish/Dockerfile))
 - `build-cache`: a maven cache image to speedup dev builds, refreshed every night based on latest upstream `develop`. ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/build-cache/Dockerfile), [`Jenkinsfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/build-cache/Jenkinsfile))
-- `4.18.1`, ..., `4.15.1`, ..., `4.11`: stable (tagged) releases
+- `4.19`, ..., `4.15.1`, ..., `4.11`: stable (tagged) releases
   - Using [upstream release schema](https://github.com/IQSS/dataverse/releases/) down to `4.11`.
   - See also [list on Docker Hub](https://hub.docker.com/r/iqss/dataverse-k8s/tags?page=1&ordering=last_updated&name=4.)
     for releases
-  - Last stable tag ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/v4.18.1/docker/dataverse-k8s/glassfish/Dockerfile))
+  - Last stable tag ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/v4.19/docker/dataverse-k8s/glassfish/Dockerfile))
 
 ## Quick reference
 
@@ -70,7 +70,7 @@ above) as a tree of directories and files:
 3. `db/password` - required - guess why?
 4. `api/key` - required because you want the *unblock-key* for anything serious.
 5. `s3/access-key` and `s3/secret-key` - needed when you want to use S3 storage. See docs on using S3.
-6. `admin/password` - optional, provision a password for the `dataverseAdmin` account. Defaults to `admin1`.
+6. `admin/password` - optional, provision a password for the `dataverseAdmin` account. Defaults to `admin`.
 7. `api/userskey` - optional, provision a `BuiltinUsers.KEY`, which is necessary to create builtin users via API. Defaults to not available.
 8. `providers/...` - optional, providing access credentials to [integrate authentication providers](https://dataverse-k8s.readthedocs.io/en/latest/day3/auth.html).
 

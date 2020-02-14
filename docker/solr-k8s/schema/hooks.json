@@ -1,7 +1,7 @@
 [
   {
     "id": "update-schema",
-    "execute-command": "./update.sh",
+    "execute-command": "./updateSchemaMDB.sh",
     "command-working-directory": "/scripts/schema/",
     "response-message": "Schema update triggered.",
     "include-command-output-in-response": true,

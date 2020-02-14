@@ -81,7 +81,7 @@ echo "Configuring JavaMail."
 asadmin create-javamail-resource \
           --mailhost "${MAIL_SERVER}" \
           --mailuser "dataversenotify" \
-          --fromaddress "do-not-reply@${HOST_DNS_ADDRESS}" \
+          --fromaddress "${MAIL_FROMADDRESS}" \
           mail/notifyMailSession
 
 echo "Setting miscellaneous configuration options."
