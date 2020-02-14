@@ -11,16 +11,18 @@ metadata:
     app.kubernetes.io/managed-by: kubectl
 data:
   ### GENERAL SETTINGS
-  HOST_DNS_ADDRESS: data.example.org
   POSTGRES_DATABASE: dataverse
   dataverse_fqdn: data.example.org
   dataverse_siteUrl: https://\${dataverse.fqdn}
   dataverse_auth_password__reset__timeout__in__minutes: 30
 
   ### CONTACT SETTINGS
+  # Sender address of all mails sent by Dataverse
+  MAIL_FROMADDRESS: "do-not-reply@example.org"
+  # Root dataverse contact
   CONTACT_MAIL: rdm@example.org
-  ADMIN_MAIL: &admin Example - Research Data Management <rdm@example.org>
-  db_SystemEmail: *admin
+  # Installation contact
+  db_SystemEmail: "Example - Research Data Management <rdm@example.org>"
 
   ### DOI SETTINGS
   doi_baseurlstring: https://mds.test.datacite.org
