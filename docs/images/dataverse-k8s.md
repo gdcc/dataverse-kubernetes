@@ -70,7 +70,7 @@ above) as a tree of directories and files:
 3. `db/password` - required - guess why?
 4. `api/key` - required because you want the *unblock-key* for anything serious.
 5. `s3/access-key` and `s3/secret-key` - needed when you want to use S3 storage. See docs on using S3.
-6. `admin/password` - optional, provision a password for the `dataverseAdmin` account. Defaults to `admin1`.
+6. `admin/password` - optional, provision a password for the `dataverseAdmin` account. Defaults to `admin`.
 7. `api/userskey` - optional, provision a `BuiltinUsers.KEY`, which is necessary to create builtin users via API. Defaults to not available.
 8. `providers/...` - optional, providing access credentials to [integrate authentication providers](https://dataverse-k8s.readthedocs.io/en/latest/day3/auth.html).
 

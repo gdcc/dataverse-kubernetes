@@ -50,7 +50,7 @@ sed -i -e "s#localhost:8080#${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT}#
 sed -i -e "s#root@mailinator.com#${CONTACT_MAIL}#" data/dv-root.json
 sed -i -e "s#dataverse@mailinator.com#${CONTACT_MAIL}#" data/user-admin.json
 # 2c) Use script(s) to bootstrap the instance.
-./setup-all.sh --insecure -p="${ADMIN_PASSWORD}"
+./setup-all.sh --insecure -p="${ADMIN_PASSWORD:-admin}"
 
 # 4.) Configure Solr location
 curl -sS -X PUT -d "${SOLR_K8S_HOST}:8983" "${DATAVERSE_URL}/api/admin/settings/:SolrHostColonPort"
