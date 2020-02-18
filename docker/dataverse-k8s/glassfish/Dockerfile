@@ -78,8 +78,11 @@ RUN wget --no-verbose -O weld-osgi-bundle.jar ${WELD_PKG} && \
     cp /etc/pki/ca-trust/extracted/java/cacerts ${GLASSFISH_DIR}/glassfish/domains/domain1/config/cacerts.jks
 
 # Make docroot of Glassfish reside in higher level directory for easier targeting
+# Due to IQSS/dataverse-kubernetes#177: create the generated pathes so they are
+# writeable by us. TBR with #178.
 RUN rm -rf ${DOMAIN_DIR}/docroot && \
-    ln -s ${DOCROOT_DIR} ${DOMAIN_DIR}/docroot
+    ln -s ${DOCROOT_DIR} ${DOMAIN_DIR}/docroot && \
+    mkdir -p ${DOMAIN_DIR}/generated/jsp/dataverse
 
 # Tune basic settings
 # 1) Set to use Server VM
