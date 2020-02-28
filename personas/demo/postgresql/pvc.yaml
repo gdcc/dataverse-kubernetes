@@ -1,0 +1,17 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgresql
+  labels:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: storage
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3G

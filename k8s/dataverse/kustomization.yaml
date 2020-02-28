@@ -6,4 +6,7 @@ resources:
   - configmap.yaml
   - pvc.yaml
   - svc.yaml
-  - jobs/bootstrap.yaml
+
+images:
+  - name: iqss/dataverse-k8s
+    newTag: "4.19"

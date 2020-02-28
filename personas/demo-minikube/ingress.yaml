@@ -1,0 +1,17 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: dataverse.demo
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: dataverse
+          servicePort: 8080

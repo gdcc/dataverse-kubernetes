@@ -4,7 +4,24 @@ apiVersion: v1
 metadata:
   name: dataverse-files
   labels:
-    app.kubernetes.io/name: dataverse
+    app.kubernetes.io/name: files
+    app.kubernetes.io/version: "1.1"
+    app.kubernetes.io/component: storage
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 6G
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: dataverse-docroot
+  labels:
+    app.kubernetes.io/name: docroot
     app.kubernetes.io/version: "1.0"
     app.kubernetes.io/component: storage
     app.kubernetes.io/part-of: dataverse
@@ -15,6 +32,3 @@ spec:
   resources:
     requests:
       storage: 6G
-  selector:
-    matchLabels:
-      backup: "False"

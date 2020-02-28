@@ -1,0 +1,46 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: metadata-update-dataverse-
+  labels:
+    app.kubernetes.io/name: metadata-update
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: job
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: metadata-update
+        app.kubernetes.io/part-of: dataverse
+    spec:
+      containers:
+        - name: metadata-update
+          image: iqss/dataverse-k8s
+          command: ['scripts/metadata-update.sh']
+          envFrom:
+            - configMapRef:
+                name: dataverse
+          volumeMounts:
+            - name: api-secret
+              mountPath: "/secrets/api"
+              readOnly: true
+      initContainers:
+        - name: check-solr-ready
+          image: giantswarm/tiny-tools
+          command: ['sh', '-c',
+            'until curl -sS -f "http://${SOLR_SERVICE_HOST}:${SOLR_SERVICE_PORT}/solr/collection1/admin/ping" 2>&1 | grep "status.:.OK";
+            do echo waiting for solr; sleep 3; done;']
+        - name: check-dataverse-ready
+          image: giantswarm/tiny-tools
+          command: ['sh', '-c',
+            'until curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/robots.txt" -m 2 2>&1 > /dev/null;
+            do echo waiting for dataverse; sleep 15; done;']
+      volumes:
+        - name: api-secret
+          secret:
+            secretName: dataverse-api
+      restartPolicy: Never
+  backoffLimit: 0

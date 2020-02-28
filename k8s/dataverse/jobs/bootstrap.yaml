@@ -4,7 +4,7 @@ metadata:
   name: bootstrap-dataverse
   labels:
     app.kubernetes.io/name: bootstrap
-    app.kubernetes.io/version: "4.15.1"
+    app.kubernetes.io/version: "1.1"
     app.kubernetes.io/component: job
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
@@ -16,7 +16,7 @@ spec:
         app.kubernetes.io/part-of: dataverse
     spec:
       containers:
-        - name: dv-bootstrap
+        - name: bootstrap
           image: iqss/dataverse-k8s
           command: ["scripts/bootstrap-job.sh"]
           envFrom:
@@ -41,22 +41,31 @@ spec:
               readOnly: true
             - name: api-secret
               mountPath: "/secrets/api"
+<<<<<<< HEAD
+=======
+              readOnly: true
+            - name: admin-secret
+              mountPath: "/secrets/admin"
+              readOnly: true
+            - name: provider-secrets
+              mountPath: "/secrets/providers"
+>>>>>>> master
               readOnly: true
       initContainers:
         - name: check-db-ready
           image: postgres:9.6
           command: ['sh', '-c',
-            'until pg_isready -h postgresql -p 5432;
+            'until pg_isready -h "${POSTGRESQL_SERVICE_HOST}" -p "${POSTGRESQL_SERVICE_PORT}";
             do echo waiting for database; sleep 3; done;']
         - name: check-solr-ready
-          image: tutum/curl
+          image: giantswarm/tiny-tools
           command: ['sh', '-c',
-            'until curl -f http://solr:8983/solr/collection1/admin/ping 2>&1 | grep "status.:.OK";
+            'until curl -sS -f "http://${SOLR_SERVICE_HOST}:${SOLR_SERVICE_PORT}/solr/collection1/admin/ping" 2>&1 | grep "status.:.OK";
             do echo waiting for solr; sleep 3; done;']
         - name: check-dataverse-ready
-          image: tutum/curl
+          image: giantswarm/tiny-tools
           command: ['sh', '-c',
-            'until curl -f http://dataverse:8080/robots.txt -m 2 2>&1 > /dev/null;
+            'until curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/robots.txt" -m 2 2>&1 > /dev/null;
             do echo waiting for dataverse; sleep 15; done;']
       volumes:
         - name: db-secret
@@ -65,5 +74,13 @@ spec:
         - name: api-secret
           secret:
             secretName: dataverse-api
+        - name: admin-secret
+          secret:
+            secretName: dataverse-admin
+            optional: true
+        - name: provider-secrets
+          secret:
+            secretName: dataverse-providers
+            optional: true
       restartPolicy: Never
   backoffLimit: 4

@@ -22,7 +22,7 @@ for alias in rserve doi db
 do
   if [ -f ${SECRETS_DIR}/$alias/password ]; then
     cat ${SECRETS_DIR}/$alias/password | sed -e "s#^#AS_ADMIN_ALIASPASSWORD=#" > /tmp/$alias
-    asadmin $ASADMIN_OPTS create-password-alias --passwordfile /tmp/$alias ${alias}_password_alias
+    asadmin create-password-alias --passwordfile /tmp/$alias ${alias}_password_alias
     rm /tmp/$alias
   else
     echo "WARNING: Could not find 'password' secret for ${alias} in ${SECRETS_DIR}. Check your Kubernetes Secrets and their mounting!"
@@ -81,7 +81,7 @@ echo "Configuring JavaMail."
 asadmin create-javamail-resource \
           --mailhost "${MAIL_SERVER}" \
           --mailuser "dataversenotify" \
-          --fromaddress "do-not-reply@${HOST_DNS_ADDRESS}" \
+          --fromaddress "${MAIL_FROMADDRESS}" \
           mail/notifyMailSession
 
 echo "Setting miscellaneous configuration options."
@@ -95,6 +95,14 @@ asadmin set-log-levels org.glassfish.grizzly.http.server.util.RequestUtils=SEVER
 asadmin set server-config.network-config.protocols.protocol.http-listener-1.http.comet-support-enabled="true"
 # SAX parser options
 asadmin create-jvm-options "\-Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl"
+# Set Max Heap Space (see also https://www.eclipse.org/openj9/docs/xxinitialrampercentage)
+asadmin create-jvm-options "\-XX\:MaxRAMPercentage=${MAX_RAM_PERCENTAGE%.*}.00"
+# If configured, enable Prometheus JMX agent
+# 3. Enable JDWP (debugger)
+if [ "x${ENABLE_JMX_EXPORT}" = "x1" ]; then
+  echo "Enabling Prometheus JMX Exporter Java Agent on port ${JMX_EXPORTER_PORT} and config at ${JMX_EXPORTER_CONFIG}."
+  asadmin create-jvm-options "\-javaagent\:${HOME}/jmx_exporter_agent.jar=${JMX_EXPORTER_PORT}\:${JMX_EXPORTER_CONFIG}"
+fi
 
 # 3. Domain based configuration options
 # Set Dataverse environment variables

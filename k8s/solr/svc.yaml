@@ -5,7 +5,7 @@ metadata:
   name: solr
   labels:
     app.kubernetes.io/name: solr
-    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/version: "1.1"
     app.kubernetes.io/component: service
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
@@ -14,6 +14,10 @@ spec:
     - port: 8983
       name: solr
       targetPort: 8983
+      protocol: TCP
+    - port: 9000
+      name: webhook
+      targetPort: 9000
       protocol: TCP
   selector:
     app.kubernetes.io/name: solr

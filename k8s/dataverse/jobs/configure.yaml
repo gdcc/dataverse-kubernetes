@@ -5,7 +5,7 @@ metadata:
   generateName: configure-dataverse-
   labels:
     app.kubernetes.io/name: configure
-    app.kubernetes.io/version: "4.15.1"
+    app.kubernetes.io/version: "1.1"
     app.kubernetes.io/component: job
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
@@ -17,7 +17,7 @@ spec:
         app.kubernetes.io/part-of: dataverse
     spec:
       containers:
-        - name: dv-bootstrap
+        - name: configure
           image: iqss/dataverse-k8s
           command: ["scripts/config-job.sh"]
           envFrom:
@@ -27,15 +27,22 @@ spec:
             - name: api-secret
               mountPath: "/secrets/api"
               readOnly: true
+            - name: provider-secrets
+              mountPath: "/secrets/providers"
+              readOnly: true
       initContainers:
         - name: check-dataverse-ready
-          image: tutum/curl
+          image: giantswarm/tiny-tools
           command: ['sh', '-c',
-            'until curl -f http://dataverse:8080/robots.txt -m 2 2>&1 > /dev/null;
+            'until curl -sS -f "http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}/robots.txt" -m 2 2>&1 > /dev/null;
             do echo waiting for dataverse; sleep 15; done;']
       volumes:
         - name: api-secret
           secret:
             secretName: dataverse-api
+        - name: provider-secrets
+          secret:
+            secretName: dataverse-providers
+            optional: true
       restartPolicy: Never
   backoffLimit: 4
