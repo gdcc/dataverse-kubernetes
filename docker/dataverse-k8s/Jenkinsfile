@@ -14,6 +14,8 @@ pipeline {
     DOCKER_IMAGE_NAME = "iqss/dataverse-k8s"
     GF_DOCKER_IMAGE_TAG = "build-gf-${env.BRANCH_NAME}"
     GF_DOCKER_FILE = "./docker/dataverse-k8s/glassfish/Dockerfile"
+    PYR_DOCKER_IMAGE_TAG = "build-pyr-${env.BRANCH_NAME}"
+    PYR_DOCKER_FILE = "./docker/dataverse-k8s/payara/Dockerfile"
     DOCKER_WORKDIR = "."
     DOCKER_HUB_CRED = "dockerhub-dataversebot"
     DOCKER_REGISTRY = "https://registry.hub.docker.com"
@@ -38,6 +40,7 @@ pipeline {
       steps {
         script {
           gf_docker_image = docker.build("${env.DOCKER_IMAGE_NAME}:${env.GF_DOCKER_IMAGE_TAG}", "--pull -f ${env.GF_DOCKER_FILE} ${env.DOCKER_WORKDIR}")
+          pyr_docker_image = docker.build("${env.DOCKER_IMAGE_NAME}:${env.PYR_DOCKER_IMAGE_TAG}", "--pull -f ${env.PYR_DOCKER_FILE} ${env.DOCKER_WORKDIR}")
         }
       }
     }
@@ -58,11 +61,13 @@ pipeline {
           }
           environment {
             GF_DOCKER_IMAGE_TAG = "${TAG_NAME.substring(1)}"
+            PYR_DOCKER_IMAGE_TAG = "${TAG_NAME.substring(1)}-payara"
           }
           steps {
             script {
               docker.withRegistry("${env.DOCKER_REGISTRY}", "${env.DOCKER_HUB_CRED}") {
                 gf_docker_image.push("${env.GF_DOCKER_IMAGE_TAG}")
+                pyr_docker_image.push("${env.PYR_DOCKER_IMAGE_TAG}")
               }
             }
           }
@@ -81,6 +86,7 @@ pipeline {
               // Push master image to latest tag
               docker.withRegistry("${env.DOCKER_REGISTRY}", "${env.DOCKER_HUB_CRED}") {
                 gf_docker_image.push("latest")
+                pyr_docker_image.push("payara")
               }
             }
             // Update description on DockerHub
