@@ -19,3 +19,8 @@ profiles:
     deploy:
       kustomize:
         path: personas/demo
+  - name: payara
+    patches:
+      - op: replace
+        path: /build/artifacts/0/docker/dockerfile
+        value: docker/dataverse-k8s/payara/Dockerfile
