@@ -81,10 +81,10 @@ To configure these limits, simply configure it in the ``Deployment`` object:
                   limits:
                     memory: "1Gi"
                 env:
-                  - name: MAX_RAM_PERCENTAGE
-                    value: "50.00"
+                  - name: MEM_MAX_RAM_PERCENTAGE
+                    value: "50.0"
 
   How much RAM is used at max for Java Heap can be easily adjusted by using the
-  JVM option ``-XX:MaxRAMPercentage=xx.xx``. For your convenience this has been
-  simplified by supporting an environment variable ``${MAX_RAM_PERCENTAGE}``,
+  JVM option ``-XX:MaxRAMPercentage=xx.x``. For your convenience this has been
+  simplified by supporting an environment variable ``${MEM_MAX_RAM_PERCENTAGE}``,
   see hidden example above. *Please keep in mind: must be a floating point value!*

@@ -29,6 +29,8 @@ ENV HOME_DIR=/opt/dataverse\
     DATAVERSE_VERSION=${VERSION}\
     DATAVERSE_PKG=https://github.com/IQSS/dataverse/releases/download/v${VERSION}/dvinstall.zip\
     JMX_EXPORTER_PKG=https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_EXPORTER_VERSION}/jmx_prometheus_javaagent-${JMX_EXPORTER_VERSION}.jar
+    MEM_MAX_RAM_PERCENTAGE=70.0\
+    MEM_XSS=512k
 ENV PATH="${PATH}:${GLASSFISH_DIR}/bin"
 
 # Install prerequisites
