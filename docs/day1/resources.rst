@@ -32,7 +32,7 @@ tweaked for memory usage. Obviously the values below count per instance.
     - 4 GiB
 
 .. hint::
-  The JVM will by default use 25% of RAM for it's heap. No need to add an
+  The JVM will by default use 70% of RAM for it's heap. No need to add an
   operating system reserve when running in containers on K8s.
 
 Configuring pods memory
@@ -62,11 +62,14 @@ To configure these limits, simply configure it in the ``Deployment`` object:
 .. seealso::
 
   For development or demo use, you'll be good in most cases with much less.
-  When running with only 1 GiB of RAM, you need to tweak the JVM to use at least
-  512 MiB of heap space. Using less heap space will not even deploy successfully.
+  You need to ensure the JVM uses at least 512 MiB for heap space.
+  Using less heap space will not even deploy successfully.
 
   .. toggle-header::
     :header: Development values are hidden on purpose to avoid confusion. *Expand/hide*
+
+    1 GiB RAM means 717 MB of heap space with 70% default setting, which is safe.
+    You can tweak the setting to match your necessities like below:
 
     .. code-block:: yaml
 

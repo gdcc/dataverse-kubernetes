@@ -16,6 +16,9 @@ When you are done with the initial deployment, you have to :doc:`bootstrap </day
 
 Maybe you should just read :doc:`/get-started/index` and follow that before going into details.
 
+.. note:: Chosse stable Glassfish 4.1 based images or experimental Payara 5
+          based with corresponding image tag. See :doc:`/images/dataverse-k8s` for available tags.
+
 .. uml::
 
   @startuml
