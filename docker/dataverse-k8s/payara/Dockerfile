@@ -17,13 +17,27 @@ ENV DATA_DIR=/data\
     DOMAIN_DIR=${PAYARA_DIR}/glassfish/domains/${DOMAIN_NAME}\
     DATAVERSE_VERSION=${VERSION}\
     DATAVERSE_PKG=https://github.com/IQSS/dataverse/releases/download/v${VERSION}/dvinstall.zip\
-    PGDRIVER_PKG=https://jdbc.postgresql.org/download/postgresql-42.2.5.jar
+    PGDRIVER_PKG=https://jdbc.postgresql.org/download/postgresql-42.2.12.jar\
+    MEM_MAX_RAM_PERCENTAGE=70.0\
+    MEM_XSS=512k
 
 # Create basic pathes
 USER root
 RUN mkdir -p ${HOME_DIR} ${SCRIPT_DIR} ${SECRETS_DIR} && \
     mkdir -p ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR} && \
     chown -R payara: ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR} ${SECRETS_DIR}
+
+# WORKAROUND MEMORY ISSUES UNTIL UPSTREAM FIXES THEM IN NEW RELEASE
+RUN ${PAYARA_DIR}/bin/asadmin --user=${ADMIN_USER} --passwordfile=${PASSWORD_FILE} start-domain ${DOMAIN_NAME} && \
+    ${PAYARA_DIR}/bin/asadmin --user=${ADMIN_USER} --passwordfile=${PASSWORD_FILE} delete-jvm-options \
+        '-XX\:+UnlockExperimentalVMOptions:-XX\:+UseCGroupMemoryLimitForHeap:-XX\:MaxRAMFraction=1' && \
+    ${PAYARA_DIR}/bin/asadmin --user=${ADMIN_USER} --passwordfile=${PASSWORD_FILE} create-jvm-options \
+        '-XX\:+UseContainerSupport:-XX\:MaxRAMPercentage=${ENV=MEM_MAX_RAM_PERCENTAGE}:-Xss${ENV=MEM_XSS}' && \
+    ${PAYARA_DIR}/bin/asadmin --user=${ADMIN_USER} --passwordfile=${PASSWORD_FILE} stop-domain ${DOMAIN_NAME} && \
+    # Cleanup after initialization
+     rm -rf \
+        ${PAYARA_DIR}/glassfish/domains/${DOMAIN_NAME}/osgi-cache \
+        ${PAYARA_DIR}/glassfish/domains/${DOMAIN_NAME}/logs
 
 # Install prerequisites
 RUN apt-get -qq update && \
