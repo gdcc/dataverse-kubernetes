@@ -7,7 +7,7 @@ Install Toolchain
 
 For efficient workflows, tools make life easier. Please install:
 
-1. `skaffold`_, v1.2.0
+1. `skaffold`_, v1.7.0
 2. `kustomize`_, v2.0.3 (same as in ``kubectl``, necessary as long as
    `this issue <https://github.com/GoogleContainerTools/skaffold/issues/1781>`_
    hasn't been resolved)
@@ -113,6 +113,8 @@ after cloning the project (``master`` branch):
 
 .. code-block:: shell
 
+  git clone https://github.com/IQSS/dataverse-kubernetes.git
+  cd dataverse-kubernetes
   git submodule sync --recursive
   git submodule update --init --recursive
 

@@ -12,10 +12,18 @@ workflow.
 These functionality is only enabled in the development flavors of :doc:`/images/dataverse-k8s`.
 You should not (and cannot) enable this in production.
 
+**When using the** ``dev`` **persona (default with** ``skaffold``\ **), JMX and JDWP support**
+**will be enabled for you. See below for details on how to use.**
+
 .. seealso:: If you need to swap out your production pod, take a look at `telepresence <https://www.telepresence.io/>`_.
 
 Metrics and Performance with VisualVM
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note:: The below is for Glassfish based images. Payara enables
+          JMX on port 8686 by default, but requires SSL handling.
+          Find more details in `this Payara Blog entry <https://blog.payara.fish/monitoring-payara-server-with-jconsole>`_.
+          Setting ``ENABLE_JMX=1`` has no effect.
 
 On startup, when the environment variable ``ENABLE_JMX=1``, the application
 server is configured to listen on port ``4000`` and ``4001`` for JMX & RMI traffic

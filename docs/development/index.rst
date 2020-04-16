@@ -40,13 +40,18 @@ Initial deployment
 **STOP.** You did :doc:`preparation for this <prepare>`, did ya? Go ahead.
 
 Now lets no more time, and create our initial deployment, already using your
-checked out branch of Dataverse:
+checked out branch of Dataverse. Choose between traditional Glassfish or Payara
+based development images by activating via profile:
 
 .. code-block:: shell
 
   skaffold run -p init
 
-:subscript:`(Between us: this will simply deploy the demo persona and the bootstrap job for you.)`
+  # --- or ---
+
+  skaffold run -p init -p payara
+
+:subscript:`(Between us: this will simply deploy the dev persona and the bootstrap job for you.)`
 
 While you are waiting for the deployment to finish
 (see :ref:`development/index:A word on waiting` for more), think about how you
@@ -99,7 +104,8 @@ Simply use Docker or other build tool again (almost like above, but different pa
 
 .. code-block:: shell
 
-  docker build -t iqss/dataverse-k8s:test -f docker/dataverse-k8s/glassfish-dev/Dockerfile .
+  docker build -t iqss/dataverse-k8s:test --pull -f docker/dataverse-k8s/glassfish-dev/Dockerfile .
+  docker build -t iqss/dataverse-k8s:payara-test --pull -f docker/dataverse-k8s/payara-dev/Dockerfile .
   docker build -t iqss/solr-k8s:test docker/solr-k8s
 
 .. note:: Currently there is no Solr development image. This is likely to change.
@@ -138,4 +144,3 @@ Future ideas
 ------------
 
 - Test using `telepresence <https://www.telepresence.io>`_ - it might lower dev cycle time
-- Try `JRebel <https://www.jrebel.com/products/jrebel>`_ to avoid full redeployments, see :issue:`101`
