@@ -13,9 +13,6 @@ spec:
               memory: "1Gi"
             limits:
               memory: "1Gi"
-          env:
-            - name: MAX_RAM_PERCENTAGE
-              value: "50"
 ---
 kind: Deployment
 apiVersion: apps/v1

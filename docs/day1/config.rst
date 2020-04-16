@@ -189,7 +189,7 @@ Sane defaults: ``default.config``
 Some things need sane defaults, which can be found in :ref:`default.config` (see below).
 You might find those usefull as an example for your personally tuned `ConfigMap`.
 
-.. literalinclude:: ../../docker/dataverse-k8s/glassfish/bin/default.config
+.. literalinclude:: ../../docker/dataverse-k8s/bin/default.config
     :caption: default.config
     :name: default.config
     :language: shell
