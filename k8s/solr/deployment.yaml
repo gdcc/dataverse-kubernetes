@@ -67,8 +67,8 @@ spec:
             - name: schema
               mountPath: "/schema"
           readinessProbe:
-            initialDelaySeconds: 5
-            periodSeconds: 60
+            initialDelaySeconds: 15
+            periodSeconds: 20
             failureThreshold: 2
             httpGet:
               path: /
