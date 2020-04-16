@@ -23,4 +23,4 @@ profiles:
     patches:
       - op: replace
         path: /build/artifacts/0/docker/dockerfile
-        value: docker/dataverse-k8s/payara/Dockerfile
+        value: docker/dataverse-k8s/payara-dev/Dockerfile
