@@ -12,8 +12,8 @@ set -euo pipefail
 # Include some sane defaults
 . ${SCRIPT_DIR}/default.config
 DATAVERSE_SERVICE_HOST=${DATAVERSE_SERVICE_HOST:-"dataverse"}
-DATAVERSE_SERVICE_PORT=${DATAVERSE_SERVICE_PORT:-"8080"}
-DATAVERSE_URL=${DATAVERSE_URL:-"http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT}"}
+DATAVERSE_SERVICE_PORT=${DATAVERSE_SERVICE_PORT_HTTP:-"8080"}
+DATAVERSE_URL=${DATAVERSE_URL:-"http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}"}
 # The Solr Service IP is always available under its name within the same namespace.
 # If people want to use a different Solr than we normally deploy, they have the
 # option to override.
