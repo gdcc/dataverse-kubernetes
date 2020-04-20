@@ -96,7 +96,7 @@ asadmin set server-config.network-config.protocols.protocol.http-listener-1.http
 # SAX parser options
 asadmin create-jvm-options "\-Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl"
 # Set Max Heap Space (see also https://www.eclipse.org/openj9/docs/xxinitialrampercentage)
-asadmin create-jvm-options "\-XX\:+UseContainerSupport\:\-Xss${MEM_XSS}\:\-XX\:MaxRAMPercentage=${MEM_MAX_RAM_PERCENTAGE}"
+asadmin create-jvm-options "\-XX\:+UseContainerSupport:\-Xss${MEM_XSS}:\-XX\:MaxRAMPercentage=${MEM_MAX_RAM_PERCENTAGE}"
 # If configured, enable Prometheus JMX agent
 # 3. Enable JDWP (debugger)
 if [ "x${ENABLE_JMX_EXPORT}" = "x1" ]; then
