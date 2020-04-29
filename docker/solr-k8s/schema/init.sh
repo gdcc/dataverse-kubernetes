@@ -16,7 +16,7 @@ if [ ! -s "/scripts/schema/api/key" ]; then
 fi
 UNBLOCK_KEY=`cat /scripts/schema/api/key`
 
-${SCHEMA_SCRIPT_DIR}/update.sh \
+${SCHEMA_SCRIPT_DIR}/updateSchemaMDB.sh \
   -t "$TARGET" \
   -s "$SOLR_URL" \
   -u "$UNBLOCK_KEY" \
