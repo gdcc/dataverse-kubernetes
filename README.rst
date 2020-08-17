@@ -24,6 +24,10 @@ If you would like to contribute, you are most welcome. Head over to the
 `contribution guide <https://dataverse-k8s.rtfd.io/en/latest/contribute.html>`_
 for details.
 
+This project follows the same branching strategy as the upstream Dataverse
+project, using a ``release`` branch for stable releases plus a ``develop``
+branch. In this branch unexpected or breaking changes may happen.
+
 
 
 .. |Dataverse badge| image:: https://img.shields.io/badge/Dataverse-v4.19-important.svg
