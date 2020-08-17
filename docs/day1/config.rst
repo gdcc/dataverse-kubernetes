@@ -63,7 +63,7 @@ server).
 Examples (see below :ref:`full-example`):
 
 .. literalinclude:: examples/configmap.yaml
-    :lines: 12,16-18,26-27,34
+    :lines: 12-13,15-17,26-29
 
 
 .. warning::
@@ -93,7 +93,7 @@ Provide settings
 ^^^^^^^^^^^^^^^^
 
 1. Pick a `Database setting <http://guides.dataverse.org/en/latest/installation/config.html#database-settings>`_
-2. Remove the ``:``` and replace it with ``db_``. Keep the Pascal case!
+2. Remove the ``:`` and replace it with ``db_``. Keep the Pascal case!
 3. Put the transformed value into the ``ConfigMap.data``.
 4. Add your value, which can be any value you see in the docs. Keep in mind:
    when you need to use JSON, format it as a string!
@@ -102,7 +102,7 @@ Provide settings
 Examples (see below :ref:`full-example`):
 
 .. literalinclude:: examples/configmap.yaml
-    :lines: 12,27-31,42-43
+    :lines: 12,27,30-33,42-45
 
 .. warning::
 
