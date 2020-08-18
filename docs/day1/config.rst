@@ -117,9 +117,9 @@ is a bad idea. It's always a good idea to put it in revision control.
 .. code::
 
   # Update ConfigMap:
-  kubectl apply -f k8s/dataverse/configmap.yaml
+  kubectl apply -f path/to/your/configmap.yaml
   # Deploy a new config job:
-  kubectl create -f k8s/dataverse/jobs/configure.yaml
+  kubectl create -f https://gitcdn.link/repo/IQSS/dataverse-kubernetes/release/k8s/dataverse/jobs/configure.yaml
 
 You might consider providing a `CronJob` for scheduled, regular updates.
 
