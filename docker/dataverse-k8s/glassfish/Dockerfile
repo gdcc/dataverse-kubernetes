@@ -8,7 +8,7 @@ FROM centos:7
 
 LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
-ARG TINI_VERSION=v0.18.0
+ARG TINI_VERSION=v0.19.0
 ARG JMX_EXPORTER_VERSION=0.12.0
 ARG VERSION=4.19
 ARG DOMAIN=domain1
@@ -47,11 +47,9 @@ RUN groupadd -g 1000 glassfish && \
     chown -R glassfish: ${HOME_DIR} ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR}
 
 # Install tini as minimized init system
-RUN wget --no-verbose -O /tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
-    wget --no-verbose -O /tini.asc https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc && \
-    gpg --batch --keyserver "hkp://p80.pool.sks-keyservers.net:80" --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
-    gpg --batch --verify /tini.asc /tini && \
-    chmod +x /tini
+RUN wget --no-verbose -O tini-amd64 https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-amd64 && \
+    echo '93dcc18adc78c65a028a84799ecf8ad40c936fdfc5f2a57b1acda5a8117fa82c tini-amd64' | sha256sum -c - && \
+    mv tini-amd64 /tini && chmod +x /tini
 
 # Install esh template engine from Github
 RUN wget --no-verbose -O esh https://raw.githubusercontent.com/jirutka/esh/v0.3.0/esh && \
