@@ -37,7 +37,7 @@ its ready) to create a demo:
 
 .. code-block:: shell
 
-  kubectl apply -k personas/demo-minikube
+  kubectl apply -k github.com/IQSS/dataverse-kubernetes/personas/demo-minikube
 
 .. image:: img/minikube-deploy.png
 

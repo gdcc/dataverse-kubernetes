@@ -12,7 +12,7 @@ set -euo pipefail
 # Include some sane defaults
 . ${SCRIPT_DIR}/default.config
 DATAVERSE_SERVICE_HOST=${DATAVERSE_SERVICE_HOST:-"dataverse"}
-DATAVERSE_SERVICE_PORT=${DATAVERSE_SERVICE_PORT_HTTP:-"8080"}
+DATAVERSE_SERVICE_PORT_HTTP=${DATAVERSE_SERVICE_PORT_HTTP:-"8080"}
 DATAVERSE_URL=${DATAVERSE_URL:-"http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}"}
 # The Solr Service IP is always available under its name within the same namespace.
 # If people want to use a different Solr than we normally deploy, they have the
@@ -45,7 +45,7 @@ psql -h ${POSTGRES_SERVER} -U ${POSTGRES_USER} ${POSTGRES_DATABASE} < ${HOME_DIR
 # 2) Initialize common data structures to make Dataverse usable
 cd ${HOME_DIR}/dvinstall
 # 2a) Patch load scripts with k8s based URL
-sed -i -e "s#localhost:8080#${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT}#" setup-*.sh
+sed -i -e "s#localhost:8080#${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}#" setup-*.sh
 # 2b) Patch user and root dataverse JSON with contact email
 sed -i -e "s#root@mailinator.com#${CONTACT_MAIL}#" data/dv-root.json
 sed -i -e "s#dataverse@mailinator.com#${CONTACT_MAIL}#" data/user-admin.json

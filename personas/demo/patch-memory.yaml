@@ -10,9 +10,9 @@ spec:
         - name: dataverse
           resources:
             requests:
-              memory: "1Gi"
+              memory: "1.0Gi"
             limits:
-              memory: "1Gi"
+              memory: "1.0Gi"
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -25,6 +25,6 @@ spec:
         - name: solr
           resources:
             requests:
-              memory: "1Gi"
+              memory: "1.0Gi"
             limits:
-              memory: "1Gi"
+              memory: "1.0Gi"

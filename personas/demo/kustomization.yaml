@@ -9,9 +9,9 @@ bases:
 resources:
   - secrets.yaml
   - mailcatcher.yaml
+  - configmap.yaml
 
 images:
 
 patchesStrategicMerge:
-  - configmap.yaml
   - patch-memory.yaml
