@@ -10,7 +10,7 @@ LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
 ARG TINI_VERSION=v0.19.0
 ARG JMX_EXPORTER_VERSION=0.12.0
-ARG VERSION=4.19
+ARG VERSION=4.20
 ARG DOMAIN=domain1
 
 ENV HOME_DIR=/opt/dataverse\

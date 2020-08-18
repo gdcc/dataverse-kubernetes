@@ -7,7 +7,7 @@
 FROM payara/server-full:5.2020.3
 LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
 
-ARG VERSION=4.19
+ARG VERSION=4.20
 ARG DOMAIN=domain1
 
 ENV DATA_DIR=/data\
