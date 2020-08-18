@@ -62,8 +62,17 @@ server).
 
 Examples (see below :ref:`full-example`):
 
-.. literalinclude:: examples/configmap.yaml
-    :lines: 12-13,15-17,26-29
+.. code-block:: yaml
+
+  data:
+    ### GENERAL SETTINGS
+    dataverse_fqdn: data.example.org
+    dataverse_siteUrl: https://\${dataverse.fqdn}
+    dataverse_auth_password__reset__timeout__in__minutes: 30
+
+    ### DOI SETTINGS
+    doi_baseurlstring: https://mds.test.datacite.org
+    doi_username: EXAMPLEORG.TEST
 
 
 .. warning::
@@ -101,8 +110,18 @@ Provide settings
 
 Examples (see below :ref:`full-example`):
 
-.. literalinclude:: examples/configmap.yaml
-    :lines: 12,27,30-33,42-45
+.. code-block:: yaml
+
+  data:
+    ### DOI SETTINGS
+    db_DoiProvider: DataCite
+    db_Protocol: doi
+    db_Authority: "10.12345"
+    db_Shoulder: EXAMPLE/
+
+    ### CUSTOMIZATION
+    db_StatusMessageHeader: "Example.org is not yet in production"
+    db_StatusMessageText: "<br />Please do not save any real data, only use for testing and sneak-peek."
 
 .. warning::
 
