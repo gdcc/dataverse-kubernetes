@@ -33,7 +33,7 @@ With the power of `Kubernetes <http://kubernetes.io>`_, many scenarios are possi
 
   .. code-block:: shell
 
-    kubectl apply -k github.com/IQSS/dataverse-kubernetes/personas/demo/common
+    kubectl apply -k github.com/IQSS/dataverse-kubernetes/personas/demo
 
   Wait. Regularly check logs and pods. Login with ``dataverseAdmin:admin1``.
 

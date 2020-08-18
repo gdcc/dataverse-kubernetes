@@ -58,7 +58,7 @@ Now start to deploy Dataverse plus any necessary services and bootstrap via Kust
 
 .. code-block:: shell
 
-  kubectl apply -k ./personas/demo-k3s
+  kubectl apply -k github.com/IQSS/dataverse-kubernetes/personas/demo-k3s
 
 .. image:: img/k3s-deploy.png
 

@@ -24,7 +24,7 @@ in the docs. Simply deploy it during off-hours (or fork and create a ``CronJob``
 
 .. code-block:: shell
 
-  kubectl create -f k8s/dataverse/jobs/inplace-reindex.yaml
+  kubectl create -f https://gitcdn.link/repo/IQSS/dataverse-kubernetes/release/k8s/dataverse/jobs/inplace-reindex.yaml
 
 .. hint::
 

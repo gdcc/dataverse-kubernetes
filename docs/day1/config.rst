@@ -62,8 +62,17 @@ server).
 
 Examples (see below :ref:`full-example`):
 
-.. literalinclude:: examples/configmap.yaml
-    :lines: 12,16-18,26-27,34
+.. code-block:: yaml
+
+  data:
+    ### GENERAL SETTINGS
+    dataverse_fqdn: data.example.org
+    dataverse_siteUrl: https://\${dataverse.fqdn}
+    dataverse_auth_password__reset__timeout__in__minutes: 30
+
+    ### DOI SETTINGS
+    doi_baseurlstring: https://mds.test.datacite.org
+    doi_username: EXAMPLEORG.TEST
 
 
 .. warning::
@@ -93,7 +102,7 @@ Provide settings
 ^^^^^^^^^^^^^^^^
 
 1. Pick a `Database setting <http://guides.dataverse.org/en/latest/installation/config.html#database-settings>`_
-2. Remove the ``:``` and replace it with ``db_``. Keep the Pascal case!
+2. Remove the ``:`` and replace it with ``db_``. Keep the Pascal case!
 3. Put the transformed value into the ``ConfigMap.data``.
 4. Add your value, which can be any value you see in the docs. Keep in mind:
    when you need to use JSON, format it as a string!
@@ -101,8 +110,18 @@ Provide settings
 
 Examples (see below :ref:`full-example`):
 
-.. literalinclude:: examples/configmap.yaml
-    :lines: 12,27-31,42-43
+.. code-block:: yaml
+
+  data:
+    ### DOI SETTINGS
+    db_DoiProvider: DataCite
+    db_Protocol: doi
+    db_Authority: "10.12345"
+    db_Shoulder: EXAMPLE/
+
+    ### CUSTOMIZATION
+    db_StatusMessageHeader: "Example.org is not yet in production"
+    db_StatusMessageText: "<br />Please do not save any real data, only use for testing and sneak-peek."
 
 .. warning::
 
@@ -117,9 +136,9 @@ is a bad idea. It's always a good idea to put it in revision control.
 .. code::
 
   # Update ConfigMap:
-  kubectl apply -f k8s/dataverse/configmap.yaml
+  kubectl apply -f path/to/your/configmap.yaml
   # Deploy a new config job:
-  kubectl create -f k8s/dataverse/jobs/configure.yaml
+  kubectl create -f https://gitcdn.link/repo/IQSS/dataverse-kubernetes/release/k8s/dataverse/jobs/configure.yaml
 
 You might consider providing a `CronJob` for scheduled, regular updates.
 
