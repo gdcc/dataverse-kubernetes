@@ -21,6 +21,7 @@ ENV HOME_DIR=/opt/dataverse\
     DOCROOT_DIR=/docroot\
     METADATA_DIR=/metadata\
     SECRETS_DIR=/secrets\
+    DUMPS_DIR=/dumps\
     GLASSFISH_PKG=http://download.java.net/glassfish/4.1/release/glassfish-4.1.zip\
     GLASSFISH_SHA1=704a90899ec5e3b5007d310b13a6001575827293\
     WELD_PKG=https://repo1.maven.org/maven2/org/jboss/weld/weld-osgi-bundle/2.2.10.SP1/weld-osgi-bundle-2.2.10.SP1-glassfish4.jar\
@@ -43,8 +44,8 @@ RUN groupadd -g 1000 glassfish && \
     useradd -u 1000 -M -s /bin/bash -d ${HOME_DIR} glassfish -g glassfish && \
     echo glassfish:glassfish | chpasswd && \
     mkdir -p ${HOME_DIR} ${SCRIPT_DIR} ${SECRETS_DIR} && \
-    mkdir -p ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR} && \
-    chown -R glassfish: ${HOME_DIR} ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR}
+    mkdir -p ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR} ${DUMPS_DIR} && \
+    chown -R glassfish: ${HOME_DIR} ${DATA_DIR} ${METADATA_DIR} ${DOCROOT_DIR} ${DUMPS_DIR}
 
 # Install tini as minimized init system
 RUN wget --no-verbose -O tini-amd64 https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-amd64 && \
@@ -92,6 +93,8 @@ RUN ${GLASSFISH_DIR}/bin/asadmin start-domain && \
     for MEMORY_JVM_OPTION in $(${GLASSFISH_DIR}/bin/asadmin list-jvm-options | grep "Xm[sx]"); do\
         ${GLASSFISH_DIR}/bin/asadmin delete-jvm-options $MEMORY_JVM_OPTION;\
     done && \
+    ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-XX\:+HeapDumpOnOutOfMemoryError" && \
+    ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-XX\:HeapDumpPath=${DUMPS_DIR}" && \
     ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-server" && \
     ${GLASSFISH_DIR}/bin/asadmin stop-domain && \
     mkdir -p ${DOMAIN_DIR}/autodeploy && \
