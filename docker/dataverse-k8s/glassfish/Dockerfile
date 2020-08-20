@@ -95,6 +95,12 @@ RUN ${GLASSFISH_DIR}/bin/asadmin start-domain && \
     done && \
     ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-XX\:+HeapDumpOnOutOfMemoryError" && \
     ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-XX\:HeapDumpPath=${DUMPS_DIR}" && \
+    ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-XX\:+UseG1GC" && \
+    ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-XX\:+UseStringDeduplication" && \
+    ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-XX\:MaxGCPauseMillis=500" && \
+    ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-XX\:MetaspaceSize=256m" && \
+    ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-XX\:MaxMetaspaceSize=2g" && \
+    ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-XX\:+IgnoreUnrecognizedVMOptions" && \
     ${GLASSFISH_DIR}/bin/asadmin create-jvm-options -- "-server" && \
     ${GLASSFISH_DIR}/bin/asadmin stop-domain && \
     mkdir -p ${DOMAIN_DIR}/autodeploy && \
