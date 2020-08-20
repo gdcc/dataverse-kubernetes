@@ -1,6 +1,6 @@
 # Image "solr-k8s"
 
-[![Upstream](https://img.shields.io/badge/Dataverse-v4.19-important.svg)](https://github.com/IQSS/dataverse/releases/v4.19)
+[![Upstream](https://img.shields.io/badge/Dataverse-v4.20-important.svg)](https://github.com/IQSS/dataverse/releases/v4.20)
 [![Hub](https://img.shields.io/static/v1.svg?label=image&message=solr-k8s&logo=docker)](https://hub.docker.com/r/iqss/solr-k8s)
 [![Solr](https://img.shields.io/static/v1.svg?label=upstream&message=7.3.1&logo=docker)](https://hub.docker.com/_/solr)
 ![Pulls](https://img.shields.io/docker/pulls/iqss/solr-k8s)
@@ -10,7 +10,7 @@
 This container image includes a dependency service to run [Dataverse](https://dataverse.org), a
 Java EE based web application for research data management, on a container platform.
 It is derived from [upstream Solr images](https://hub.docker.com/_/solr), [using the
-required version](http://guides.dataverse.org/en/4.19/installation/prerequisites.html#solr).
+required version](http://guides.dataverse.org/en/4.20/installation/prerequisites.html#solr).
 
 It is primarily targeted to be used in production on [Kubernetes](https://kubernetes.io),
 but if you follow the same conventions, you should be able to use it with other tools
@@ -19,11 +19,11 @@ like [Docker](https://docker.io) or [podman](https://podman.io).
 ## Supported tags
 
 - `latest`: master branch based build ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/glassfish/Dockerfile))
-- `4.19`, ..., `4.15.1`, ..., `4.11`: stable (tagged) releases
+- `4.20`, ..., `4.15.1`, ..., `4.11`: stable (tagged) releases
   - Using [upstream release schema](https://github.com/IQSS/dataverse/releases/) down to `4.11`.
   - See also [list on Docker Hub](https://hub.docker.com/r/iqss/dataverse-k8s/tags?page=1&ordering=last_updated&name=4.)
     for releases
-  - Last stable tag ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/v4.19/docker/solr-k8s/Dockerfile))
+  - Last stable tag ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/v4.20/docker/solr-k8s/Dockerfile))
 
 ## Quick reference
 
@@ -54,8 +54,8 @@ to this user on any volumes used for the below directories.
   Also available as `$SCHEMA_DIR`
 
   Please read the detailed docs about Solr schema provisioning:
-   - [Upstream: updating Solr schema](http://guides.dataverse.org/en/4.19/admin/metadatacustomization.html#updating-the-solr-schema).
-   - [Kubernetes `Job`s for Search Index](https://dataverse-k8s.rtfd.io/en/4.19/day2/job-index.html)
+   - [Upstream: updating Solr schema](http://guides.dataverse.org/en/4.20/admin/metadatacustomization.html#updating-the-solr-schema).
+   - [Kubernetes `Job`s for Search Index](https://dataverse-k8s.rtfd.io/en/4.20/day2/job-index.html)
 - **/scripts** <br />
   A collection of scripts for init containers and sidecars. See guide for more
   information on those scripts. Also available as `$SCRIPT_DIR`.

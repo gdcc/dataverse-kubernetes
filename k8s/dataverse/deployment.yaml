@@ -5,7 +5,7 @@ metadata:
   name: dataverse
   labels:
     app.kubernetes.io/name: dataverse
-    app.kubernetes.io/version: "4.19"
+    app.kubernetes.io/version: "4.20"
     app.kubernetes.io/component: appserver
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
