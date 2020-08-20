@@ -23,12 +23,12 @@ tweaked for memory usage. Obviously the values below count per instance.
     - Recommendend min. RAM
       for production use
   * - Application server w/ Dataverse
-    - 1 GiB
-    - 512 MiB
+    - 1.5 GiB
+    - 768 MiB
     - 4 GiB
   * - Solr Search Index
-    - 1 GiB
-    - 512 MiB
+    - 820 MiB
+    - 410 MiB
     - 4 GiB
 
 .. hint::
