@@ -46,6 +46,13 @@ there, some hints how to cope with that on Kubernetes:
       you need to populate this directory. A sidecar pattern is likely to be a
       good fit for this, retrieving data from remote (like a Git repository).
 
+  * - **/dumps**
+    - Heap dumps area
+    - In case of :ref:`running out of heap space <day1/resources:Shortage of Heap Space>`,
+      heap dumps will be saved here for further shipping, analysis etc.
+      By default this is backed by an ``emptyDir`` temporary storage volume.
+      Should be monitored in a sidecar container.
+
 Temporary Data Storage
 ^^^^^^^^^^^^^^^^^^^^^^
 Depending on the ``dataverse_files_directory`` :doc:`setting <config>` data
@@ -53,6 +60,9 @@ uploaded by users will be stored  in a ``temp`` sub-directory of the given
 path for processing (ingest) and moving to final location. With default
 ``/data``, this will result in temporary storage at ``/data/temp``.
 
+Remember to have temporary storage available at ``/dumps``. Heap dumps
+might grow as large as your configured container memory limits and storing
+them on the overlay filesytem of the container is a bad idea.
 
 "Local" Data Storage
 ^^^^^^^^^^^^^^^^^^^^

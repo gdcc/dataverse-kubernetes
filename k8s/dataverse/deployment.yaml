@@ -55,6 +55,8 @@ spec:
               mountPath: /data
             - name: docroot
               mountPath: /docroot
+            - name: heapdumps
+              mountPath: /dumps
             - name: db-secret
               mountPath: "/secrets/db"
               readOnly: true
@@ -103,6 +105,8 @@ spec:
         - name: doi-secret
           secret:
             secretName: dataverse-doi
+        - name: heapdumps
+          emptyDir: {}
         # This is here because of IQSS/dataverse-kubernetes#177. TBR for #178
         - name: primefaces-upload
           emptyDir: {}
