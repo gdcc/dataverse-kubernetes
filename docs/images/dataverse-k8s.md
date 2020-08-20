@@ -62,6 +62,10 @@ to this user on any volumes (except secrets) used for the below directories.
   Installation root of application server, WAR files, scripts etc. See `Dockerfile`
   for all details.
 
+- **/dumps** <br />
+  Mount a volume here to access Java Heap dumps when running out of heap memory.
+  Also available as `$DUMPS_DIR`.
+
 ### Secrets and Credentials
 
 Currently understood secrets in the container, mounted at `$SECRETS_DIR` (see
