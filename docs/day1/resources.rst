@@ -62,13 +62,19 @@ To configure these limits, simply configure it in the ``Deployment`` object:
 .. seealso::
 
   For development or demo use, you'll be good in most cases with much less.
-  You need to ensure the JVM uses at least 512 MiB for heap space.
+  You need to ensure the JVM uses at least ~800 MiB for heap space.
   Using less heap space will not even deploy successfully.
+
+  How much RAM is used at max for Java Heap can be easily adjusted by using the
+  JVM option ``-XX:MaxRAMPercentage=xx.x``. For your convenience this has been
+  simplified by supporting an environment variable ``${MEM_MAX_RAM_PERCENTAGE}``,
+  see hidden example below. *Please keep in mind: value must be a floating point
+  value!*
 
   .. toggle-header::
     :header: Development values are hidden on purpose to avoid confusion. *Expand/hide*
 
-    1 GiB RAM means 717 MB of heap space with 70% default setting, which is safe.
+    1.5 GiB RAM means ~1 GiB of heap space using the 70% default setting, which is safe.
     You can tweak the setting to match your necessities like below:
 
     .. code-block:: yaml
@@ -80,14 +86,9 @@ To configure these limits, simply configure it in the ``Deployment`` object:
               - name: dataverse
                 resources:
                   requests:
-                    memory: "1Gi"
+                    memory: "1.0Gi"
                   limits:
-                    memory: "1Gi"
+                    memory: "1.5Gi"
                 env:
                   - name: MEM_MAX_RAM_PERCENTAGE
                     value: "50.0"
-
-  How much RAM is used at max for Java Heap can be easily adjusted by using the
-  JVM option ``-XX:MaxRAMPercentage=xx.x``. For your convenience this has been
-  simplified by supporting an environment variable ``${MEM_MAX_RAM_PERCENTAGE}``,
-  see hidden example above. *Please keep in mind: must be a floating point value!*
