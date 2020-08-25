@@ -176,3 +176,7 @@ tools. Previewers, data analysis, data capturing and many more await you.
   Currently, none of these are supported or maintained by this project, although
   this is a mid-term goal. If you feel a need, raise an issue. You are most
   welcome to contribute.
+
+Apart from external tools, Dataverse can be integrated with :doc:`external
+authentication </day3/auth>` systems and :doc:`object storage </day3/objectstore>`,
+which is supported by this project.
