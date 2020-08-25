@@ -103,6 +103,9 @@ Please see upstream documentation about
 for extensive docs on the available options. :ref:`full-example` provides
 a handy S3 example using Minio.
 
+Further explenaition and an example can be found in the integration docs about
+:doc:`/day3/objectstore`.
+
 Index server
 ------------
 

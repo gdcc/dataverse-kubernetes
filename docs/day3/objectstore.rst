@@ -21,4 +21,12 @@ To enable object storage locations, you need to follow three steps:
 3. Configure Dataverse to make use of it. See :doc:`/day1/config` for details
    on how to create a configuration.
 
-.. todo:: Describe ``personas/demo-integrate-minio`` example here.
+
+Minio Example Demo
+------------------
+In the :tree:`Minio Integration Demo <personas/demo-integrate-minio>` you can
+find a very basic example how to deploy a simple Minio service to your cluster
+plus patching the Dataverse deployment to include the S3 credentials from
+the ``Secret``.
+
+Simply deploy with ``kubectl apply -k github.com/IQSS/dataverse-kubernetes/personas/demo-integrate-minio``
