@@ -87,6 +87,7 @@ pygments_style = None
 autosectionlabel_prefix_document = True
 
 extlinks = {
+    'tree': ('https://github.com/IQSS/dataverse-kubernetes/tree/master/%s', 'folder of master branch '),
     'issue': ('https://github.com/IQSS/dataverse-kubernetes/issues/%s', 'issue '),
     'issue_dv': ('https://github.com/IQSS/dataverse/issues/%s', 'issue '),
     'guide_dv': ('http://guides.dataverse.org/en/'+version+'/%s', 'upstream docs ')
