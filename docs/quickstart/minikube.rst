@@ -16,13 +16,13 @@ Booting your *minikube* K8s cluster:
 
 .. code-block:: shell
 
-  minikube start --memory=4096
+  minikube start --memory 6144 --cpus 4 --disk-size 30g
 
 .. image:: img/minikube-setup.png
 
 .. important::
-  Please provide at least 4 GB of RAM for the Minikube VM, as Dataverse will
-  use **a lot** of RAM during deployment and at least 1024 MB when idle.
+  Please provide at least 6 GB of RAM for the Minikube VM, as Dataverse will
+  use **a lot** of RAM (see :doc:`/day1/resources`).
   Remember: this is a VM, so you should have at least 8 GB available in your hardware.
 
 .. note::
@@ -37,7 +37,7 @@ its ready) to create a demo:
 
 .. code-block:: shell
 
-  kubectl apply -k github.com/IQSS/dataverse-kubernetes/personas/demo-minikube
+  minikube kubectl -- apply -k github.com/IQSS/dataverse-kubernetes/personas/demo-minikube
 
 .. image:: img/minikube-deploy.png
 
@@ -64,7 +64,7 @@ Add the `Ingress` IP address to your `/etc/hosts`:
 
   minikube addons enable ingress
   # wait for about 1 minute...
-  kubectl get ingress
+  minikube kubectl -- get ingress
 
 Take a note of the IP address (it might take a while till it appears, try again)
 and add it to ``/etc/hosts``, replacing ``XXX.XXX.XXX.XXX`` with it:
@@ -101,6 +101,9 @@ or for other reasons, you can always use the ``kubectl`` builtin reverse proxy:
   You will need to keep this running as long as you want to access the app.
   This command has the advantage to work in all cases, remotely or not,
   as long as you have access to the K8s API server.
+
+  Please ensure having *kubectl* v1.14 or later installed or follow the
+  `kubectl installation docs <https://kubernetes.io/docs/tasks/tools/install-kubectl>`_.
 
 Now access your freshly baked Dataverse demo via your browser at http://localhost:8080.
 
