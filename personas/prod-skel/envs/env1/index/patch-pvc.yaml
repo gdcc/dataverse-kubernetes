@@ -1,0 +1,10 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: solr
+spec:
+  resources:
+    requests:
+      storage: 60Gi
+  # storageClassName: pm-local

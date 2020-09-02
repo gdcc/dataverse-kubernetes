@@ -1,0 +1,20 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: dataverse-files
+spec:
+  resources:
+    requests:
+      storage: 500Gi
+  # storageClassName: pm-local
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: dataverse-docroot
+spec:
+  resources:
+    requests:
+      storage: 20Gi
+  # storageClassName: pm-local
