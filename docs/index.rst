@@ -51,6 +51,17 @@ Context: what is Dataverse?
   | academic credit and web visibility.
 
 
+
+Media: where a the stories?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This project was presented at a few Dataverse related events:
+
+- Presentation at European Dataverse Workshop 2020, Tromso, https://doi.org/10.7557/5.5427
+- Presentation at Dataverse Community Meeting 2020, Online Conference, https://youtu.be/OTiEkaDc7j8?t=3817
+
+
+
 .. toctree::
     :maxdepth: 4
     :hidden:
