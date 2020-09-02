@@ -11,18 +11,17 @@ Deploying, Running and Using Dataverse on Kubernetes
 |Docs badge|
 |IRC badge|
 
-This community-supported project aims to provide simple to re-use Kubernetes
-objects on how to run Dataverse on a Kubernetes cluster.
+This community-supported project aims at offering a new way to deploy, run and
+maintain a Dataverse installation for any purpose on any kind of Kubernetes-based
+cloud infrastructure.
 
-It aims at day-1 deployments and day-2 operations.
+You can use this on your laptop, in your on-prem datacentre or public cloud.
+With the power of `Kubernetes <http://kubernetes.io>`_, many scenarios are possible.
 
 * Documentation: https://dataverse-k8s.rtfd.io
-* Support: https://github.com/IQSS/dataverse-kubernetes/issues
-* Roadmap: https://dataverse-k8s.rtfd.io/en/latest/roadmap.html
+* Support and new ideas: https://github.com/IQSS/dataverse-kubernetes/issues
 
-If you would like to contribute, you are most welcome. Head over to the
-`contribution guide <https://dataverse-k8s.rtfd.io/en/latest/contribute.html>`_
-for details.
+If you would like to contribute, you are most welcome.
 
 This project follows the same branching strategy as the upstream Dataverse
 project, using a ``release`` branch for stable releases plus a ``develop``
