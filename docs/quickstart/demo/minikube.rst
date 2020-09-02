@@ -69,7 +69,7 @@ Add the `Ingress` IP address to your `/etc/hosts`:
 Take a note of the IP address (it might take a while till it appears, try again)
 and add it to ``/etc/hosts``, replacing ``XXX.XXX.XXX.XXX`` with it:
 
-.. code-block:: hosts
+.. code-block::
 
   XXX.XXX.XXX.XXX dataverse.demo
 

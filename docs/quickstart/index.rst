@@ -1,6 +1,6 @@
-===============
-Getting started
-===============
+=================
+Quickstart / Demo
+=================
 
 .. toctree::
     :maxdepth: 2
