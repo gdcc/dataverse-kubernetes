@@ -1,7 +1,7 @@
 Deploying, Running and Using Dataverse on Kubernetes
 ====================================================
 
-.. image:: https://raw.githubusercontent.com/IQSS/dataverse-kubernetes/master/docs/img/title-composition.png
+.. image:: docs/img/title-composition.png
 
 |Dataverse badge|
 |Validation badge|
