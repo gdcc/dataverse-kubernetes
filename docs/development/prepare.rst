@@ -7,19 +7,17 @@ Install Toolchain
 
 For efficient workflows, tools make life easier. Please install:
 
-1. `skaffold`_, v1.7.0
+1. `skaffold`_
 2. `kustomize`_, v2.0.3 (same as in ``kubectl``, necessary as long as
    `this issue <https://github.com/GoogleContainerTools/skaffold/issues/1781>`_
    hasn't been resolved)
+3. `kubectl`_
 
 When you opt for using a local cluster (see below), add:
 
 1. `minikube`_ or
-2. `kind`_, v0.7.0 plus `Docker <https://docs.docker.com/install>`_
-
-.. important::
-
-  The tools mentioned in :doc:`/get-started/index` are obligatory.
+2. `kind`_ plus `Docker`_
+3. `k3d`_, using `k3s`_ plus `Docker`_
 
 .. tip::
 
@@ -58,7 +56,7 @@ Skaffold docs, search via Google, etc. Again: *PRs welcome.*
 Minikube
 ''''''''
 
-Please follow :ref:`get-started/demo/minikube:Start with setup of *minikube* VM`
+Please follow :ref:`quickstart/minikube:Start with setup of *minikube* VM`
 to create your cluster. No need to deploy yet, we are just preparing for now.
 
 **K**\ ubernetes **IN** **D**\ ocker ("KinD")
@@ -179,5 +177,9 @@ Example: Switch to feature branch in (your) fork
 
 .. _skaffold: https://skaffold.dev/docs/getting-started/#installing-skaffold
 .. _kustomize: https://github.com/kubernetes-sigs/kustomize/blob/master/docs/INSTALL.md
+.. _kubectl: https://kubernetes.io/docs/tasks/tools/install-kubectl
 .. _kind: https://kind.sigs.k8s.io/docs/user/quick-start
 .. _minikube: https://kubernetes.io/docs/setup/learning-environment/minikube
+.. _k3s: https://k3s.io
+.. _k3d: https://k3d.io
+.. _Docker: https://docs.docker.com/install

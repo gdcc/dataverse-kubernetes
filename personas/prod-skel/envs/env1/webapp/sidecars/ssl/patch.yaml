@@ -1,0 +1,35 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dataverse
+spec:
+  template:
+    spec:
+      containers:
+        - name: ssl
+          image: nginx:1.17-alpine
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "0.25"
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
+          ports:
+            - containerPort: 443
+              name: https
+          volumeMounts:
+            - name: certificates
+              mountPath: "/etc/nginx/ssl"
+            - name: config
+              mountPath: "/etc/nginx/conf.d"
+            - name: docroot
+              mountPath: "/docroot"
+      volumes:
+        - name: certificates
+          secret:
+            secretName: dataverse-certificate
+        - name: config
+          configMap:
+            name: ssl-sidecar

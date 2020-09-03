@@ -67,7 +67,7 @@ them on the overlay filesytem of the container is a bad idea.
 "Local" Data Storage
 ^^^^^^^^^^^^^^^^^^^^
 *Local storage* is any kind of volume mounted into the application container. It
-*will look like a local filesystem to the application.
+will look like a local filesystem to the application.
 
 It might be a ``hostPath`` flavored volume, a Docker volume, a NFS share or even
 a clustered file system. Plenty of options are available for Kubernetes.

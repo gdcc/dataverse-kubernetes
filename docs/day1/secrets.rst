@@ -93,11 +93,12 @@ Example: Admin account password
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The password for the superadmin account ``dataverseAdmin`` defaults to **admin1**
-when you install (precise: bootstrap) Dataverse on Kubernetes using the
-:ref:`demos persona <get-started/index:1. Demo time!>`.
+when you install (precise: bootstrap) Dataverse on Kubernetes running the
+:doc:`/quickstart/index`.
 
-Create a ``Secret`` first (or use some other way to get the password into the file).
-(For a complete ``Secret`` example, have a look at ``/personas/demo/secrets.yaml``)
+To use a different initial password, create a ``Secret`` (or use some other way
+to get the password into the file). (For a complete ``Secret`` example, have a
+look at ``/personas/demo/secrets.yaml``)
 
 .. code-block:: yaml
 
