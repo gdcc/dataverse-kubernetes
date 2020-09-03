@@ -15,6 +15,12 @@ When the very basic configuration has been done, the configuration given in the
 ``ConfigMap`` will be applied, like you would
 :ref:`run a configure Kubernetes job <day1/config:Details of the configuration job>`.
 
+To create a bootstrapping job, use ``kubectl``:
+
+.. code-block:: shell
+
+  kubectl create -f https://gitcdn.link/repo/IQSS/dataverse-kubernetes/release/k8s/dataverse/jobs/bootstrap.yaml
+
 .. uml::
 
   @startuml

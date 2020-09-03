@@ -12,8 +12,8 @@ Day 1 - Deployment
     ./resources
     ./storage
     ./provider-hints
-    ./init-deploy
     ./job-bootstrap
+    ./deploy-behind-scenes
 
 Once you start building your own installation beyond ephemeral demo or
 development purposes, you should take some time to prepare and successfully
@@ -68,6 +68,10 @@ definitely should be reading some docs first. Some starting points:
 - https://kubernetes.io/docs/tutorials/kubernetes-basics/
 - https://ramitsurana.github.io/awesome-kubernetes
 - https://kubernetes-on-aws.readthedocs.io/en/latest/admin-guide/kubernetes-in-production.html
+
+Please familiarize yourself with the `architecture of Dataverse <http://guides.dataverse.org/en/latest/installation>`_
+if not already done: it helps a lot knowing how things are connected in a complex
+application like Dataverse to also understand hosting on Kubernetes.
 
 
 
@@ -153,14 +157,16 @@ You now need to change all :doc:`config`, :doc:`limits <resources>`,
 Make sure to create all the :doc:`secrets` and match names between them.
 
 Once you're done, DEPLOY! :-)
+When deployment is ready, you have to run the one-time :doc:`job-bootstrap`.
 
 .. code-block:: shell
 
   kubectl apply -k envs/env1
+  kubectl create -f https://gitcdn.link/repo/IQSS/dataverse-kubernetes/release/k8s/dataverse/jobs/bootstrap.yaml
 
-When deployment is ready, you have to run the one-time :doc:`job-bootstrap`.
 
-
+More in detail docs about what happens during the deployment can be found at
+:doc:`deploy-behind-scenes`.
 
 .. _kubectl: https://kubernetes.io/docs/tasks/tools/install-kubectl
 .. _git: https://git-scm.com/downloads

@@ -1,23 +1,14 @@
-==================
-Initial Deployment
-==================
+=================
+Behind the Scenes
+=================
 
-Please familiarize yourself with the `architecture of Dataverse <http://guides.dataverse.org/en/latest/installation>`_
-if not already done: it helps a lot knowing how things are connected in Dataverse
-to also understand using it as a Kubernetes application.
-
-The below UML sequence diagram shows all necessary steps by "you" (the user activity on the left)
-or (preferably) your deployment framework (like Kustomize.io, Helm or similar)
-on your behalf for a new deployment of Dataverse. It also explains what happens
-in the background on an overview level.
+The below UML sequence diagram shows all necessary steps by "you"
+(the user activity on the left) or (preferably) your deployment framework
+(like Kustomize.io, Helm or similar) on your behalf for a new deployment of
+Dataverse. It explains what happens in the background on an overview level.
 
 When you are done with the initial deployment, you have to :doc:`bootstrap </day1/job-bootstrap>`
 (and :doc:`configure </day1/config>`, which is done during bootstrapping, too).
-
-Maybe you should just read :doc:`/get-started/index` and follow that before going into details.
-
- .. note:: Choose stable Glassfish 4.1 based images or experimental Payara 5
-          based with corresponding image tag. See :doc:`/images/dataverse-k8s` for available tags.
 
 .. uml::
 
