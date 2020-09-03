@@ -8,6 +8,7 @@ Quickstart / Demo
 
     k3s
     minikube
+    docker-compose
 
 .. _demos:
 
@@ -16,6 +17,7 @@ Currently pre-packaged to be run on your local machine:
 
 - Using ``minikube``, see :doc:`minikube`
 - Using ``k3s``, see :doc:`k3s`
+- Using ``docker-compose``, see :doc:`docker-compose`
 
 :ref:`day3/objectstore:Minio Example Demo` bases on these, but includes
 integrating an S3 compatible object store, too.
