@@ -3,8 +3,9 @@ Bootstrap Job
 =============
 
 After deploying every components of Dataverse on Kubernetes for the first time
-(see :doc:`./init-deploy`), you will need to bootstrap your installation.
-That will create a superadmin user, root dataverse and block important API endpoints.
+(see the :ref:`deployment step<day1/index:7. Configure and deploy>` or more details at
+:doc:`deploy-behind-scenes`), you will need to bootstrap your installation. That
+will create a superadmin user, root dataverse and block important API endpoints.
 
 It will also set the option ``:SolrHostColonPort``, configuring where Dataverse
 can find the Solr Search index. It will default to ``solr:8983``, but can be
