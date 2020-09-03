@@ -1,0 +1,36 @@
+pipeline {
+  agent any
+  environment {
+    DOCKER_IMAGE = "iqss/dataverse-k8s"
+    DOCKER_IMAGE_TAG = "build-cache"
+    DOCKER_FILE = "./docker/dataverse-k8s/build-cache/Dockerfile"
+    DOCKER_WORKDIR = "."
+    DOCKER_HUB_CRED = "dockerhub-dataversebot"
+    DOCKER_REGISTRY = "https://registry.hub.docker.com"
+  }
+  triggers {
+    cron('H H(0-4) * * *')
+  }
+  stages {
+    stage('build') {
+      steps {
+        checkout scm
+        dir("dataverse") {
+          git branch: "develop", url: "https://github.com/IQSS/dataverse"
+        }
+        script {
+          docker_image = docker.build("${env.DOCKER_IMAGE}:${env.DOCKER_IMAGE_TAG}", "--pull -f ${env.DOCKER_FILE} ${env.DOCKER_WORKDIR}")
+        }
+      }
+    }
+    stage('push') {
+      steps {
+        script {
+          docker.withRegistry("${env.DOCKER_REGISTRY}", "${env.DOCKER_HUB_CRED}") {
+            docker_image.push("${env.DOCKER_IMAGE_TAG}")
+          }
+        }
+      }
+    }
+  }
+}

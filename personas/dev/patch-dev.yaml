@@ -1,0 +1,47 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dataverse
+spec:
+  template:
+    spec:
+      containers:
+        - name: dataverse
+          resources:
+            requests:
+              memory: "1.5Gi"
+            limits:
+              memory: "1.5Gi"
+          env:
+            - name: MEM_MAX_RAM_PERCENTAGE
+              value: "70.0"
+            - name: "ENABLE_JMX"
+              value: "1"
+            - name: "ENABLE_JDWP"
+              value: "1"
+        - name: heapdumps
+          image: wardsco/sleep
+          resources:
+            requests:
+              memory: "64Mi"
+            limits:
+              memory: "64Mi"
+          volumeMounts:
+            - name: heapdumps
+              mountPath: /dumps
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: solr
+spec:
+  template:
+    spec:
+      containers:
+        - name: solr
+          resources:
+            requests:
+              memory: "0.8Gi"
+            limits:
+              memory: "0.8Gi"

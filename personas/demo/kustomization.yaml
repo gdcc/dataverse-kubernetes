@@ -4,9 +4,14 @@ kind: Kustomization
 bases:
   - postgresql
   - ../../k8s
+  - ../../k8s/dataverse/jobs
 
 resources:
   - secrets.yaml
   - mailcatcher.yaml
+  - configmap.yaml
 
 images:
+
+patchesStrategicMerge:
+  - patch-memory.yaml

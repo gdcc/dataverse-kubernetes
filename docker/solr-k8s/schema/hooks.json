@@ -1,0 +1,16 @@
+[
+  {
+    "id": "update-schema",
+    "execute-command": "./updateSchemaMDB.sh",
+    "command-working-directory": "/scripts/schema/",
+    "response-message": "Schema update triggered.",
+    "include-command-output-in-response": true,
+    "include-command-output-in-response-on-error": true,
+    "pass-environment-to-command":
+    [
+      { "source": "string", "name": "http://localhost:8983", "envname": "SOLR_URL"},
+      { "source": "payload", "name": "api_key", "envname": "UNBLOCK_KEY" },
+      { "source": "payload", "name": "dataverse_url", "envname": "DATAVERSE_URL" }
+    ]
+  }
+]

@@ -5,12 +5,14 @@ metadata:
   name: solr
   labels:
     app.kubernetes.io/name: solr
-    app.kubernetes.io/version: "4.16"
+    app.kubernetes.io/version: "4.20"
     app.kubernetes.io/component: searchindex
     app.kubernetes.io/part-of: dataverse
     app.kubernetes.io/managed-by: kubectl
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: solr
@@ -25,34 +27,74 @@ spec:
       containers:
         - name: solr
           image: iqss/solr-k8s
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "4Gi"
           ports:
             - name: index
               containerPort: 8983
           volumeMounts:
             - name: data
               mountPath: /opt/solr/server/solr/collection1/data
+            - name: schema
+              mountPath: /schema
           env:
             - name: SOLR_PORT  # Otherwise, this is wrongfully set by K8s.
               value: "8983"
           livenessProbe:
-            initialDelaySeconds: 10
-            failureThreshold: 1
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            failureThreshold: 4 # thus restart after 4 minutes n/a
             httpGet:
               path: /solr/collection1/admin/ping
               port: index
           readinessProbe:
-            initialDelaySeconds: 5
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            failureThreshold: 2
             httpGet:
-              path: /solr/admin/info/system
+              path: /solr/collection1/admin/ping
               port: index
+        - name: schema-sidecar
+          image: iqss/solr-k8s
+          command: ["/tini", "--", "/scripts/schema/sidecar.sh"]
+          ports:
+            - name: webhook
+              containerPort: 9000
+          volumeMounts:
+            - name: schema
+              mountPath: "/schema"
+          readinessProbe:
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            failureThreshold: 2
+            httpGet:
+              path: /
+              port: webhook
       initContainers:
         - name: volume-mount-hack
           image: giantswarm/tiny-tools
           command: ["sh", "-c", "chown -c 8983:8983 /data"]
           volumeMounts:
-          - name: data
-            mountPath: /data
+            - name: data
+              mountPath: /data
+        - name: schema-init
+          image: iqss/solr-k8s
+          command: ["/scripts/schema/init.sh"]
+          volumeMounts:
+            - name: schema
+              mountPath: /schema
+            - name: api-secret
+              mountPath: "/scripts/schema/api"
+              readOnly: true
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: solr
+        - name: schema
+          emptyDir: {}
+        - name: api-secret
+          secret:
+            secretName: dataverse-api

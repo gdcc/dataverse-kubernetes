@@ -1,0 +1,10 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dataverse
+  labels:
+    app.kubernetes.io/name: configmap
+    app.kubernetes.io/part-of: dataverse
+data:
+  db_DoiProvider: FAKE

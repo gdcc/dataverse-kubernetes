@@ -1,0 +1,11 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dataverse
+spec:
+  template:
+    spec:
+      containers:
+        - name: dataverse
+          imagePullPolicy: Always

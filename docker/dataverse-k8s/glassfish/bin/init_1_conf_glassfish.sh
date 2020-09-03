@@ -22,7 +22,7 @@ for alias in rserve doi db
 do
   if [ -f ${SECRETS_DIR}/$alias/password ]; then
     cat ${SECRETS_DIR}/$alias/password | sed -e "s#^#AS_ADMIN_ALIASPASSWORD=#" > /tmp/$alias
-    asadmin $ASADMIN_OPTS create-password-alias --passwordfile /tmp/$alias ${alias}_password_alias
+    asadmin create-password-alias --passwordfile /tmp/$alias ${alias}_password_alias
     rm /tmp/$alias
   else
     echo "WARNING: Could not find 'password' secret for ${alias} in ${SECRETS_DIR}. Check your Kubernetes Secrets and their mounting!"
@@ -30,16 +30,29 @@ do
 done
 
 # 1b. Create AWS access credentials when storage driver is set to s3
-#     See IQSS/dataverse-kubernetes#28 for details of this workaround.
-if [ "s3" = "${dataverse_files_storage__driver__id}" ]; then
-  if [ -f ${SECRETS_DIR}/s3/access-key ] && [ -f ${SECRETS_DIR}/s3/secret-key ]; then
-    mkdir -p ${HOME_DIR}/.aws
-    echo "[default]" > ${HOME_DIR}/.aws/credentials
-    cat ${SECRETS_DIR}/s3/access-key | sed -e "s#^#aws_access_key_id = #" -e "s#\$#\n#" >> ${HOME_DIR}/.aws/credentials
-    cat ${SECRETS_DIR}/s3/secret-key | sed -e "s#^#aws_secret_access_key = #" -e "s#\$#\n#" >> ${HOME_DIR}/.aws/credentials
-  else
-    echo "WARNING: Could not find all S3 access secrets in ${SECRETS_DIR}/s3/(access-key|secret-key). Check your Kubernetes Secrets and their mounting!"
-  fi
+# Find all access keys
+if [ -d "${SECRETS_DIR}/s3" ]; then
+  S3_KEYS=`find "${SECRETS_DIR}/s3" -readable -type f -iname '*access-key'`
+  S3_CRED_FILE=${HOME_DIR}/.aws/credentials
+  mkdir -p `dirname "${S3_CRED_FILE}"`
+  rm -f ${S3_CRED_FILE}
+  # Iterate keys
+  while IFS= read -r S3_ACCESS_KEY; do
+    echo "Loading S3 key ${S3_ACCESS_KEY}"
+    # Try to find the secret key, parse for profile and add to the credentials file.
+    S3_PROFILE=`echo "${S3_ACCESS_KEY}" | sed -ne "s#.*/\(.*\)-access-key#\1#p"`
+    S3_SECRET_KEY=`echo "${S3_ACCESS_KEY}" | sed -ne "s#\(.*/\|.*/.*-\)access-key#\1secret-key#p"`
+
+    if [ -r ${S3_SECRET_KEY} ]; then
+      [ -z "${S3_PROFILE}" ] && echo "[default]" >> "${S3_CRED_FILE}" || echo "[${S3_PROFILE}]" >> "${S3_CRED_FILE}"
+      cat "${S3_ACCESS_KEY}" | sed -e "s#^#aws_access_key_id = #" -e "s#\$#\n#" >> "${S3_CRED_FILE}"
+      cat "${S3_SECRET_KEY}" | sed -e "s#^#aws_secret_access_key = #" -e "s#\$#\n#" >> "${S3_CRED_FILE}"
+      echo "" >> "${S3_CRED_FILE}"
+    else
+      echo "ERROR: Could not find or read matching \"$S3_SECRET_KEY\"."
+      exit 1
+    fi
+  done <<< "${S3_KEYS}"
 fi
 
 # 2. Domain-spaced resources (JDBC, JMS, ...)
@@ -81,7 +94,7 @@ echo "Configuring JavaMail."
 asadmin create-javamail-resource \
           --mailhost "${MAIL_SERVER}" \
           --mailuser "dataversenotify" \
-          --fromaddress "do-not-reply@${HOST_DNS_ADDRESS}" \
+          --fromaddress "${MAIL_FROMADDRESS}" \
           mail/notifyMailSession
 
 echo "Setting miscellaneous configuration options."
@@ -95,6 +108,14 @@ asadmin set-log-levels org.glassfish.grizzly.http.server.util.RequestUtils=SEVER
 asadmin set server-config.network-config.protocols.protocol.http-listener-1.http.comet-support-enabled="true"
 # SAX parser options
 asadmin create-jvm-options "\-Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl"
+# Set Max Heap Space (see also https://www.eclipse.org/openj9/docs/xxinitialrampercentage)
+asadmin create-jvm-options "\-XX\:+UseContainerSupport:\-Xss${MEM_XSS}:\-XX\:MaxRAMPercentage=${MEM_MAX_RAM_PERCENTAGE}"
+# If configured, enable Prometheus JMX agent
+# 3. Enable JDWP (debugger)
+if [ "x${ENABLE_JMX_EXPORT}" = "x1" ]; then
+  echo "Enabling Prometheus JMX Exporter Java Agent on port ${JMX_EXPORTER_PORT} and config at ${JMX_EXPORTER_CONFIG}."
+  asadmin create-jvm-options "\-javaagent\:${HOME}/jmx_exporter_agent.jar=${JMX_EXPORTER_PORT}\:${JMX_EXPORTER_CONFIG}"
+fi
 
 # 3. Domain based configuration options
 # Set Dataverse environment variables

@@ -1,0 +1,91 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: minio
+  labels:
+    app.kubernetes.io/name: minio
+    app.kubernetes.io/version: "latest"
+    app.kubernetes.io/component: storage
+    app.kubernetes.io/part-of: dataverse
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: minio
+      app.kubernetes.io/part-of: dataverse
+  revisionHistoryLimit: 1
+  strategy:
+    # Choosen as upstream example uses this. Might be a thing of locks...
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: minio
+        app.kubernetes.io/part-of: dataverse
+      annotations: {}
+    spec:
+      containers:
+        - name: minio
+          image: minio/minio
+          args: ["server", "/data"]
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "0.5"
+            limits:
+              memory: "4Gi"
+              cpu: "2"
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          env:
+            # MinIO access key and secret key
+            - name: MINIO_ACCESS_KEY_FILE
+              value: minio/access-key
+            - name: MINIO_SECRET_KEY_FILE
+              value: minio/secret-key
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: minio-secrets
+              mountPath: "/run/secrets/minio"
+              readOnly: true
+          ports:
+            - containerPort: 9000
+              name: service
+          readinessProbe:
+            httpGet:
+              path: /minio/health/ready
+              port: service
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /minio/health/live
+              port: service
+            initialDelaySeconds: 30
+            periodSeconds: 30
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+        - name: perm-and-bucket
+          image: giantswarm/tiny-tools
+          securityContext:
+            runAsUser: 0
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p /data/dataverse /data/mdclogs;
+              chown -c 1000:1000 /data /data/dataverse /data/mdclogs
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: minio
+        - name: minio-secrets
+          secret:
+            secretName: dataverse-s3
