@@ -52,8 +52,8 @@ Context: what is Dataverse?
 
 
 
-Media: where a the stories?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Media: where are the stories?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This project was presented at a few Dataverse related events:
 
