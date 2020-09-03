@@ -4,7 +4,7 @@
 [![Hub](https://img.shields.io/static/v1.svg?label=image&message=dataverse-k8s&logo=docker)](https://hub.docker.com/r/iqss/dataverse-k8s)
 ![Pulls](https://img.shields.io/docker/pulls/iqss/dataverse-k8s)
 [![RTD](https://img.shields.io/readthedocs/dataverse-k8s)](https://dataverse-k8s.readthedocs.io)
-[![Build](https://jenkins.dataverse.org/job/dataverse-k8s/job/image-dataverse/job/master/badge/icon?subject=master&status=pushed&color=purple)](https://jenkins.dataverse.org/job/dataverse-k8s/job/image-dataverse/job/master)
+[![Build](https://jenkins.dataverse.org/job/dataverse-k8s/job/image-dataverse/job/release/badge/icon?subject=release&status=pushed&color=purple)](https://jenkins.dataverse.org/job/dataverse-k8s/job/image-dataverse/job/release)
 
 This container image enables you to run [Dataverse](https://dataverse.org), a
 Java EE based web application for research data management, on a container platform.
@@ -15,9 +15,9 @@ like [Docker](https://docker.io) or [podman](https://podman.io).
 
 ## Supported tags
 
-- `latest`: master branch based build ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/glassfish/Dockerfile))
-- `payara`: master branch based build, payara flavor ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/payara/Dockerfile))
-- `build-cache`: a maven cache image to speedup dev builds, refreshed every night based on latest upstream `develop`. ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/build-cache/Dockerfile), [`Jenkinsfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/build-cache/Jenkinsfile))
+- `latest`: release branch based build ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/release/docker/dataverse-k8s/glassfish/Dockerfile))
+- `payara`: release branch based build, payara flavor ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/release/docker/dataverse-k8s/payara/Dockerfile))
+- `build-cache`: a maven cache image to speedup dev builds, refreshed every night based on latest upstream `develop`. ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/release/docker/dataverse-k8s/build-cache/Dockerfile), [`Jenkinsfile`](https://github.com/IQSS/dataverse-kubernetes/blob/release/docker/dataverse-k8s/build-cache/Jenkinsfile))
 - `4.20`, ..., `4.15.1`, ..., `4.11`: stable (tagged) releases
   - Using [upstream release schema](https://github.com/IQSS/dataverse/releases/) down to `4.11`.
   - See also [list on Docker Hub](https://hub.docker.com/r/iqss/dataverse-k8s/tags?page=1&ordering=last_updated&name=4.)

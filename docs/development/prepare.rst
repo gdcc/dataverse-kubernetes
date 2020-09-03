@@ -107,7 +107,7 @@ Clone source files
 
 For building images from any branch or commit of Dataverse, you need to have
 it in your (Docker) build context. Easily achieved by running the following
-after cloning the project (``master`` branch):
+after cloning the project (``release`` branch):
 
 .. code-block:: shell
 
