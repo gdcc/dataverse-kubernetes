@@ -11,6 +11,7 @@ Day 1 - Deployment
     ./secrets
     ./resources
     ./storage
+    ./provider-hints
     ./init-deploy
     ./job-bootstrap
 
@@ -104,7 +105,8 @@ You'll need a running and fully configured Kubernetes cluster.
   - Amazon: `AWS EKS <https://aws.amazon.com/de/eks>`_
   - RedHat: `OpenShift <https://www.openshift.com>`_
 
-
+  Please note there is an extensible collection of hints for some of these
+  cloud providers at the :doc:`provider-hints` page.
 
 
 
