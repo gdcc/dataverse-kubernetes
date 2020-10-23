@@ -68,7 +68,7 @@ pipeline {
         }
         stage('latest') {
           when {
-            branch 'master'
+            branch 'release'
           }
           environment {
             // credentials() will magically add DOCKER_HUB_USR and DOCKER_HUB_PSW
@@ -77,7 +77,7 @@ pipeline {
           }
           steps {
             script {
-              // Push master image to latest tag
+              // Push release image to latest tag
               docker.withRegistry("${env.DOCKER_REGISTRY}", "${env.DOCKER_HUB_CRED}") {
                 docker_image.push("latest")
               }

@@ -3,9 +3,9 @@
   This section is primarily targeted at people developing the Dataverse
   application on a Kubernetes platform, run CI jobs or similar.
 
-=================
-Development usage
-=================
+===========================
+Dataverse Development Usage
+===========================
 
 Images on Docker Hub are meant for production usage or quick demos.
 When developing Dataverse, testing a new feature not yet shipped in a release or
@@ -60,9 +60,10 @@ will access your cluster. Your options:
 1. When using ``skaffold dev`` (see below!), you can add ``--port-forward``.
    See also `port forward docs <https://skaffold.dev/docs/how-tos/portforward>`_.
    This is currently not possible with ``run`` mode.
-2. When using Minikube, see :ref:`get-started/demo/minikube:Make Dataverse reachable via browser`
+2. When using Minikube, see :ref:`quickstart/minikube:Make Dataverse reachable via browser`
 3. When using KinD, easiest way forward is ``kubectl port-forward``. ``Ingress``
    is also possible, see `upstream doc <https://kind.sigs.k8s.io/docs/user/ingress>`_.
+4. When using k3d, easiest way to go is by `exposing the ingress <https://k3d.io/usage/guides/exposing_services/#1-via-ingress>`_
 
 Example workflow for local development
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

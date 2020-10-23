@@ -17,7 +17,8 @@ DATAVERSE_URL=${DATAVERSE_URL:-"http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SER
 # The Solr Service IP is always available under its name within the same namespace.
 # If people want to use a different Solr than we normally deploy, they have the
 # option to override.
-SOLR_K8S_HOST=${SOLR_K8S_HOST:-"solr"}
+SOLR_SERVICE_HOST=${SOLR_SERVICE_HOST:-"solr"}
+SOLR_SERVICE_PORT=${SOLR_SERVICE_PORT:-"8983"}
 
 # Check postgres and API key secrets are available
 if [ ! -s "${SECRETS_DIR}/db/password" ]; then
@@ -53,7 +54,7 @@ sed -i -e "s#dataverse@mailinator.com#${CONTACT_MAIL}#" data/user-admin.json
 ./setup-all.sh --insecure -p="${ADMIN_PASSWORD:-admin}"
 
 # 4.) Configure Solr location
-curl -sS -X PUT -d "${SOLR_K8S_HOST}:8983" "${DATAVERSE_URL}/api/admin/settings/:SolrHostColonPort"
+curl -sS -X PUT -d "${SOLR_SERVICE_HOST}:${SOLR_SERVICE_PORT}" "${DATAVERSE_URL}/api/admin/settings/:SolrHostColonPort"
 
 # 5.) Provision builtin users key to enable creation of more builtin users
 if [ -s "${SECRETS_DIR}/api/userskey" ]; then

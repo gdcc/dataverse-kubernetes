@@ -1,0 +1,44 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dataverse
+  labels:
+    app: dataverse
+data:
+  ### GENERAL SETTINGS
+  dataverse_fqdn: data-test.example.org
+  dataverse_siteUrl: https://data-test.example.org
+  POSTGRES_DATABASE: dataverse
+
+  ### CONTACT SETTINGS
+  CONTACT_MAIL: rdm@example.org
+  MAIL_FROMADDRESS: rdm@example.org
+  db_SystemEmail: Research Data Management Unit Example.org <rdm@example.org>
+
+  ### DOI SETTINGS
+  doi_baseurlstring: https://mds.test.datacite.org
+  doi_username: EXAMPLE.ORG
+  db_DoiProvider: DataCite
+  db_Protocol: doi
+  db_Authority: "10.9999999999"
+  db_Shoulder: EXAMPLE-ORG-TEST/
+
+  ### FILE STORAGE
+  dataverse_files_directory: /data
+  dataverse_files_storage__driver__id: "s3"
+  dataverse_files_s3__custom__endpoint__url: http://minio:9000
+  dataverse_files_s3__bucket__name: dataverse
+  # required for Minio!
+  dataverse_files_s3__path__style__access: "true"
+
+  ### INGEST
+  # deactivate ingest for tabular files
+  db_TabularIngestSizeLimit: "0"
+  # allow uploads only < 2GB
+  db_MaxFileUploadSizeInBytes: "2147483648"
+  db_FileFixityChecksumAlgorithm: SHA-256
+
+  ### CUSTOMIZATION
+  db_StatusMessageHeader: "Test Environment"
+  db_StatusMessageText: "<br />This instance is meant for testing, training and experiments. DOIs minted here are not citeable!"

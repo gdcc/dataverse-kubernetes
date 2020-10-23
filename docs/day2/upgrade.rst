@@ -63,3 +63,53 @@ a similar project named `Imago <https://github.com/philpep/imago>`_ to sync your
 
 This works independently from your ``imagePullPolicy`` by using the ``sha256``
 image checksum in background.
+
+
+
+Flyway Database Migration Issues
+--------------------------------
+When using a custom version of Dataverse (e. g. when you maintain a small
+fork and deploy it based on images of this project), you might run into a
+situation where deployments fail due to "out of order" migrations.
+
+When deploying, `Flyway <https://flywaydb.org>`_ takes care of maintaining
+the database tables to be inline with the object-relational mapping.
+Backporting or adding a custom change might leave you in a state where
+Flyway complains about migrations not being applicable because newer migrations
+already happened. The deployment will fail for good.
+
+To solve this situation, you need to apply the migrations "out of order".
+Add the Flyway plugin to ``pom.xml`` (when you maintain a fork, this should
+be pretty clear where to do this).
+
+.. code-block:: xml
+
+  <plugin>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-maven-plugin</artifactId>
+      <version>${flyway.version}</version>
+      <configuration>
+          <url>jdbc:postgresql://localhost/dataverse</url>
+          <user>dataverse</user>
+          <password>YOUR DATABASE PASSWORD HERE</password>
+      </configuration>
+      <dependencies>
+          <dependency>
+              <groupId>org.postgresql</groupId>
+              <artifactId>postgresql</artifactId>
+              <version>42.2.12</version>
+          </dependency>
+      </dependencies>
+  </plugin>
+
+Now forward your PostgreSQL server to ``localhost`` (keep it running):
+
+.. code-block:: shell
+
+  kubectl port-forward service/postgresql 5432
+
+And then apply the migrations out of order:
+
+.. code-block:: shell
+
+  mvn -Dflyway.outOfOrder=true flyway:migrate

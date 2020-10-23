@@ -1,0 +1,10 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: minio
+spec:
+  resources:
+    requests:
+      storage: 5000Gi
+  # storageClassName: pm-local

@@ -30,16 +30,29 @@ do
 done
 
 # 1b. Create AWS access credentials when storage driver is set to s3
-#     See IQSS/dataverse-kubernetes#28 for details of this workaround.
-if [ "s3" = "${dataverse_files_storage__driver__id}" ]; then
-  if [ -f ${SECRETS_DIR}/s3/access-key ] && [ -f ${SECRETS_DIR}/s3/secret-key ]; then
-    mkdir -p ${HOME_DIR}/.aws
-    echo "[default]" > ${HOME_DIR}/.aws/credentials
-    cat ${SECRETS_DIR}/s3/access-key | sed -e "s#^#aws_access_key_id = #" -e "s#\$#\n#" >> ${HOME_DIR}/.aws/credentials
-    cat ${SECRETS_DIR}/s3/secret-key | sed -e "s#^#aws_secret_access_key = #" -e "s#\$#\n#" >> ${HOME_DIR}/.aws/credentials
-  else
-    echo "WARNING: Could not find all S3 access secrets in ${SECRETS_DIR}/s3/(access-key|secret-key). Check your Kubernetes Secrets and their mounting!"
-  fi
+# Find all access keys
+if [ -d "${SECRETS_DIR}/s3" ]; then
+  S3_KEYS=`find "${SECRETS_DIR}/s3" -readable -type f -iname '*access-key'`
+  S3_CRED_FILE=${HOME_DIR}/.aws/credentials
+  mkdir -p `dirname "${S3_CRED_FILE}"`
+  rm -f ${S3_CRED_FILE}
+  # Iterate keys
+  while IFS= read -r S3_ACCESS_KEY; do
+    echo "Loading S3 key ${S3_ACCESS_KEY}"
+    # Try to find the secret key, parse for profile and add to the credentials file.
+    S3_PROFILE=`echo "${S3_ACCESS_KEY}" | sed -ne "s#.*/\(.*\)-access-key#\1#p"`
+    S3_SECRET_KEY=`echo "${S3_ACCESS_KEY}" | sed -ne "s#\(.*/\|.*/.*-\)access-key#\1secret-key#p"`
+
+    if [ -r ${S3_SECRET_KEY} ]; then
+      [ -z "${S3_PROFILE}" ] && echo "[default]" >> "${S3_CRED_FILE}" || echo "[${S3_PROFILE}]" >> "${S3_CRED_FILE}"
+      cat "${S3_ACCESS_KEY}" | sed -e "s#^#aws_access_key_id = #" -e "s#\$#\n#" >> "${S3_CRED_FILE}"
+      cat "${S3_SECRET_KEY}" | sed -e "s#^#aws_secret_access_key = #" -e "s#\$#\n#" >> "${S3_CRED_FILE}"
+      echo "" >> "${S3_CRED_FILE}"
+    else
+      echo "ERROR: Could not find or read matching \"$S3_SECRET_KEY\"."
+      exit 1
+    fi
+  done <<< "${S3_KEYS}"
 fi
 
 # 2. Domain-spaced resources (JDBC, JMS, ...)

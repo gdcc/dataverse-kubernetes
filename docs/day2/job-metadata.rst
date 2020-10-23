@@ -21,7 +21,7 @@ get your custom metadata inside that job somehow, see below.
 
 .. code-block:: shell
 
-  kubectl create -f k8s/dataverse/jobs/metadata-update.yaml
+  kubectl create -f https://gitcdn.link/repo/IQSS/dataverse-kubernetes/release/k8s/dataverse/jobs/metadata-update.yaml
 
 .. important::
 
@@ -48,7 +48,7 @@ to re-export all citation metadata. A simple job does the trick:
 
 .. code-block:: shell
 
-  kubectl create -f k8s/dataverse/jobs/metadata-reexport.yaml
+  kubectl create -f https://gitcdn.link/repo/IQSS/dataverse-kubernetes/release/k8s/dataverse/jobs/metadata-reexport.yaml
 
 Having a large set of published dataverses and datasets, you might want to run
 this during off-hours.

@@ -1,0 +1,21 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dataverse
+  labels:
+    app.kubernetes.io/name: configmap
+    app.kubernetes.io/part-of: dataverse
+data:
+  # PIDs
+  db_DoiProvider: FAKE
+
+  ### FILE STORAGE
+  dataverse_files_directory: /data
+  dataverse_files_storage__driver__id: "myremote"
+  dataverse_files_myremote_type: "s3"
+  dataverse_files_myremote_label: "My Remote S3 Object Store"
+  dataverse_files_myremote_custom__endpoint__url: http://minio:9000
+  dataverse_files_myremote_bucket__name: dataverse
+  # required for Minio!
+  dataverse_files_myremote_path__style__access: "true"

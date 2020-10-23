@@ -52,13 +52,14 @@ Let's get ready to Dataverse...
 
   Please be aware that the *k3s.io* persona is using `Kustomize <https://kustomize.io>`_
   to re-use the provided descriptors, but suited for usage with K3s.
-  Please ensure having *kubectl* v1.14 or later installed as described in :doc:`/get-started/index`.
+  Please ensure having *kubectl* v1.14 or later installed or follow the
+  `kubectl installation docs <https://kubernetes.io/docs/tasks/tools/install-kubectl>`_.
 
 Now start to deploy Dataverse plus any necessary services and bootstrap via Kustomize:
 
 .. code-block:: shell
 
-  kubectl apply -k ./personas/demo-k3s
+  kubectl apply -k github.com/IQSS/dataverse-kubernetes/personas/demo-k3s
 
 .. image:: img/k3s-deploy.png
 

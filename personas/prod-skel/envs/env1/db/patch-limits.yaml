@@ -1,0 +1,17 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: postgresql
+spec:
+  template:
+    spec:
+      containers:
+        - name: postgresql
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "0.5"
+            limits:
+              memory: "4Gi"
+              cpu: "2"
