@@ -22,27 +22,24 @@ As K3s removed all "in-tree" storage classes, you will need to provide
 one on your own. For simple purposes like demos or development, local storage
 is sufficient.
 
-.. note::
-  The *k3s.io* persona will add a `local provisioner <https://github.com/rancher/local-path-provisioner>`_ by default,
-  so the default storage class will "just work".
-
 For getting started quickly, you can use *k3s.io* on *Docker* easily with *k3d*. You'll need:
 
 - `Docker <https://docs.docker.com/install>`_
-- `k3d <https://github.com/rancher/k3d/releases>`_
+- `k3d <https://k3d.io/#installation>`_ v3.1+
 
 Now create a small test cluster for this demo:
 
 .. code-block:: shell
 
-  k3d create --publish 8080:80 --wait 0
-  export KUBECONFIG="$(k3d get-kubeconfig --name='k3s-default')"
+  k3d cluster create -p "8080:80@loadbalancer"
 
 .. image:: img/k3s-setup.png
 
 .. hint::
-  Remember you need to expose the ``Ingress`` port, thus the ``--publish 8080:80``. Ingress will be reachable via http://localhost:8080 later.
-
+  Remember you need to expose the ``Ingress`` port, thus the ``-p "8080:80@loadbalancer"``.
+  Ingress will be reachable via http://localhost:8080 later. See also
+  `k3d exposing guide <https://k3d.io/usage/guides/exposing_services>`_ for more
+  options on exposing ports.
 
 
 Let's get ready to Dataverse...
@@ -59,7 +56,7 @@ Now start to deploy Dataverse plus any necessary services and bootstrap via Kust
 
 .. code-block:: shell
 
-  kubectl apply -k github.com/IQSS/dataverse-kubernetes/personas/demo-k3s
+  kubectl apply -k github.com/GlobalDataverseCommunityConsortium/dataverse-kubernetes/personas/demo-k3s
 
 .. image:: img/k3s-deploy.png
 
@@ -71,6 +68,8 @@ your host to the service.
 
 Wait a little longer...
 
+.. image:: img/k3s-wait-2.png
+.. image:: img/k3s-wait-3.png
 .. image:: img/k3s-done.png
 
 Point your favorite browser to http://localhost:8080 and enjoy your freshly backed Dataverse demo.
@@ -84,12 +83,13 @@ Point your favorite browser to http://localhost:8080 and enjoy your freshly back
 
 A word on deployment times
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-On a 2016 laptop with
+On a 2020 laptop with
 
-- 16 GB RAM,
+- 32 GB RAM,
 - SATA SSD,
-- Intel Core i5-6300U and
+- Intel Core i7-8665U and
 - a fairly fast internet connection for image pulling
+- and Docker Hub behaving normal
 
 it takes about **3 to 4 minutes** from zero to hero, not including installation time
-for Docker, k3d/k3s or kubectl. See also timestamps above.
+for Docker, k3d/k3s or kubectl. Timestamps above differ due to Docker Hub problems.
