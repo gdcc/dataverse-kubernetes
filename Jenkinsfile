@@ -16,7 +16,7 @@ pipeline {
                 sh "docker build -t dataverse:latest -f docker/dataverse-k8s/payara/Dockerfile ."
                 }
             }
-        },
+        }
         stage('Start up Dataverse job') {
             when {
                 anyOf {
@@ -27,5 +27,4 @@ pipeline {
                 sh "docker-compose up"
                 }
             }
-        }
 }
