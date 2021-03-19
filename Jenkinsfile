@@ -9,7 +9,7 @@ pipeline {
         stage('Trigger Dataverse CICD job') {
             when {
                 anyOf {
-                    branch '4.3'
+                    branch '5.3'
                 }
             }
             steps {
