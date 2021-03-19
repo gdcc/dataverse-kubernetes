@@ -41,11 +41,9 @@ echo "${POSTGRES_SERVER}:*:*:${POSTGRES_USER}:`cat ${SECRETS_DIR}/db/password`" 
 chmod 0600 ${HOME_DIR}/.pgpass
 
 # 1.) Load SQL data
-if [ ! -s ${HOME_DIR}/dvinstall/reference_data.sql ];
-  # no reference, just empty file for diagnostic purposes
-  echo '' > /opt/payara/dvinstall/reference_data.sql
+if [ -s "${HOME_DIR}/dvinstall/reference_data.sql" ]; then
+  psql -h ${POSTGRES_SERVER} -U ${POSTGRES_USER} ${POSTGRES_DATABASE} < ${HOME_DIR}/dvinstall/reference_data.sql
 fi
-psql -h ${POSTGRES_SERVER} -U ${POSTGRES_USER} ${POSTGRES_DATABASE} < ${HOME_DIR}/dvinstall/reference_data.sql
 
 # 2) Initialize common data structures to make Dataverse usable
 cd ${HOME_DIR}/dvinstall
