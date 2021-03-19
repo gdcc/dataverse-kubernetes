@@ -7,8 +7,8 @@ services:
     expose:
       - 5432
     environment:
-      - POSTGRES_USER=dataverse
-      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
 
   solr:
     image: iqss/solr-k8s
@@ -18,15 +18,15 @@ services:
   dataverse:
     build:
       context: .
-      dockerfile: ./docker/dataverse-k8s/glassfish-dev/Dockerfile
-    image: iqss/dataverse-k8s:dev
+      dockerfile: ./docker/dataverse-k8s/payara/Dockerfile
     depends_on:
       - postgresql
       - solr
     ports:
       - 8080:8080
+    env_file: .env
     volumes:
       - type: bind
         source: ./personas/docker-compose/secrets
         target: /secrets
-        read_only: true
+        #read_only: true
