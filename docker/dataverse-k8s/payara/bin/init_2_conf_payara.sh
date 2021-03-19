@@ -129,7 +129,7 @@ echo "INFO: Symlinking and editing jHove configuration."
 echo "disable-phome-home" >> ${PREBOOT_COMMANDS}
 
 cp ${SCRIPT_DIR}/init-setup.sh ${HOME_DIR}/dvinstall/
-ln -s ${HOME_DIR}/dvinstall/dataverse.war ${DOMAIN_DIR}/autodeploy/dataverse.war
+#ln -s ${HOME_DIR}/dvinstall/dataverse.war ${DOMAIN_DIR}/autodeploy/dataverse.war
 cd ${HOME_DIR}/dvinstall/ && nohup ./init-setup.sh &>/dev/null &
 
 if [ "${GIT_CVM_TEMPLATES}" ]; then
