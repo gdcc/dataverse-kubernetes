@@ -19,8 +19,8 @@ Simple with Docker (or Podman) after cloning the project and accessing the sourc
 
 .. code-block:: shell
 
-  docker build -t iqss/dataverse-k8s:4.19 -f docker/dataverse-k8s/glassfish/Dockerfile .
-  docker build -t iqss/solr-k8s:4.19 docker/solr-k8s
+  docker build -t iqss/dataverse-k8s:4.20 -f docker/dataverse-k8s/glassfish/Dockerfile .
+  docker build -t iqss/solr-k8s:4.20 docker/solr-k8s
 
 
 *Please remember to change the tag above as appropriate. You should be*
@@ -29,3 +29,18 @@ Simple with Docker (or Podman) after cloning the project and accessing the sourc
 .. seealso::
 
   Building development flavored images is described at :doc:`/development/index`.
+
+Build with ``podman``
+---------------------
+
+When building images with ``podman``, you need to be aware that DNS and hostname
+is handled differently than with Docker.
+
+If you see an error like ``There is a process already using the admin port 4848``
+failing the build, you might fear of a DNS problem.
+
+Please try to use ``podman build --add-host=$(hostname):127.0.0.1 ...`` as your
+build command, otherwise the appserver will not start because it cannot reach
+your host IP from within the container.
+
+See also http://www.adam-bien.com/roller/abien/entry/when_there_is_a_process

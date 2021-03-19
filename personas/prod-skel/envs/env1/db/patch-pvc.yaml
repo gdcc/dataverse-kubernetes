@@ -1,0 +1,10 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgresql
+spec:
+  resources:
+    requests:
+      storage: 30Gi
+  # storageClassName: pm-local

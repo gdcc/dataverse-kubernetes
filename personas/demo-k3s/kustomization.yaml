@@ -4,7 +4,6 @@ kind: Kustomization
 
 bases:
   - ../demo
-  - github.com/rancher/local-path-provisioner/deploy
 
 resources:
   - ingress.yaml

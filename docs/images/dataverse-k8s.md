@@ -1,10 +1,10 @@
 # Image "dataverse-k8s"
 
-[![Upstream](https://img.shields.io/badge/Dataverse-v4.19-important.svg)](https://github.com/IQSS/dataverse/releases/v4.19)
+[![Upstream](https://img.shields.io/badge/Dataverse-v4.20-important.svg)](https://github.com/IQSS/dataverse/releases/v4.20)
 [![Hub](https://img.shields.io/static/v1.svg?label=image&message=dataverse-k8s&logo=docker)](https://hub.docker.com/r/iqss/dataverse-k8s)
 ![Pulls](https://img.shields.io/docker/pulls/iqss/dataverse-k8s)
 [![RTD](https://img.shields.io/readthedocs/dataverse-k8s)](https://dataverse-k8s.readthedocs.io)
-[![Build](https://jenkins.dataverse.org/job/dataverse-k8s/job/image-dataverse/job/master/badge/icon?subject=master&status=pushed&color=purple)](https://jenkins.dataverse.org/job/dataverse-k8s/job/image-dataverse/job/master)
+[![Build](https://jenkins.dataverse.org/job/dataverse-k8s/job/image-dataverse/job/release/badge/icon?subject=release&status=pushed&color=purple)](https://jenkins.dataverse.org/job/dataverse-k8s/job/image-dataverse/job/release)
 
 This container image enables you to run [Dataverse](https://dataverse.org), a
 Java EE based web application for research data management, on a container platform.
@@ -15,13 +15,15 @@ like [Docker](https://docker.io) or [podman](https://podman.io).
 
 ## Supported tags
 
-- `latest`: master branch based build ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/glassfish/Dockerfile))
-- `build-cache`: a maven cache image to speedup dev builds, refreshed every night based on latest upstream `develop`. ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/build-cache/Dockerfile), [`Jenkinsfile`](https://github.com/IQSS/dataverse-kubernetes/blob/master/docker/dataverse-k8s/build-cache/Jenkinsfile))
-- `4.19`, ..., `4.15.1`, ..., `4.11`: stable (tagged) releases
+- `latest`: release branch based build ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/release/docker/dataverse-k8s/glassfish/Dockerfile))
+- `payara`: release branch based build, payara flavor ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/release/docker/dataverse-k8s/payara/Dockerfile))
+- `build-cache`: a maven cache image to speedup dev builds, refreshed every night based on latest upstream `develop`. ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/release/docker/dataverse-k8s/build-cache/Dockerfile), [`Jenkinsfile`](https://github.com/IQSS/dataverse-kubernetes/blob/release/docker/dataverse-k8s/build-cache/Jenkinsfile))
+- `4.20`, ..., `4.15.1`, ..., `4.11`: stable (tagged) releases
   - Using [upstream release schema](https://github.com/IQSS/dataverse/releases/) down to `4.11`.
   - See also [list on Docker Hub](https://hub.docker.com/r/iqss/dataverse-k8s/tags?page=1&ordering=last_updated&name=4.)
     for releases
-  - Last stable tag ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/v4.19/docker/dataverse-k8s/glassfish/Dockerfile))
+  - Last stable tag ([`Dockerfile`](https://github.com/IQSS/dataverse-kubernetes/blob/v4.20/docker/dataverse-k8s/glassfish/Dockerfile))
+- `4.20-payara`, ..., `4.20-payara`: same as above, but using Payara 5 as appserver.
 
 ## Quick reference
 
@@ -59,6 +61,10 @@ to this user on any volumes (except secrets) used for the below directories.
 - **/opt/dataverse/...** <br />
   Installation root of application server, WAR files, scripts etc. See `Dockerfile`
   for all details.
+
+- **/dumps** <br />
+  Mount a volume here to access Java Heap dumps when running out of heap memory.
+  Also available as `$DUMPS_DIR`.
 
 ### Secrets and Credentials
 

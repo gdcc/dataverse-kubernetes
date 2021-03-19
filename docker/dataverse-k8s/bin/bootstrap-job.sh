@@ -12,12 +12,13 @@ set -euo pipefail
 # Include some sane defaults
 . ${SCRIPT_DIR}/default.config
 DATAVERSE_SERVICE_HOST=${DATAVERSE_SERVICE_HOST:-"dataverse"}
-DATAVERSE_SERVICE_PORT=${DATAVERSE_SERVICE_PORT:-"8080"}
-DATAVERSE_URL=${DATAVERSE_URL:-"http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT}"}
+DATAVERSE_SERVICE_PORT_HTTP=${DATAVERSE_SERVICE_PORT_HTTP:-"8080"}
+DATAVERSE_URL=${DATAVERSE_URL:-"http://${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}"}
 # The Solr Service IP is always available under its name within the same namespace.
 # If people want to use a different Solr than we normally deploy, they have the
 # option to override.
-SOLR_K8S_HOST=${SOLR_K8S_HOST:-"solr"}
+SOLR_SERVICE_HOST=${SOLR_SERVICE_HOST:-"solr"}
+SOLR_SERVICE_PORT=${SOLR_SERVICE_PORT:-"8983"}
 
 # Check postgres and API key secrets are available
 if [ ! -s "${SECRETS_DIR}/db/password" ]; then
@@ -45,7 +46,7 @@ psql -h ${POSTGRES_SERVER} -U ${POSTGRES_USER} ${POSTGRES_DATABASE} < ${HOME_DIR
 # 2) Initialize common data structures to make Dataverse usable
 cd ${HOME_DIR}/dvinstall
 # 2a) Patch load scripts with k8s based URL
-sed -i -e "s#localhost:8080#${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT}#" setup-*.sh
+sed -i -e "s#localhost:8080#${DATAVERSE_SERVICE_HOST}:${DATAVERSE_SERVICE_PORT_HTTP}#" setup-*.sh
 # 2b) Patch user and root dataverse JSON with contact email
 sed -i -e "s#root@mailinator.com#${CONTACT_MAIL}#" data/dv-root.json
 sed -i -e "s#dataverse@mailinator.com#${CONTACT_MAIL}#" data/user-admin.json
@@ -53,7 +54,7 @@ sed -i -e "s#dataverse@mailinator.com#${CONTACT_MAIL}#" data/user-admin.json
 ./setup-all.sh --insecure -p="${ADMIN_PASSWORD:-admin}"
 
 # 4.) Configure Solr location
-curl -sS -X PUT -d "${SOLR_K8S_HOST}:8983" "${DATAVERSE_URL}/api/admin/settings/:SolrHostColonPort"
+curl -sS -X PUT -d "${SOLR_SERVICE_HOST}:${SOLR_SERVICE_PORT}" "${DATAVERSE_URL}/api/admin/settings/:SolrHostColonPort"
 
 # 5.) Provision builtin users key to enable creation of more builtin users
 if [ -s "${SECRETS_DIR}/api/userskey" ]; then

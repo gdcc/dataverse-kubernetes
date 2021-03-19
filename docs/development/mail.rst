@@ -10,7 +10,7 @@ just use `MailCatcher <https://mailcatcher.me>`_ as a small extra deployment:
 
 .. code-block:: shell
 
-  kubectl create -f k8s/utils/mailcatcher.yaml
+  kubectl create -f https://gitcdn.link/repo/IQSS/dataverse-kubernetes/release/personas/demo/mailcatcher.yaml
   minikube service mailcatcher
 
 (The last will open the web UI in your default browser.)
