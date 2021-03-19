@@ -17,14 +17,4 @@ pipeline {
                 }
             }
         }
-        stage('Start up Dataverse job') {
-            when {
-                anyOf {
-                    branch '4.3'
-                }
-            }
-            steps {
-                sh "docker-compose up"
-                }
-            }
 }
