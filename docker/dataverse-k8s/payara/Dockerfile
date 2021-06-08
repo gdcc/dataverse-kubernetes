@@ -5,13 +5,13 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 FROM payara/server-full:5.2020.7-jdk11
-LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>"
+LABEL maintainer="FDM FZJ <forschungsdaten@fz-juelich.de>, DANS <vyacheslav.tykhonov@dans.knaw.nl>"
 
-ARG VERSION=5.3
+ARG VERSION=5.5
 ARG DOMAIN=domain1
 
 ENV DATA_DIR=/data\
-    DOCROOT_DIR=/docroot\
+    DOCROOT_DIR=/opt/docroot\
     METADATA_DIR=/metadata\
     SECRETS_DIR=/secrets\
     DUMPS_DIR=/dumps\
