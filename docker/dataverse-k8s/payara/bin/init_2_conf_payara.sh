@@ -139,8 +139,7 @@ if [ "${GIT_CVM_TEMPLATES}" ]; then
     #cp -R /tmp/cvm-templates/templates/dataverse/* /opt/payara/appserver/glassfish/domains/production/applications/dataverse/
 fi
 
-else
-    echo "Restarting Dataverse...." >> /tmp/status.log
-    #This is a workaround
-    ${SCRIPT_DIR}/check-dvn.sh &
-fi
+# Workaround disabled
+#echo "Restarting Dataverse...." >> /tmp/status.log
+#This is a workaround
+#${SCRIPT_DIR}/check-dvn.sh &
